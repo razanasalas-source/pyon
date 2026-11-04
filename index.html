@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PYON · v4.3.2 · Diseño unificado con seguridad</title>
+<title>PYON · v4.3.3.1 · Selector de moneda visible</title>
 <meta name="theme-color" content="#087F5B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PYON">
 <meta name="application-name" content="PYON">
 <link rel="apple-touch-icon" sizes="180x180" href="./pyon-apple-touch-icon.png">
-<link rel="manifest" href="./pyon-v4.3.2.webmanifest">
+<link rel="manifest" href="./pyon-v4.3.3.1.webmanifest">
 
 <style>
 :root{--bg:#F4F5F1;--cd:#fff;--ink:#17231F;--mu:#5B6862;--ac:#1F6F5C;--on:#fff;--ln:#E3E6E0;--wb:#FFF1DC;--wt:#8A5200;--rd:#A63A28;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -545,6 +545,41 @@ html[data-pyon-style="compact"] .pyon-compact-row,html[data-pyon-style="compact"
 .pyon-account-actions{flex-wrap:wrap}
 .pyon-account-delete{color:var(--rd)}
 @media(max-width:520px){.pyon-two-col,.pyon-inline-grid{grid-template-columns:1fr}.pyon-three-col{grid-template-columns:1fr 1fr}.pyon-unified-top{align-items:flex-start;flex-direction:column}.pyon-badge{align-self:flex-start}}
+
+/* PYON v4.3.3 — Centro de administración segura de datos */
+.pyon-reset-info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:10px 0}
+.pyon-reset-info div{border:1px solid var(--ln);background:var(--bg);border-radius:12px;text-align:center;padding:10px 4px}
+.pyon-reset-info b{font-size:19px;display:block;color:var(--ink)}
+.pyon-reset-info small{display:block;color:var(--mu);font-size:11px}
+.pyon-reset-step{border:1px solid var(--ln);border-radius:15px;padding:13px;margin-top:10px;background:var(--cd)}
+.pyon-reset-step h3{font-size:14px;margin:0 0 8px}
+.pyon-reset-choice{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--ln);border-radius:12px;margin-top:9px;background:var(--bg)}
+.pyon-reset-choice input{width:20px;min-width:20px;height:20px;min-height:20px;margin:1px 0 0;accent-color:var(--ac)}
+.pyon-reset-choice span{flex:1;color:var(--ink)}
+.pyon-reset-choice small{display:block;color:var(--mu);font-size:12px;margin-top:3px}
+.pyon-reset-choice:has(input:checked){border-color:var(--ac)}
+.pyon-reset-warning{border:1px solid var(--rd);border-radius:12px;padding:12px;background:var(--bg);margin-top:11px}
+.pyon-reset-warning strong{color:var(--rd)}
+.pyon-reset-delete{background:var(--rd)!important;color:#fff!important;border:0!important;width:100%;margin-top:12px}
+.pyon-reset-delete:disabled{opacity:.5}
+.pyon-reset-help{font-size:12px;color:var(--mu);margin:8px 0 0}
+@media(max-width:350px){.pyon-reset-info{grid-template-columns:1fr 1fr}}
+
+/* PYON v4.3.3.1: moneda claramente visible al crear una cuenta. Radios nativos accesibles en iOS. */
+.pyon-account-currency{border:0;padding:0;margin:12px 0 6px;min-width:0}
+.pyon-account-currency legend{font-size:13px;color:var(--mu);padding:0 0 7px;font-weight:600}
+.pyon-account-currency-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}
+.pyon-account-currency-label{display:block;position:relative;margin:0;cursor:pointer;min-width:0}
+.pyon-account-currency-label input[type=radio]{position:absolute;left:12px;top:12px;width:18px;height:18px;min-height:18px;margin:0;opacity:0;pointer-events:none}
+.pyon-account-currency-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-height:85px;padding:13px 14px;background:var(--cd);border:2px solid var(--ln);border-radius:14px;box-sizing:border-box;color:var(--ink);transition:border-color .13s,background-color .13s,box-shadow .13s}
+.pyon-account-currency-card strong{font-size:15px;color:var(--ink);font-weight:700}
+.pyon-account-currency-card small{font-size:12px;color:var(--mu)}
+.pyon-account-currency-card .pyon-account-currency-symbol{font-size:22px;font-weight:750;line-height:1.1;color:var(--ac)}
+.pyon-account-currency-label input[type=radio]:checked + .pyon-account-currency-card{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac);background:color-mix(in srgb,var(--ac) 9%,var(--cd))}
+.pyon-account-currency-label input[type=radio]:focus-visible + .pyon-account-currency-card{outline:3px solid var(--ac);outline-offset:2px}
+.pyon-account-currency-label input[type=radio]:disabled + .pyon-account-currency-card{opacity:.62;cursor:not-allowed}
+.pyon-account-currency-note{font-size:12px;line-height:1.45;color:var(--mu);margin:4px 0 12px}
+@media(prefers-reduced-motion:reduce){.pyon-account-currency-card{transition:none}}
 </style>
 </head>
 <body>
@@ -927,6 +962,80 @@ function pyonValidateBackup(parsed){
  return {C:cleanC,M:cleanM,preferences:pref,originalVersion:String(parsed.version||parsed.v||'anterior')};
 }
 function pyonRestoreMetrics(d){return `<div class="pyon-backup-metrics"><div class="pyon-backup-metric"><b>${d.accounts}</b><small>Cuentas</small></div><div class="pyon-backup-metric"><b>${d.movements}</b><small>Movimientos</small></div><div class="pyon-backup-metric"><b>${d.debts}</b><small>Deudas</small></div></div>`;}
+
+// PYON v4.3.3 — Borrado local seguro: respaldo, selección explícita y confirmación doble.
+let pyonResetStage={backupReady:false,snapshot:null};
+function pyonResetSnapshot(){
+ return JSON.stringify({C,M,preferences:{appearance:pyonAppearance(),dashboard:pyonDashboardSettings(),calendar:pyonCalendarSettings()}});
+}
+function pyonDefaultFinancialData(keepPersonalization){
+ const prev=keepPersonalization?C:null;
+ return {medios:[],cats:keepPersonalization&&Array.isArray(prev.cats)?prev.cats.map(x=>({...x})):CATS.map(n=>({n})),
+  deudas:[],metas:[],years:[],frec:[],rec:[],notas:[],pres:{},
+  nombre:keepPersonalization?String(prev.nombre||''):'',
+  tc:keepPersonalization?(Number(prev.tc)||0):0,
+  pin:keepPersonalization?(prev.pin||null):null,schemaVersion:4};
+}
+function pyonResetBackupDownload(){
+ if(db){toast('La limpieza de esta pantalla solo es compatible con datos locales; no borra datos de la nube.');return}
+ try{
+  const payload={format:'PYON-respaldo',version:'4.3.3',fechaExportacion:new Date().toISOString(),C,M,
+   preferencias:{apariencia:pyonAppearance(),inicio:pyonDashboardSettings(),calendario:pyonCalendarSettings()}};
+  const contents=JSON.stringify(payload,null,2);
+  const success=pyonDownloadFile('PYON-antes-de-limpiar-'+today()+'.json',contents,'application/json;charset=utf-8');
+  if(!success){pyonResetStage={backupReady:false,snapshot:null};return}
+  pyonResetStage={backupReady:true,snapshot:pyonResetSnapshot()};
+  render();toast('Descarga solicitada. Comprueba que el archivo JSON se haya guardado.');
+ }catch(e){pyonResetStage={backupReady:false,snapshot:null};toast('No se pudo generar el respaldo. No se habilitó el borrado.');}
+}
+function vDataAdmin(){
+ const summary=pyonRestoreSummary({C,M});
+ const cloud=!!db;
+ return back()+`<div class="c">${pyonUnifiedHeader('🗃️','Administración de datos','Limpia registros de prueba sin desinstalar PYON. El proceso no afecta tus cuentas bancarias reales.','v4.3.3')}
+ <div class="pyon-reset-info"><div><b>${summary.accounts}</b><small>Cuentas</small></div><div><b>${summary.movements}</b><small>Movimientos</small></div><div><b>${summary.debts}</b><small>Deudas</small></div></div>
+ <div class="pyon-unified-actions"><button type="button" class="o" data-a="backup-json">⬇ Respaldo normal</button><button type="button" class="o" data-a="restore-open">↗ Restaurar JSON</button></div>
+ ${cloud?`<div class="pyon-reset-warning"><strong>Modo conectado a la nube</strong><p class="d">La eliminación local está bloqueada porque los datos podrían sincronizarse. No se realizará ninguna limpieza. Esta función está disponible únicamente en modo local.</p></div>`:`
+ <div class="pyon-reset-warning"><strong>Importante: borrado definitivo de esta instalación</strong><p class="d">Haz una copia y comprueba que se guardó antes de continuar. PYON no puede recuperar lo borrado si no conservas el archivo JSON. Si utilizas varias versiones bajo el mismo sitio GitHub Pages, comparten los datos locales.</p></div>
+ <div class="pyon-reset-step"><h3>1. Descargar respaldo obligatorio</h3><p class="d">Incluye cuentas, deudas, movimientos, ahorros, categorías y preferencias. Este JSON es privado y puede restaurarse desde Más → Respaldo y restauración.</p><button type="button" class="b" data-a="reset-backup" style="width:100%">⬇ Descargar respaldo antes de borrar</button><p class="pyon-reset-help">${pyonResetStage.backupReady?'✓ PYON inició la descarga de un respaldo durante esta sesión. Confirma que realmente aparece en tus archivos.':'Primero descarga el archivo. Después se habilitará la confirmación.'}</p></div>
+ <div class="pyon-reset-step"><h3>2. Elegir qué quieres limpiar</h3><label class="pyon-reset-choice"><input type="radio" name="pyon-reset-scope" value="financial" checked><span><b>Solo mis registros financieros</b><small>Elimina cuentas, movimientos, deudas, metas, recurrentes, notas y presupuestos. Conserva categorías, PIN, nombre, colores, estilo y personalización.</small></span></label><label class="pyon-reset-choice"><input type="radio" name="pyon-reset-scope" value="full"><span><b>Restablecimiento completo de PYON</b><small>Elimina también categorías personalizadas, PIN y preferencias locales de apariencia, Inicio y calendario. No borra datos de otros sitios.</small></span></label></div>
+ <div class="pyon-reset-step"><h3>3. Confirmar que guardaste tu copia</h3><label class="pyon-reset-choice"><input type="checkbox" id="pyon-reset-saved"><span>Revisé mis descargas y guardé el respaldo JSON en un lugar seguro.</span></label><label>Escribe <b>BORRAR</b> para autorizar esta limpieza<input id="pyon-reset-text" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="BORRAR" maxlength="12"></label><button type="button" class="b pyon-reset-delete" data-a="reset-commit" ${!pyonResetStage.backupReady?'disabled':''}>🗑 Revisar y confirmar eliminación</button><p class="pyon-reset-help">Después aparecerá una segunda confirmación. Seleccionar una opción por sí solo nunca borra datos.</p></div>`}
+ </div>`;
+}
+async function pyonResetCommit(){
+ if(db){toast('No se permite borrar desde aquí en modo nube.');return}
+ if(!pyonResetStage.backupReady||!pyonResetStage.snapshot){toast('Primero descarga un respaldo de los datos actuales.');return}
+ if(!$('#pyon-reset-saved')?.checked){toast('Confirma que el respaldo JSON está guardado.');return}
+ if(val('pyon-reset-text')!=='BORRAR'){toast('Escribe BORRAR en mayúsculas para continuar.');return}
+ const scope=document.querySelector('input[name="pyon-reset-scope"]:checked')?.value;
+ if(!['financial','full'].includes(scope)){toast('Selecciona qué datos quieres limpiar.');return}
+ if(pyonResetSnapshot()!==pyonResetStage.snapshot){
+  pyonResetStage={backupReady:false,snapshot:null};render();toast('Los datos cambiaron desde el respaldo. Vuelve a descargar una copia actualizada.');return;
+ }
+ const desc=scope==='full'?'TODOS los registros financieros y también el PIN, categorías y configuración visual':'TODOS los registros financieros, conservando PIN, categorías y configuración visual';
+ const approved=await pyonConfirm('Vas a eliminar '+desc+' de esta instalación de PYON. Asegúrate de tener el JSON guardado; esta acción es irreversible sin respaldo. ¿Confirmas?','Eliminar datos de prueba');
+ if(!approved)return;
+ if(db||pyonResetSnapshot()!==pyonResetStage.snapshot){pyonResetStage={backupReady:false,snapshot:null};toast('Los datos cambiaron o se activó el modo nube; no se borró nada.');render();return}
+ try{
+  const clean=pyonDefaultFinancialData(scope==='financial');
+  // Escribir primero el estado nuevo en disco; si falla, conservar datos actuales.
+  localStorage.setItem('fin1',JSON.stringify({C:clean,M:{}}));
+  clearTimeout(tm);pend.clear();C=clean;M={};
+  if(scope==='full'){
+   // Nunca ejecutar localStorage.clear(): podría borrar información ajena a PYON.
+   for(const key of ['pyon-appearance-v1','pyon-dashboard-v1','pyon-calendar-v1']){
+    try{localStorage.removeItem(key)}catch(e){}
+   }
+   try{sessionStorage.removeItem('pyon-privacy-visual-v1')}catch(e){}
+   pyonPrivacyActive=false;
+   pyonApplyAppearance(pyonAppearance());
+  }
+  pyonResetStage={backupReady:false,snapshot:null};pyonRestoreStage=null;
+  tab='i';sub='';ed=null;medEd=null;yr=today().slice(0,4);ym=today().slice(0,7);
+  pyonMovFormOpen=false;pyonGoalFormOpen=false;pyonDebtFormOpen=false;
+  render();toast(scope==='full'?'PYON restablecido a sus valores iniciales.':'Registros financieros eliminados. Tus preferencias se conservaron.');
+ }catch(e){toast('El navegador no pudo guardar los cambios. No se borró información de PYON.');}
+}
+
 function vBackupRestore(){
  const current=pyonRestoreSummary({C,M}),stage=pyonRestoreStage;
  return back()+`<div class="c"><h2>☁️ Respaldo y restauración</h2><p class="d">Recupera tus datos al cambiar de teléfono o reinstalar PYON. Todo el proceso de lectura del archivo ocurre en este dispositivo.</p>
@@ -985,7 +1094,7 @@ async function pyonCommitRestore(){
 
 function pyonBackupJSON(){
  try{
-  const blob=JSON.stringify({format:'PYON-respaldo',version:'4.3.1',fechaExportacion:new Date().toISOString(),C,M,preferencias:{apariencia:pyonAppearance(),inicio:pyonDashboardSettings(),calendario:pyonCalendarSettings()}},null,2);
+  const blob=JSON.stringify({format:'PYON-respaldo',version:'4.3.3',fechaExportacion:new Date().toISOString(),C,M,preferencias:{apariencia:pyonAppearance(),inicio:pyonDashboardSettings(),calendario:pyonCalendarSettings()}},null,2);
   if(pyonDownloadFile('PYON-respaldo-'+today()+'.json',blob,'application/json;charset=utf-8'))toast('Copia JSON descargada. Guárdala en privado.');
  }catch(e){toast('No se pudo preparar el respaldo JSON. Reintenta.');}
 }
@@ -1152,7 +1261,8 @@ function pyonAccountListRow(m){
 
 function pyonUnifiedHeader(icon,title,desc,badge=''){return `<div class="pyon-unified-top"><div><h2>${icon} ${title}</h2><p>${desc}</p></div>${badge?`<span class="pyon-badge">${badge}</span>`:''}</div>`}
 function pyonUnifiedToggle(key,label,opened){return `<button type="button" class="o" data-a="utoggle" data-v="${key}">${opened?'▾':'▸'} ${label}</button>`}
-function vMed(){const e=medEd?C.medios.find(m=>m.id===medEd):null;const open=e||pyonUnifiedForms.med;const active=C.medios.filter(m=>!m.x).length,arch=C.medios.filter(m=>m.x).length;return back()+`<div class="c">${pyonUnifiedHeader('💳','Mis cuentas y medios de pago','Administra tus cuentas con el mismo estilo compacto de Deudas, Movimientos y Ahorros.',`${active} activas · ${arch} archivadas`)}<div class="pyon-unified-actions">${!e?pyonUnifiedToggle('med',open?'Ocultar formulario':'Nueva cuenta',open):''}</div>${open?`<div class="pyon-form-card"><div class="k">${e?'Editar cuenta':'Agregar cuenta o medio de pago'}</div><label>Nombre<input id="bn" list="bl" placeholder="Ej. BCP ahorro dólares" value="${e?esc(e.n):''}"></label><datalist id="bl">${BANCOS.map(b=>`<option value="${esc(b)}">`).join('')}</datalist><div class="pyon-inline-grid"><label>Tipo<select id="bk"><option value="d"${e&&e.k==='d'?' selected':''}>Cuenta de débito</option><option value="c"${e&&e.k==='c'?' selected':''}>Tarjeta de crédito</option><option value="b"${e&&e.k==='b'?' selected':''}>Billetera</option><option value="e"${e&&e.k==='e'?' selected':''}>Efectivo</option></select></label><label>Moneda<select id="bcur"${e&&accountMovements(e.id).length?' disabled':''}><option value="PEN"${!e||e.cur!=='USD'?' selected':''}>Soles (PEN)</option><option value="USD"${e&&e.cur==='USD'?' selected':''}>Dólares (USD)</option></select></label><label>Saldo inicial<input id="bsi" type="number" inputmode="decimal" step="0.01" placeholder="Opcional" value="${e&&e.saldoInicial!==null&&e.saldoInicial!==undefined?e.saldoInicial:''}"></label><label>Día de cierre (crédito)<input id="bc" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.cie||''):''}"></label><label>Día de pago (crédito)<input id="bp" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.pag||''):''}"></label></div>${e&&accountMovements(e.id).length?'<div class="d">La moneda se bloquea cuando la cuenta ya tiene movimientos.</div>':''}<div class="r" style="margin-top:12px"><button class="b" data-a="${e?'medsave':'addm'}" style="flex:1">${e?'Guardar cambios':'Agregar cuenta'}</button>${e?'<button class="o" data-a="medcancel">Cancelar</button>':'<button class="o" data-a="utoggle" data-v="med">Cerrar</button>'}</div></div>`:''}<div class="pyon-section-mini">Tus cuentas</div>${C.medios.length?C.medios.map(pyonAccountListRow).join(''):'<div class="pyon-list-card"><div class="d">Aún no agregaste ninguna cuenta o medio de pago.</div></div>'}<div class="d" style="margin-top:8px">Puedes editar, archivar o eliminar cuentas. Eliminar solo está disponible cuando no existen vínculos financieros.</div></div>`}
+function pyonAccountCurrencySelection(){return document.querySelector('input[name="bcur-choice"]:checked')?.value==='USD'?'USD':'PEN'}
+function vMed(){const e=medEd?C.medios.find(m=>m.id===medEd):null;const open=e||pyonUnifiedForms.med;const active=C.medios.filter(m=>!m.x).length,arch=C.medios.filter(m=>m.x).length;return back()+`<div class="c">${pyonUnifiedHeader('💳','Mis cuentas y medios de pago','Administra tus cuentas con el mismo estilo compacto de Deudas, Movimientos y Ahorros.',`${active} activas · ${arch} archivadas`)}<div class="pyon-unified-actions">${!e?pyonUnifiedToggle('med',open?'Ocultar formulario':'Nueva cuenta',open):''}</div>${open?`<div class="pyon-form-card"><div class="k">${e?'Editar cuenta':'Agregar cuenta o medio de pago'}</div><label>Nombre<input id="bn" list="bl" placeholder="Ej. BCP ahorro dólares" value="${e?esc(e.n):''}"></label><datalist id="bl">${BANCOS.map(b=>`<option value="${esc(b)}">`).join('')}</datalist><div class="pyon-inline-grid"><label>Tipo<select id="bk"><option value="d"${e&&e.k==='d'?' selected':''}>Cuenta de débito</option><option value="c"${e&&e.k==='c'?' selected':''}>Tarjeta de crédito</option><option value="b"${e&&e.k==='b'?' selected':''}>Billetera</option><option value="e"${e&&e.k==='e'?' selected':''}>Efectivo</option></select></label><fieldset class="pyon-account-currency"><legend>Moneda de la cuenta</legend><div class="pyon-account-currency-grid"><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="PEN"${!e||e.cur!=='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">S/</span><strong>Soles</strong><small>PEN</small></span></label><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="USD"${e&&e.cur==='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">US$</span><strong>Dólares</strong><small>USD</small></span></label></div></fieldset><div class="pyon-account-currency-note">Selecciona la moneda en la que está denominada esta cuenta; PEN y USD no se suman ni convierten automáticamente.</div><label>Saldo inicial<input id="bsi" type="number" inputmode="decimal" step="0.01" placeholder="Opcional" value="${e&&e.saldoInicial!==null&&e.saldoInicial!==undefined?e.saldoInicial:''}"></label><label>Día de cierre (crédito)<input id="bc" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.cie||''):''}"></label><label>Día de pago (crédito)<input id="bp" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.pag||''):''}"></label></div>${e&&accountMovements(e.id).length?'<div class="d">La moneda se bloquea cuando la cuenta ya tiene movimientos.</div>':''}<div class="r" style="margin-top:12px"><button class="b" data-a="${e?'medsave':'addm'}" style="flex:1">${e?'Guardar cambios':'Agregar cuenta'}</button>${e?'<button class="o" data-a="medcancel">Cancelar</button>':'<button class="o" data-a="utoggle" data-v="med">Cerrar</button>'}</div></div>`:''}<div class="pyon-section-mini">Tus cuentas</div>${C.medios.length?C.medios.map(pyonAccountListRow).join(''):'<div class="pyon-list-card"><div class="d">Aún no agregaste ninguna cuenta o medio de pago.</div></div>'}<div class="d" style="margin-top:8px">Puedes editar, archivar o eliminar cuentas. Eliminar solo está disponible cuando no existen vínculos financieros.</div></div>`}
 function vCat(){return back()+`<div class="c"><div class="k">Agregar categoría</div><label>Nombre<input id="cn"></label><button class="b" data-a="addc" style="width:100%;margin-top:12px">Agregar</button></div><div class="c">`+C.cats.map((c,i)=>`<div class="r" style="margin-top:8px"><span>${ce(c.n)} ${esc(c.n)}${c.x?' <span class="d">archivada</span>':''}</span><span style="display:flex;gap:6px"><input data-pr="${i}" type="number" inputmode="decimal" placeholder="Límite PEN" value="${budgetLimit(c.n,'PEN')||''}" style="width:120px" aria-label="Presupuesto PEN de ${esc(c.n)}"><input data-prusd="${i}" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Límite USD" value="${budgetLimit(c.n,'USD')||''}" style="width:105px" aria-label="Presupuesto USD de ${esc(c.n)}"><button class="o" data-a="xc" data-v="${i}">${c.x?'Reactivar':'Archivar'}</button></span></div>`).join('')+`</div>`}
 document.addEventListener('change',e=>{if(e.target.id==='reportcur'){window.reportCurrency=e.target.value;render()}});
 function reportCur(x){const acct=med(x.cuentaId||x.m);return x.cur==='USD'?'USD':x.cur==='PEN'?'PEN':(acct?.cur==='USD'?'USD':'PEN')}
@@ -1215,12 +1325,26 @@ function vAnual(){
 }
 function vAyuda(){
 const sections=[
+['💵','Soles y dólares al crear cuentas · v4.3.3.1','Selector visible para registrar cuentas PEN y USD.',[
+ ['Dónde está','En Más → Mis cuentas → Nueva cuenta, elige Soles (PEN) o Dólares (USD) antes de guardar. Ambas opciones se ven en la pantalla, sin abrir un menú desplegable.'],
+ ['Cuenta nueva','Puedes crear cuentas o tarjetas en PEN o USD; PYON registra la moneda seleccionada y mantiene los saldos separados.'],
+ ['Editar cuentas existentes','La moneda de una cuenta con movimientos históricos está bloqueada para evitar inconsistencias. Si necesitas otra moneda, crea una cuenta nueva en USD o PEN.'],
+ ['No convierte dinero','Elegir USD no cambia movimientos existentes ni realiza conversiones. Consulta tus importes en la moneda original.']]],
+['🗃️','Administración de datos · v4.3.3','Comienza de cero con protección contra borrados accidentales.',[
+ ['Dónde se encuentra','En Más → Administrar datos, o desde el botón Limpiar datos de prueba de Más → Herramientas.'],
+ ['Respaldo obligatorio','Primero descarga un archivo JSON y confirma manualmente que está guardado. Sin ese paso PYON no permite continuar.'],
+ ['Solo registros financieros','Borra cuentas, movimientos, deudas, metas, notas, recurrentes, frecuentes y presupuestos. Mantiene categorías, PIN, nombre, apariencia y preferencias del calendario.'],
+ ['Restablecimiento completo','Además elimina categorías personalizadas, PIN y preferencias de apariencia, inicio y calendario de esta instalación. No borra todos los datos del navegador.'],
+ ['Doble confirmación','Debes indicar qué borrar, marcar que guardaste el JSON, escribir BORRAR y aceptar un aviso final. No existe un botón Deshacer.'],
+ ['Modo nube','Por seguridad no se permite la limpieza desde esta pantalla si los datos están conectados a una base de datos en la nube.'],
+ ['Varias versiones','Las versiones de PYON bajo el mismo origen de GitHub Pages suelen compartir el almacenamiento local. La limpieza afecta los datos compartidos de ese origen.'],
+ ['Recuperación','Para recuperar tus datos, ve a Más → Respaldo y restauración y elige el archivo JSON descargado antes de limpiar.']]],
 ['🎨','Diseño visual unificado · v4.3.2','Las pantallas abiertas desde Más siguen ahora un mismo lenguaje visual.',[
  ['Qué cambió','Mis cuentas, Presupuestos, Transferencias, Notas, Recurrentes, Seguridad y Monedas utilizan tarjetas compactas, formularios plegables y acciones más discretas.'],
  ['Qué se mantiene','No se modificó la lógica financiera: los movimientos, cálculos, cobros, pagos y saldos siguen funcionando igual.'],
  ['Cómo usarlo','En las pantallas que muestran un botón Nuevo, pulsa para abrir el formulario y vuelve a pulsarlo para cerrarlo. Las listas permanecen visibles y ocupan menos espacio.'],
  ['Objetivo','Que PYON se sienta como una sola aplicación coherente, con mejor impacto visual en celular sin repetir información innecesaria.']]],
-['🏦','Diseño unificado · v4.3.2','Administra cuentas sin afectar movimientos ni deudas.',[
+['🏦','Eliminar cuentas · v4.3.1','Administra cuentas sin afectar movimientos ni deudas.',[
  ['Dónde está','En Más → Mis cuentas y medios de pago, cada cuenta tiene Editar, Archivar/Reactivar y Eliminar.'],
  ['Eliminar una cuenta nueva','Si la cuenta no tiene movimientos ni referencias, pulsa Eliminar y confirma la operación. Si tenía saldo inicial, PYON advierte que este desaparecerá del total.'],
  ['Cuenta con historial','Cuando hay movimientos, pagos de deudas o gastos recurrentes/frecuentes asociados, PYON bloquea la eliminación para no alterar tus cálculos. Puedes archivarla: dejará de estar disponible para nuevas operaciones, pero conservará el historial.'],
@@ -1296,7 +1420,7 @@ const sections=[
 ['🧪','Novedades y próximas mejoras','Conoce qué está disponible y qué está pendiente.',[
 ['Disponible en esta versión','Cuentas PEN/USD, saldos estimados por moneda, transferencias, cambio bidireccional, deudas con abonos y presupuestos por moneda.'],
 ['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: pendiente','Todavía no está disponible. Una versión futura incorporará preguntas sencillas procesadas localmente; el asistente conversacional avanzado requerirá revisión de privacidad y costes.'],['En desarrollo','Proyecciones avanzadas, consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
-['Novedad v4.3.2 · diseño unificado'],['Novedad v4.3.2 · eliminación segura de cuentas','En Más → Mis cuentas y medios de pago se añadió Eliminar con confirmación. Las cuentas vinculadas a operaciones no se borran: pueden archivarse para conservar el historial.'],['Novedad v4.3 · calendario y vistas compactas','Calendario mensual interno con vencimientos de tarjetas, deudas, notas y recurrentes; movimientos y metas en filas compactas y expandibles. Se mantiene la descarga .ics.'],['Novedad v4.2.2 · Deudas compactas','La pestaña Deudas ahora tiene Me deben, Debo y Saldadas como vistas independientes; muestra filas compactas que se despliegan al tocarlas. No repite el resumen de Inicio ni altera los cálculos.'],['Novedad v4.2.1 · desplazamiento vertical','Se corrigió la interacción de las reglas de desbordamiento horizontal y vertical, especialmente para desplazarse con el dedo en pantallas móviles y tras cerrar ventanas emergentes.'],['Novedad v4.2 · respaldo y compatibilidad iOS','Nueva pantalla con vista previa y confirmación antes de restaurar un JSON, soporte de copias antiguas, preparación de ícono y manifiesto para instalación en pantalla de inicio y mejoras en controles táctiles.'],['Novedad v4.1 · integridad financiera','Nueva revisión de consistencia sin modificar datos, descarga de respaldo JSON, y anulación de transferencias y cambios como operación completa. Se protegen los movimientos de deudas y metas contra eliminación aislada.'],['Novedad v4.0 · inicio discreto y privacidad visual','El gran botón Personalizar Inicio se sustituyó por un pequeño ícono junto al mes. Un nuevo ícono de ojo oculta o muestra importes en pantalla sin cambiar registros.'],['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio toca el ícono discreto de ajustes junto al selector del mes, o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
+['Novedad v4.3.3.1 · selector PEN/USD','En Mis cuentas, la moneda se elige con dos tarjetas visibles: Soles (PEN) o Dólares (USD). Se respeta el bloqueo para cuentas con historial.'],['Novedad v4.3.3 · administración de datos','Nuevo centro para limpiar registros de prueba con descarga previa, dos alcances de borrado, palabra BORRAR y confirmación final, sin afectar otros sitios del navegador.'],['Novedad v4.3.2 · diseño unificado','Se unificaron tarjetas y formularios plegables de Mis cuentas, Presupuestos, Transferencias, Notas, Recurrentes, Seguridad y Monedas.'],['Novedad v4.3.2 · eliminación segura de cuentas','En Más → Mis cuentas y medios de pago se añadió Eliminar con confirmación. Las cuentas vinculadas a operaciones no se borran: pueden archivarse para conservar el historial.'],['Novedad v4.3 · calendario y vistas compactas','Calendario mensual interno con vencimientos de tarjetas, deudas, notas y recurrentes; movimientos y metas en filas compactas y expandibles. Se mantiene la descarga .ics.'],['Novedad v4.2.2 · Deudas compactas','La pestaña Deudas ahora tiene Me deben, Debo y Saldadas como vistas independientes; muestra filas compactas que se despliegan al tocarlas. No repite el resumen de Inicio ni altera los cálculos.'],['Novedad v4.2.1 · desplazamiento vertical','Se corrigió la interacción de las reglas de desbordamiento horizontal y vertical, especialmente para desplazarse con el dedo en pantallas móviles y tras cerrar ventanas emergentes.'],['Novedad v4.2 · respaldo y compatibilidad iOS','Nueva pantalla con vista previa y confirmación antes de restaurar un JSON, soporte de copias antiguas, preparación de ícono y manifiesto para instalación en pantalla de inicio y mejoras en controles táctiles.'],['Novedad v4.1 · integridad financiera','Nueva revisión de consistencia sin modificar datos, descarga de respaldo JSON, y anulación de transferencias y cambios como operación completa. Se protegen los movimientos de deudas y metas contra eliminación aislada.'],['Novedad v4.0 · inicio discreto y privacidad visual','El gran botón Personalizar Inicio se sustituyó por un pequeño ícono junto al mes. Un nuevo ícono de ojo oculta o muestra importes en pantalla sin cambiar registros.'],['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio toca el ícono discreto de ajustes junto al selector del mes, o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
 ];
 return back()+`<div class="c" style="background:var(--cd);color:var(--ink);border-top:4px solid var(--ac)"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Todo lo que necesitas, explicado paso a paso cuando lo necesites.</p><div class="d">Guía de la versión 4.3 · Puedes consultar los temas sin modificar tus datos.</div></div>`
 +`<div class="c"><label style="margin:0">🔎 Buscar en la guía<input id="helpSearch" type="search" placeholder="Ej. deuda, dólar, transferencia, ahorro" oninput="document.querySelectorAll('.help-topic').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(this.value.toLowerCase()))"></label></div>`
@@ -1420,9 +1544,9 @@ function pyonSaveAppearance(patch){
 }
 pyonApplyAppearance(pyonAppearance());
 
-function vMas(){if(sub==='restore')return vBackupRestore();if(sub==='revision')return vRevision();if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
- const menu=[['cal','📅','Calendario'],['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio'],['revision','🛡️','Revisar datos'],['restore','☁️','Respaldo y restauración']];
- return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">⬇️ Calendario .ics</button><button class="o" data-a="exp">⬇️ Exportar CSV</button><button class="o" data-a="calendar-open">⚙️ Elegir bancos</button><button class="o" data-a="backup-json">⬇️ Respaldo JSON</button><button class="o" data-a="restore-open">📂 Restaurar JSON</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
+function vMas(){if(sub==='data')return vDataAdmin();if(sub==='restore')return vBackupRestore();if(sub==='revision')return vRevision();if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
+ const menu=[['cal','📅','Calendario'],['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio'],['revision','🛡️','Revisar datos'],['restore','☁️','Respaldo y restauración'],['data','🗃️','Administrar datos']];
+ return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">⬇️ Calendario .ics</button><button class="o" data-a="exp">⬇️ Exportar CSV</button><button class="o" data-a="calendar-open">⚙️ Elegir bancos</button><button class="o" data-a="backup-json">⬇️ Respaldo JSON</button><button class="o" data-a="restore-open">📂 Restaurar JSON</button><button class="o" data-a="data-open">🗃️ Limpiar datos de prueba</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
 }
 
 // v4.0: Ocultar cifras visibles es una medida contra miradas casuales, NO cifrado ni bloqueo de acceso.
@@ -1570,6 +1694,9 @@ document.addEventListener('keydown',e=>{
 
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('svg .pyon-chart-action[role="button"]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+ if(a==='data-open'){tab='x';sub='data';render();return}
+ if(a==='reset-backup'){pyonResetBackupDownload();return}
+ if(a==='reset-commit'){await pyonResetCommit();return}
  if(a==='restore-open'){tab='x';sub='restore';render();return}
  if(a==='restore-cancel'){pyonRestoreStage=null;render();return}
  if(a==='restore-commit'){await pyonCommitRestore();return}
@@ -1641,8 +1768,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  else if(a==='retg'){const mt=C.metas.find(x=>x.id===v),mo=+val('ret'+v),acct=med(val('retac'+v));if(!mt||!Number.isFinite(mo)||mo<=0||mo>goalSaved(v)+0.001||!acct||acct.x||acct.k==='c'||(acct.cur||'PEN')!==(mt.cur||'PEN')){msg='Comprueba el importe pendiente en la meta y selecciona una cuenta activa de la misma moneda.';return render()}if(!await pyonConfirm('¿Liberar '+money(mo,mt.cur||'PEN')+' de esta meta hacia '+acct.n+'? Solo cambia el registro interno de PYON.','Retirar de la meta'))return;addMov({t:'a_return',f:today(),mo:Math.round(mo*100)/100,a:v,m:acct.id,cuentaId:acct.id,cur:mt.cur||'PEN',n:'Retiro de reserva: '+mt.n});msg='Dinero liberado de la meta y devuelto al disponible estimado.'}
  else if(a==='mededit'){medEd=v;sub='med'}
  else if(a==='medcancel'){medEd=null;sub='med'}
- else if(a==='medsave'){const m=C.medios.find(x=>x.id===medEd),n=val('bn'),k=val('bk');if(!m||!n){msg='Escribe el nombre de la cuenta.';return render()}if(accountMovements(m.id).length&&val('bcur')!==(m.cur||'PEN')){msg='No se puede cambiar la moneda porque la cuenta ya tiene movimientos.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';m.n=n;m.k=k;m.cur=val('bcur')==='USD'?'USD':'PEN';m.saldoInicial=val('bsi')!==''?+val('bsi'):null;m.tipoCuenta=k;m.cie=k==='c'?val('bc'):' ';m.pag=k==='c'?val('bp'):' ';medEd=null;save('cfg');msg='Cuenta actualizada. Los movimientos históricos se conservaron.'}
- else if(a==='addm'){let n=val('bn'),k=val('bk');if(!n){msg='Escribe el nombre.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';C.medios.push({id:nid(),n,k,cur:val('bcur')==='USD'?'USD':'PEN',saldoInicial:val('bsi')!==''?+val('bsi'):null,tipoCuenta:k,cie:k==='c'?val('bc'):'',pag:k==='c'?val('bp'):''});save('cfg');msg='Medio de pago agregado.'}
+ else if(a==='medsave'){const m=C.medios.find(x=>x.id===medEd),n=val('bn'),k=val('bk');if(!m||!n){msg='Escribe el nombre de la cuenta.';return render()}if(accountMovements(m.id).length&&val('bcur')!==(m.cur||'PEN')){msg='No se puede cambiar la moneda porque la cuenta ya tiene movimientos.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';m.n=n;m.k=k;m.cur=pyonAccountCurrencySelection();m.saldoInicial=val('bsi')!==''?+val('bsi'):null;m.tipoCuenta=k;m.cie=k==='c'?val('bc'):' ';m.pag=k==='c'?val('bp'):' ';medEd=null;save('cfg');msg='Cuenta actualizada. Los movimientos históricos se conservaron.'}
+ else if(a==='addm'){let n=val('bn'),k=val('bk');if(!n){msg='Escribe el nombre.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';C.medios.push({id:nid(),n,k,cur:pyonAccountCurrencySelection(),saldoInicial:val('bsi')!==''?+val('bsi'):null,tipoCuenta:k,cie:k==='c'?val('bc'):'',pag:k==='c'?val('bp'):''});save('cfg');msg='Medio de pago agregado.'}
  else if(a==='meddel'){
   const account=med(v);
   if(!account){toast('Esta cuenta ya no existe.');return}

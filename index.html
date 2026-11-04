@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PYON · v3.9 · Calendario, CSV y presupuestos</title>
+<title>PYON · v4.2 · Respaldo, restauración e iOS</title>
+<meta name="theme-color" content="#087F5B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PYON">
+<meta name="application-name" content="PYON">
+<link rel="apple-touch-icon" sizes="180x180" href="./pyon-apple-touch-icon.png">
+<link rel="manifest" href="./pyon-v4.2.webmanifest">
+
 <style>
 :root{--bg:#F4F5F1;--cd:#fff;--ink:#17231F;--mu:#5B6862;--ac:#1F6F5C;--on:#fff;--ln:#E3E6E0;--wb:#FFF1DC;--wt:#8A5200;--rd:#A63A28;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121815;--cd:#1B2420;--ink:#E8EEEA;--mu:#A5B1AA;--ac:#4FB89F;--on:#0B1411;--ln:#2C3832;--wb:#3A2A12;--wt:#F0B35A;--rd:#E58673;color-scheme:dark}}
@@ -289,6 +297,60 @@ html[data-pyon-palette="night"] .pyon-hero .k,html[data-pyon-palette="night"] .p
 .pyon-budget-empty{border:1px dashed var(--ln);padding:14px;border-radius:12px;color:var(--mu);font-size:13px}
 @media(max-width:385px){.pyon-budget-editor{grid-template-columns:minmax(0,1fr) 78px 78px;gap:5px}.pyon-budget-editor input{padding:6px}.pyon-utility-actions{grid-template-columns:1fr}}
 
+
+/* PYON v4.0: controles discretos en Inicio + modo de privacidad visual */
+.pyon-home-toolbar{display:flex;align-items:center;justify-content:space-between;gap:7px;margin:3px 0 11px;min-width:0}
+.pyon-home-toolbar>.r{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;margin:0}
+.pyon-home-toolbar>.r>b{font-size:clamp(12px,3.2vw,15px);white-space:nowrap;flex:0 1 auto}
+.pyon-home-toolbar>.r .ic{min-width:30px;min-height:34px;padding:4px 9px}
+.pyon-home-actions{display:flex;align-items:center;gap:5px;flex:0 0 auto}
+.pyon-home-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;min-height:36px;padding:0;border-radius:11px;border:1px solid var(--ln);background:var(--cd);color:var(--mu);transition:background-color .15s,border-color .15s,color .15s}
+.pyon-home-icon:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.pyon-home-icon:hover{color:var(--ac);border-color:var(--ac)}
+.pyon-home-icon[aria-pressed="true"]{color:var(--ac);border-color:var(--ac);background:var(--bg)}
+html[data-pyon-style="classic"] .pyon-home-icon{border-radius:4px}
+html[data-pyon-style="compact"] .pyon-home-icon{border-radius:8px;width:33px;height:33px;min-width:33px;min-height:33px}
+@media(max-width:350px){.pyon-home-toolbar{gap:3px}.pyon-home-actions{gap:3px}.pyon-home-icon{width:31px;height:32px;min-width:31px;min-height:32px}.pyon-home-toolbar>.r{gap:3px}.pyon-home-toolbar>.r .ic{min-width:26px;min-height:32px;padding:3px 6px}}
+@media(prefers-reduced-motion:reduce){.pyon-home-icon{transition:none}}
+
+
+/* PYON v4.1 — integridad de movimientos vinculados */
+.pyon-health-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.pyon-health-metric{background:var(--bg);border:1px solid var(--ln);border-radius:12px;padding:11px 6px;text-align:center;min-width:0}
+.pyon-health-metric b{font-size:20px;display:block;color:var(--ac);font-variant-numeric:tabular-nums}
+.pyon-health-metric span{font-size:11px;color:var(--mu);overflow-wrap:anywhere}
+.pyon-health-item{border-top:1px solid var(--ln);padding:11px 0;overflow-wrap:anywhere}
+.pyon-health-item b{display:block;margin-bottom:3px}
+.pyon-op-undo{font-size:12px;white-space:nowrap;margin-left:5px;padding:5px 8px;min-height:30px}
+.pyon-linked-label{font-size:12px;color:var(--mu);padding:0 5px;white-space:nowrap}
+@media(max-width:385px){.pyon-health-metrics{gap:5px}.pyon-health-metric{padding:9px 3px}.pyon-op-undo{font-size:11px;padding:4px}}
+
+/* v4.2: iPhone (safe area, zoom de formularios y pantallas estrechas) */
+html{-webkit-text-size-adjust:100%;min-height:100%;min-height:100dvh}
+body{min-height:100vh;min-height:100dvh;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+button,select,input,textarea{touch-action:manipulation}
+input:not([type="checkbox"]):not([type="radio"]),select,textarea{font-size:max(16px,1rem)}
+#app{padding-bottom:calc(115px + env(safe-area-inset-bottom,0px))}
+#pyon-overlay .pyon-dialog{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#pyon-overlay{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+#lock{min-height:100vh;min-height:100dvh}
+.pyon-backup-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}
+.pyon-backup-metric{background:var(--bg);border:1px solid var(--ln);border-radius:12px;padding:11px 7px;min-width:0;text-align:center}
+.pyon-backup-metric b{display:block;font-size:21px;line-height:1.3}
+.pyon-backup-metric small{display:block;font-size:11px;color:var(--mu)}
+.pyon-backup-alert{border:1px solid var(--ln);border-left:4px solid var(--ac);border-radius:11px;background:var(--bg);padding:12px;margin:10px 0}
+.pyon-backup-alert.danger{border-left-color:var(--rd)}
+.pyon-backup-file{display:block;width:100%;margin:9px 0 14px;padding:9px;border:1px dashed var(--ac);border-radius:12px;background:var(--cd);color:var(--ink);min-height:52px}
+.pyon-backup-file::file-selector-button{padding:8px 11px;background:var(--ac);color:var(--on);border:0;border-radius:9px;margin-right:8px}
+.pyon-restore-check{display:flex;align-items:flex-start;gap:10px;margin:10px 0;padding:10px;border:1px solid var(--ln);border-radius:11px;color:var(--ink);font-size:14px}
+.pyon-restore-check input{flex:0 0 22px;margin-top:2px}
+.pyon-restore-submit{width:100%;margin:12px 0}
+.pyon-restore-submit:disabled{opacity:.5;cursor:not-allowed}
+.pyon-ios-steps{counter-reset:step;padding:0;margin:10px 0;list-style:none}
+.pyon-ios-steps li{counter-increment:step;padding:9px 0 9px 37px;position:relative;border-bottom:1px solid var(--ln)}
+.pyon-ios-steps li::before{content:counter(step);position:absolute;top:9px;left:0;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1px solid var(--ln);color:var(--ac);font-weight:700}
+@media(max-width:350px){.pyon-backup-metrics{gap:5px}.pyon-backup-metric{padding:8px 3px}.pyon-backup-metric b{font-size:18px}}
+
 </style>
 </head>
 <body>
@@ -496,10 +558,10 @@ function pyonDashboardSettings(){
 }
 function pyonDashboardSave(d){try{localStorage.setItem('pyon-dashboard-v1',JSON.stringify(d))}catch(e){toast('No se pudo guardar la personalización en este dispositivo.')}render()}
 function pyonDashboardArrange(parts){const d=pyonDashboardSettings();return d.order.filter(id=>!d.hidden.includes(id)).map(id=>parts[id]||'').join('')}
-function vPersonalizarInicio(){const d=pyonDashboardSettings();return back()+`<div class="c"><h2>🏠 Personalizar Inicio</h2><p class="d">Decide qué secciones aparecen y en qué orden. Solo cambia la presentación: no elimina registros ni modifica saldos.</p><div class="pyon-dashboard-options">${d.order.map((id,i)=>{const label=PYON_DASH_SECTIONS.find(x=>x[0]===id)[1];const enabled=!d.hidden.includes(id);return `<div class="pyon-dashboard-option"><label class="pyon-dashboard-toggle"><input type="checkbox" data-dashboard-toggle="${id}" ${enabled?'checked':''}><span>${label}</span></label><div class="pyon-dashboard-arrows"><button class="o" type="button" data-a="dash-up" data-v="${id}" ${i===0?'disabled':''} aria-label="Subir ${label}">↑</button><button class="o" type="button" data-a="dash-down" data-v="${id}" ${i===d.order.length-1?'disabled':''} aria-label="Bajar ${label}">↓</button></div></div>`}).join('')}</div><button class="o" style="width:100%;margin-top:14px" type="button" data-a="dash-reset">↺ Restaurar Inicio</button><p class="d">Los cambios se aplican al volver a Inicio y quedan guardados en este navegador.</p></div>`}
+function vPersonalizarInicio(){const d=pyonDashboardSettings();return back()+`<div class="c"><h2>🏠 Personalizar Inicio</h2><p class="d">Decide qué secciones aparecen y en qué orden. Solo cambia la presentación: no elimina registros ni modifica saldos.</p><div class="pyon-dashboard-options">${d.order.map((id,i)=>{const label=PYON_DASH_SECTIONS.find(x=>x[0]===id)[1];const enabled=!d.hidden.includes(id);return `<div class="pyon-dashboard-option"><label class="pyon-dashboard-toggle"><input type="checkbox" data-dashboard-toggle="${id}" ${enabled?'checked':''}><span>${label}</span></label><div class="pyon-dashboard-arrows"><button class="o" type="button" data-a="dash-up" data-v="${id}" ${i===0?'disabled':''} aria-label="Subir ${label}">↑</button><button class="o" type="button" data-a="dash-down" data-v="${id}" ${i===d.order.length-1?'disabled':''} aria-label="Bajar ${label}">↓</button></div></div>`}).join('')}</div><button class="o" style="width:100%;margin-top:14px" type="button" data-a="dash-reset">↺ Restaurar Inicio</button><p class="d">Los cambios se aplican al volver a Inicio y quedan guardados en este navegador. Abre esta sección con el pequeño ícono de ajustes junto al mes o desde Más.</p></div>`}
 
 function vInicio(){
- const a=inM(ym),curr=['PEN','USD'];let h=saludo()+mSel()+`<div class="pyon-dashboard-edit"><button class="o" data-a="dashboard-open" type="button">⚙️ Personalizar Inicio</button></div>`;const blocks={};
+ const a=inM(ym),curr=['PEN','USD'];let h=saludo()+`<div class="pyon-home-toolbar">${mSel()}<div class="pyon-home-actions"><button class="pyon-home-icon" data-a="dashboard-open" type="button" title="Personalizar Inicio" aria-label="Personalizar Inicio"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3"/><path d="M1 14h6m2-6h6m2 8h6"/></svg></button><button id="pyon-privacy-switch" class="pyon-home-icon" data-a="privacy-toggle" type="button" title="Ocultar importes en pantalla" aria-label="Ocultar importes en pantalla" aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>`;const blocks={};
  let part='<div class="pyon-section-title">💳 Mis saldos</div><div class="pyon-mini-grid">';
  for(const c of curr){const ac=C.medios.filter(m=>!m.x&&(m.cur||'PEN')===c),total=ac.filter(m=>m.k!=='c').reduce((z,m)=>z+accountBalance(m),0),credit=ac.filter(m=>m.k==='c').reduce((z,m)=>z+accountBalance(m),0);
  part+=`<div class="pyon-mini"><div class="k">${c==='PEN'?'🇵🇪 Soles':'🇺🇸 Dólares'}</div><div class="amount">${money(total,c)}</div><div class="d">${ac.length} cuenta(s)</div>${ac.some(m=>m.k==='c')?`<details class="pyon-detail"><summary>Ver tarjetas</summary><p class="d">Saldo neto: ${money(credit,c)}</p></details>`:''}</div>`}
@@ -513,6 +575,200 @@ function vInicio(){
  blocks.accounts=part;const debts=['PEN','USD'].map(c=>{const dc=C.deudas.filter(d=>d.dir==='c'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0),dp=C.deudas.filter(d=>d.dir==='p'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0);return `<div class="r" style="padding:10px 0;border-top:1px solid var(--ln)"><b>${c}</b><span class="d">Por cobrar: ${money(dc,c)}<br>Por pagar: ${money(dp,c)}</span></div>`}).join('');
  blocks.debts=`<details class="c"><summary style="font-weight:750;cursor:pointer">🤝 Resumen de deudas</summary>${debts}</details>`;return h+pyonDashboardArrange(blocks);
 }
+
+/* PYON 4.1 — auditoría no destructiva de la información financiera. */
+const PYON_PAIRED_TYPES=['tr_out','tr_in','ex_out','ex_in'];
+function pyonLinkedType(x){return !!x && (PYON_PAIRED_TYPES.includes(x.t)||!!x.opId)}
+function pyonMovementActions(x){
+ if(pyonLinkedType(x))return x.opId
+  ?`<button type="button" class="o pyon-op-undo" data-a="op-undo" data-v="${esc(x.opId)}" title="Anular los dos movimientos juntos">↶ Anular</button>`
+  :'<span class="pyon-linked-label" title="Operación antigua incompleta: revisa la integridad de los datos">⚠ Revisar</span>';
+ if(x.deudaId||['debt_in','debt_out'].includes(x.t))return '<span class="pyon-linked-label" title="Para anular el abono ve al historial de la deuda">🔗 Deuda</span>';
+ if(x.a||['a','a_return'].includes(x.t))return '<span class="pyon-linked-label" title="Registro vinculado a una meta de ahorro">🎯 Meta</span>';
+ return `<button type="button" class="x" style="color:var(--ink)" data-a="em" data-v="${esc(x.id)}" aria-label="Editar movimiento">✎</button><button type="button" class="x" data-a="dm" data-v="${esc(x.id)}" aria-label="Eliminar movimiento">✕</button>`;
+}
+function pyonDateValid(date){
+ if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date))return false;
+ const d=new Date(date+'T12:00:00');return Number.isFinite(+d)&&pyonDateKey(d)===date;
+}
+function pyonHealthReport(){
+ const ms=all(),issues=[],seen=new Set(),accounts=new Map(C.medios.map(m=>[m.id,m]));
+ const ops=new Map(),debtPayments=new Map();
+ function warn(title,detail){issues.push({title,detail})}
+ for(const x of ms){
+  if(x.id){if(seen.has(String(x.id)))warn('Identificador repetido','Hay más de un movimiento con identificador '+x.id+'.');seen.add(String(x.id))}
+  if(!Number.isFinite(Number(x.mo))||!(Number(x.mo)>0))warn('Importe no válido','Movimiento '+(x.id||'sin ID')+' con importe vacío, cero o inválido.');
+  if(!pyonDateValid(x.f))warn('Fecha no válida','Movimiento '+(x.id||'sin ID')+' con fecha '+(x.f||'sin definir')+'.');
+  const id=x.cuentaId||x.m;
+  if(!id)warn('Movimiento sin cuenta','Un movimiento '+(x.id||'sin ID')+' no identifica la cuenta asociada.');
+  else if(!accounts.has(id))warn('Cuenta no encontrada','Un movimiento '+(x.id||'sin ID')+' apunta a una cuenta que ya no figura en la configuración.');
+  if(x.opId){const k=String(x.opId);if(!ops.has(k))ops.set(k,[]);ops.get(k).push(x)}
+  else if(PYON_PAIRED_TYPES.includes(x.t))warn('Operación sin vínculo','Movimiento '+(x.id||'sin ID')+' de transferencia o cambio que no tiene identificador de grupo.');
+  if(x.deudaId){if(!C.deudas.some(d=>d.id===x.deudaId))warn('Deuda no encontrada','Movimiento '+(x.id||'sin ID')+' vinculado a una deuda ausente.');}
+  if(x.a&&!C.metas.some(g=>g.id===x.a))warn('Meta no encontrada','Movimiento '+(x.id||'sin ID')+' de una meta que ya no existe.');
+ }
+ for(const [opId,items] of ops){
+  const types=items.map(x=>x.t),isTransfer=types.some(t=>t==='tr_out'||t==='tr_in'),isExchange=types.some(t=>t==='ex_out'||t==='ex_in');
+  const goodTypes=isTransfer&&!isExchange?types.includes('tr_out')&&types.includes('tr_in'):isExchange&&!isTransfer?types.includes('ex_out')&&types.includes('ex_in'):false;
+  if(items.length!==2||!goodTypes){warn('Operación incompleta','Transferencia o cambio '+opId+' tiene '+items.length+' movimientos; debería tener uno de salida y otro de entrada.');continue}
+  const [out,inc]=[items.find(x=>x.t.endsWith('_out')),items.find(x=>x.t.endsWith('_in'))];
+  if(out.f!==inc.f)warn('Fechas diferentes','Operación '+opId+' tiene fechas diferentes en origen y destino.');
+  if((out.cuentaId||out.m)===(inc.cuentaId||inc.m))warn('Misma cuenta en ambos lados','Operación '+opId+' usa una misma cuenta para salida y entrada.');
+  if(isTransfer&&(curOf(out)!==curOf(inc)||Math.abs(Number(out.mo)-Number(inc.mo))>.011))warn('Transferencia descuadrada','Operación '+opId+' tiene importes o monedas que no coinciden.');
+  if(isExchange&&curOf(out)===curOf(inc))warn('Cambio de moneda incorrecto','Operación '+opId+' tiene la misma moneda en ambas cuentas.');
+ }
+ for(const d of C.deudas){
+  let paid=0;
+  for(const pay of d.pagos||[]){
+   paid+=Number(pay.mo)||0;
+   const link=ms.find(x=>x.id===pay.movementId);
+   if(!link){warn('Pago sin movimiento','La deuda '+d.n+' contiene un abono sin movimiento asociado.');continue}
+   const expected=d.dir==='c'?'debt_in':'debt_out';
+   if(link.t!==expected||link.deudaId!==d.id||link.pagoId!==pay.id||Math.abs(Number(link.mo)-Number(pay.mo))>.011||curOf(link)!==(d.cur||'PEN'))warn('Pago no coincide','Un abono de '+d.n+' no coincide con el movimiento registrado en la cuenta.');
+  }
+  if(paid>Number(d.mo)+.011)warn('Deuda sobreabonada','Los abonos de '+d.n+' superan el monto original.');
+ }
+ for(const x of ms.filter(x=>['debt_in','debt_out'].includes(x.t)&&x.deudaId)){
+  const d=C.deudas.find(d=>d.id===x.deudaId);
+  if(d&&!(d.pagos||[]).some(p=>p.movementId===x.id))warn('Cobro o pago huérfano','El movimiento '+(x.id||'sin ID')+' no figura en el historial de su deuda.');
+ }
+ return {movements:ms.length,operations:ops.size,debts:C.deudas.length,issues};
+}
+function vRevision(){
+ const h=pyonHealthReport(),items=h.issues.slice(0,35);
+ return back()+`<div class="c"><h2>🛡️ Revisión de datos</h2><p class="d">Comprobaciones de coherencia entre movimientos, transferencias, cambios y deudas. No se modifica ni elimina ningún registro.</p>
+ <div class="pyon-health-metrics"><div class="pyon-health-metric"><b>${h.movements}</b><span>Movimientos</span></div><div class="pyon-health-metric"><b>${h.operations}</b><span>Operaciones vinculadas</span></div><div class="pyon-health-metric"><b>${h.issues.length}</b><span>Avisos para revisar</span></div></div>
+ <p class="d">${h.issues.length?'Se encontraron posibles inconsistencias. Guarda un respaldo y revísalas antes de corregir algo.':'No se detectaron inconsistencias en las reglas verificadas. Esto no confirma los saldos bancarios reales.'}</p>
+ <button type="button" class="b" data-a="backup-json" style="width:100%">⬇️ Descargar copia de seguridad JSON</button><button type="button" class="o" style="width:100%;margin-top:9px" data-a="restore-open">↗️ Abrir respaldo y restauración</button><p class="d">El respaldo contiene información financiera privada. Guárdalo en un lugar seguro. Para restaurar, entra en Más → Respaldo y restauración. No se importa nada sin vista previa y confirmación.</p></div>
+ <div class="c"><div class="k">Detalle de revisión</div>${items.length?items.map((x,i)=>`<div class="pyon-health-item"><b>${i+1}. ${esc(x.title)}</b><span class="d">${esc(x.detail)}</span></div>`).join(''):'<p class="d">Sin avisos en las comprobaciones realizadas. ✓</p>'}${h.issues.length>items.length?`<p class="d">Se muestran los primeros ${items.length} de ${h.issues.length} avisos.</p>`:''}</div>`;
+}
+
+// PYON v4.2: importación de archivos local. Seleccionar un JSON NO escribe datos.
+let pyonRestoreStage=null;
+function pyonRestoreSummary(payload){
+ const C0=payload.C,M0=payload.M;
+ return {accounts:C0.medios.length,debts:C0.deudas.length,goals:C0.metas.length,movements:Object.values(M0).reduce((a,b)=>a+b.length,0),years:Object.keys(M0).length,pin:!!C0.pin};
+}
+function pyonValidateBackup(parsed){
+ if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))throw new Error('El archivo no contiene un respaldo válido de PYON.');
+ if(parsed.format&&parsed.format!=='PYON-respaldo')throw new Error('El archivo tiene un formato desconocido.');
+ if(!parsed.C||typeof parsed.C!=='object'||Array.isArray(parsed.C)||!parsed.M||typeof parsed.M!=='object'||Array.isArray(parsed.M))throw new Error('Faltan las secciones C y M del respaldo.');
+ const c=parsed.C,m=parsed.M;
+ if(!Array.isArray(c.medios)||!Array.isArray(c.cats))throw new Error('Faltan las listas de cuentas o categorías del respaldo.');
+ const arrays=['medios','cats','deudas','metas','years','frec','rec','notas'];
+ for(const k of arrays){if(c[k]!==undefined&&!Array.isArray(c[k]))throw new Error('La sección '+k+' no es una lista válida.');}
+ for(const k of ['medios','cats','deudas','metas','frec','rec','notas']){
+  if((c[k]||[]).some(x=>!x||typeof x!=='object'||Array.isArray(x)))throw new Error('La sección '+k+' contiene registros inválidos.');
+ }
+ if(c.medios.some(x=>!x.id||typeof x.id!=='string'||!x.n||typeof x.n!=='string'))throw new Error('El respaldo contiene cuentas sin identificador o nombre.');
+ if(c.cats.some(x=>typeof x.n!=='string'))throw new Error('El respaldo contiene una categoría inválida.');
+ if(c.pres!==undefined&&(typeof c.pres!=='object'||c.pres===null||Array.isArray(c.pres)))throw new Error('El apartado de presupuestos no es válido.');
+ const cleanM=Object.create(null);let count=0;
+ for(const [y,rows] of Object.entries(m)){
+  if(!/^\d{4}$/.test(y)||!Array.isArray(rows))throw new Error('Los movimientos deben estar agrupados por año.');
+  if(rows.some(x=>!x||typeof x!=='object'||Array.isArray(x)||typeof x.f!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(x.f)||typeof x.t!=='string'||!Number.isFinite(Number(x.mo))))throw new Error('Existen movimientos con estructura inválida en '+y+'.');
+  if(rows.some(x=>x.f.slice(0,4)!==y))throw new Error('Hay movimientos guardados en un año diferente al indicado en su fecha.');
+  count+=rows.length;
+  if(count>100000)throw new Error('El respaldo supera el límite de 100 000 movimientos; no se modificó nada.');
+  cleanM[y]=rows.map(x=>Object.assign({},x));
+ }
+ const cleanC={
+  medios:c.medios.map(x=>({...x})),cats:c.cats.map(x=>({...x})),deudas:(c.deudas||[]).map(x=>({...x})),metas:(c.metas||[]).map(x=>({...x})),
+  years:Object.keys(cleanM).sort(),frec:(c.frec||[]).map(x=>({...x})),rec:(c.rec||[]).map(x=>({...x})),notas:(c.notas||[]).map(x=>({...x})),
+  pres:JSON.parse(JSON.stringify(c.pres||{})),nombre:typeof c.nombre==='string'?c.nombre:'',tc:Number.isFinite(Number(c.tc))?Number(c.tc):0,
+  pin:c.pin&&typeof c.pin==='object'&&typeof c.pin.s==='string'&&typeof c.pin.h==='string'?{s:c.pin.s,h:c.pin.h}:null,
+  schemaVersion:4
+ };
+ cleanC.medios.forEach(ac=>{if(!ac.cur)ac.cur='PEN';if(ac.saldoInicial===undefined)ac.saldoInicial=null;if(!ac.tipoCuenta)ac.tipoCuenta=ac.k||'d';});
+ for(const rows of Object.values(cleanM))rows.forEach(x=>{if(!x.cuentaId&&x.m)x.cuentaId=x.m;if(!x.cur)x.cur='PEN';});
+ const pref=parsed.preferencias&&typeof parsed.preferencias==='object'?parsed.preferencias:null;
+ return {C:cleanC,M:cleanM,preferences:pref,originalVersion:String(parsed.version||parsed.v||'anterior')};
+}
+function pyonRestoreMetrics(d){return `<div class="pyon-backup-metrics"><div class="pyon-backup-metric"><b>${d.accounts}</b><small>Cuentas</small></div><div class="pyon-backup-metric"><b>${d.movements}</b><small>Movimientos</small></div><div class="pyon-backup-metric"><b>${d.debts}</b><small>Deudas</small></div></div>`;}
+function vBackupRestore(){
+ const current=pyonRestoreSummary({C,M}),stage=pyonRestoreStage;
+ return back()+`<div class="c"><h2>☁️ Respaldo y restauración</h2><p class="d">Recupera tus datos al cambiar de teléfono o reinstalar PYON. Todo el proceso de lectura del archivo ocurre en este dispositivo.</p>
+ <div class="k">Datos actuales de esta instalación</div>${pyonRestoreMetrics(current)}
+ <button type="button" class="b" data-a="backup-json" style="width:100%">⬇️ 1. Descargar respaldo de mis datos actuales</button>
+ <div class="pyon-backup-alert"><strong>Importante</strong><p class="d" style="margin:4px 0 0">Guarda el archivo JSON original en un lugar privado, por ejemplo en Archivos de iPhone. El modo de privacidad visual no cifra los respaldos.</p></div></div>
+ <div class="c"><h3>📂 2. Elegir archivo para restaurar</h3><p class="d">Admite respaldos JSON de PYON v4.1 y anteriores, incluido el formato antiguo con campos v, C y M. No selecciones un CSV ni un calendario .ics.</p>
+ <label for="pyon-restore-file">Archivo JSON de PYON</label><input class="pyon-backup-file" id="pyon-restore-file" type="file" accept=".json,application/json" aria-label="Elegir archivo JSON de PYON">
+ ${stage?`<div class="pyon-backup-alert"><strong>✓ Archivo validado: ${esc(stage.name)}</strong><p class="d">Versión del respaldo: ${esc(stage.data.originalVersion)} · ${stage.data.C.metas.length} metas · ${Object.keys(stage.data.M).length} años.</p>${pyonRestoreMetrics(pyonRestoreSummary(stage.data))}<p class="d">Actualmente hay ${current.movements} movimientos; después habría ${pyonRestoreSummary(stage.data).movements}. ${stage.data.C.pin?'El respaldo tiene PIN; necesitarás conocerlo al volver a entrar.':'Este respaldo no tiene PIN de bloqueo.'}</p></div>
+ <div class="pyon-backup-alert danger"><strong>⚠️ Se reemplazarán tus datos actuales</strong><p class="d" style="margin:4px 0 0">No se mezclarán cuentas ni movimientos con los de este dispositivo. Los datos originales solo se recuperan con su respaldo anterior.</p></div>
+ <label class="pyon-restore-check"><input type="checkbox" id="pyon-restore-confirm"><span>He descargado y guardado una copia de mis datos actuales. Entiendo que al restaurar los reemplazaré.</span></label>
+ <label class="pyon-restore-check"><input type="checkbox" id="pyon-restore-prefs" checked><span>Restaurar también el tema, la pantalla de inicio y la configuración del calendario (si se incluyeron en el JSON).</span></label>
+ <button class="b pyon-restore-submit" type="button" data-a="restore-commit" id="pyon-restore-commit" disabled>3. Confirmar restauración</button>
+ <button class="o" type="button" data-a="restore-cancel" style="width:100%">Cancelar / elegir otro archivo</button>`:
+ '<p class="d">Al elegir un archivo aparecerá una vista previa antes de confirmar. Ningún dato cambia en este paso.</p>'}</div>
+ <div class="c"><h3>📱 Instalación en iPhone</h3><ol class="pyon-ios-steps"><li>Publica los archivos de PYON en GitHub Pages (HTTPS).</li><li>Abre la dirección en <strong>Safari</strong> del iPhone.</li><li>Toca Compartir y selecciona <strong>Agregar a Inicio</strong>; activa <strong>Abrir como app web</strong> si aparece.</li><li>Abre PYON desde el nuevo ícono. Si aparece vacío, utiliza el respaldo JSON para recuperar tus registros.</li></ol><p class="d">La instalación de la pantalla de inicio puede usar un almacenamiento separado del de Safari. Mantén respaldos JSON frecuentes: los datos locales no se sincronizan automáticamente entre equipos. Para probar una versión nueva, no elimines la anterior sin respaldo.</p></div>`;
+}
+async function pyonReadBackupFile(file){
+ pyonRestoreStage=null;
+ if(!file)return;
+ if(!/\.json$/i.test(file.name||'')){toast('Selecciona un archivo JSON de PYON.');render();return}
+ if(file.size>12*1024*1024){toast('Archivo demasiado grande (máximo 12 MB).');render();return}
+ try{
+  const raw=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('No se pudo leer el archivo.'));reader.readAsText(file,'UTF-8')});
+  const data=pyonValidateBackup(JSON.parse(String(raw)));
+  pyonRestoreStage={name:file.name,data};
+  render();toast('Respaldo validado. Revisa el resumen antes de confirmar.');
+ }catch(e){render();toast('Respaldo rechazado: '+(e?.message||'JSON no válido.'))}
+}
+async function pyonCommitRestore(){
+ if(!pyonRestoreStage){toast('Selecciona primero un respaldo JSON.');return}
+ if(!$('#pyon-restore-confirm')?.checked){toast('Debes confirmar que guardaste tus datos actuales.');return}
+ if(db){toast('La restauración segura está disponible en modo local. No se puede reemplazar una base de datos en la nube desde esta pantalla.');return}
+ const includePrefs=!!$('#pyon-restore-prefs')?.checked;
+ const stage=pyonRestoreStage,data=stage.data;
+ if(!await pyonConfirm('¿Reemplazar los datos de esta instalación con el archivo '+stage.name+'? Esta acción no se puede deshacer sin el respaldo anterior.','Restaurar datos financieros'))return;
+ try{
+  // Se escribe primero y se cambia el estado visual solo si el almacenamiento tuvo éxito.
+  const prepared=JSON.stringify({C:data.C,M:data.M});
+  localStorage.setItem('fin1',prepared);
+  clearTimeout(tm);pend.clear();C=data.C;M=data.M;
+  if(includePrefs&&data.preferences){
+   const ps=data.preferences;
+   try{
+    if(ps.apariencia&&typeof ps.apariencia==='object')localStorage.setItem('pyon-appearance-v1',JSON.stringify(ps.apariencia));
+    if(ps.inicio&&typeof ps.inicio==='object')localStorage.setItem('pyon-dashboard-v1',JSON.stringify(ps.inicio));
+    if(ps.calendario&&typeof ps.calendario==='object')localStorage.setItem('pyon-calendar-v1',JSON.stringify(ps.calendario));
+   }catch(e){toast('Datos recuperados, pero algunas preferencias no pudieron guardarse.');}
+  }
+  pyonApplyAppearance(pyonAppearance());
+  pyonRestoreStage=null;tab='i';sub='';ed=null;yr=today().slice(0,4);ym=today().slice(0,7);
+  render();if(C.pin)lock();
+  toast('Restauración completada: '+pyonRestoreSummary({C,M}).movements+' movimientos recuperados.');
+ }catch(err){toast('No se modificaron los datos: el navegador no pudo guardar el respaldo. Comprueba el espacio disponible.');}
+}
+
+function pyonBackupJSON(){
+ try{
+  const blob=JSON.stringify({format:'PYON-respaldo',version:'4.2',fechaExportacion:new Date().toISOString(),C,M,preferencias:{apariencia:pyonAppearance(),inicio:pyonDashboardSettings(),calendario:pyonCalendarSettings()}},null,2);
+  if(pyonDownloadFile('PYON-respaldo-'+today()+'.json',blob,'application/json;charset=utf-8'))toast('Copia JSON descargada. Guárdala en privado.');
+ }catch(e){toast('No se pudo preparar el respaldo JSON. Reintenta.');}
+}
+async function pyonUndoOperation(opId){
+ if(!opId)return;
+ const rows=all().filter(x=>String(x.opId||'')===String(opId));
+ if(!rows.length){toast('La operación ya no está disponible.');return}
+ const kinds=new Set(rows.map(x=>x.t));
+ const title=kinds.has('ex_out')||kinds.has('ex_in')?'Anular cambio de moneda':'Anular transferencia';
+ const warning=rows.length===2?'Se eliminarán los movimientos de origen y destino juntos.':'Esta operación parece incompleta ('+rows.length+' registro/s). Se eliminarán únicamente los registros que aún existen.';
+ if(!await pyonConfirm(warning+' Esta acción solo modifica los registros internos de PYON.',''+title))return;
+ const removed=[];
+ for(const year of Object.keys(M)){
+  const group=M[year];if(!Array.isArray(group))continue;
+  for(let i=group.length-1;i>=0;i--){if(String(group[i].opId||'')===String(opId)){removed.push({year,index:i,mov:group.splice(i,1)[0]});save(year)}}
+ }
+ if(!removed.length){toast('No se encontraron registros para anular.');return}
+ render();toast('Operación anulada: '+removed.length+' movimiento(s).','Deshacer',()=>{
+  for(const item of removed.sort((a,b)=>a.year.localeCompare(b.year)||a.index-b.index)){
+   (M[item.year]=M[item.year]||[]).splice(Math.min(item.index,M[item.year].length),0,item.mov);save(item.year);
+  }
+  render();toast('Operación restaurada.');
+ });
+}
+
 const PYON_EXTRA_MOVEMENT_LABELS={debt_in:'Cobro de préstamo',debt_out:'Pago de préstamo',tr_in:'Transferencia recibida',tr_out:'Transferencia enviada',ex_in:'Cambio de moneda recibido',ex_out:'Cambio de moneda enviado',a_return:'Retiro de meta',a:'Aporte a meta'};
 function pyonMovementLabel(x){return TN[x.t]||PYON_EXTRA_MOVEMENT_LABELS[x.t]||'Movimiento registrado'}
 function pyonMovementSign(x){return ['i','debt_in','tr_in','ex_in','a_return'].includes(x.t)?'+':'−'}
@@ -522,7 +778,7 @@ function vMovs(){const e=ed?all().find(x=>x.id===ed):null;if(e)fT=e.t;
  if(!ms.length)h+=`<div class="d">${fT==='p'?'Primero agrega una tarjeta de crédito':'Primero agrega un medio de pago'} en Más → Medios de pago.</div></div>`;
  else h+=`<label>Monto<input id="mo" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e?e.mo:''}"></label><label>${fT==='p'?'Tarjeta que pagas':'Cuenta o medio de pago'}<select id="md">${ms.map(m=>`<option value="${m.id}"${e&&e.m===m.id?' selected':''}>${KE[m.k]} ${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="accountCurrencyHint" style="margin-top:4px">Moneda según la cuenta.</div><label>Tipo de cambio de referencia (opcional)<input id="tc" type="number" inputmode="decimal" step="0.001" min="0" value="${e&&e.tc?e.tc:C.tc||''}" placeholder="Solo informativo"></label>`+(fT==='g'?`<label>Categoría<select id="ct">${cs.map(c=>`<option value="${esc(c.n)}"${e&&e.c===c.n?' selected':''}>${ce(c.n)} ${esc(c.n)}</option>`).join('')}</select></label><label class="chk"><input type="checkbox" id="im"${e&&e.imp?' checked':''}>Marcar como imprevisto</label>`+(e?'':`<label class="chk" style="color:var(--ink);background:var(--bg)"><input type="checkbox" id="fr">Guardar como gasto frecuente</label>`):'')+`<label>Fecha<input id="fe" type="date" value="${e?e.f:today()}"></label><label>Nota<input id="no" placeholder="Opcional" value="${esc(e?e.n:'')}"></label><div class="r" style="margin-top:12px"><button class="b" data-a="add" style="flex:1">${e?'Guardar cambios':'Guardar'}</button>${e?'<button class="o" data-a="ce">Cancelar</button>':''}</div></div>`;
  const L=inM(ym).sort((a,b)=>a.f<b.f?1:-1);
- return h+`<div class="c"><div class="k">Movimientos del mes</div><input id="q" placeholder="🔍 Buscar por nota, categoría o banco" style="margin-top:8px">`+(L.length?L.map(x=>`<div class="r mv" data-s="${esc((pyonMovementLabel(x)+' '+(x.c||'')+' '+(x.m?mn(x.m):'')+' '+(x.n||'')).toLowerCase())}" style="border-top:1px solid var(--ln);padding:6px 0"><div><div>${x.c?ce(x.c)+' ':''}${esc(pyonMovementLabel(x))}${x.c?' · '+esc(x.c):''}${x.imp?' · imprevisto':''}</div><div class="d">${x.f} · ${curOf(x)}${x.m?' · '+esc(mn(x.m)):''}${x.a?' · '+esc((C.metas.find(m=>m.id===x.a)||{}).n):''}${x.n?' · '+esc(x.n):''}</div></div><div style="display:flex;align-items:center"><b style="color:${x.t==='i'?'var(--ac)':'inherit'}">${pyonMovementSign(x)}${money(x.mo,curOf(x))}</b>${x.t==='a'||x.deudaId?'':`<button class="x" style="color:var(--ink)" data-a="em" data-v="${x.id}" aria-label="Editar movimiento">✎</button>`}${x.deudaId?`<span class="d" title="Para anular este cobro o pago, ve a Deudas → Historial de pagos">🔗</span>`:`<button class="x" data-a="dm" data-v="${x.id}" aria-label="Eliminar movimiento">✕</button>`}</div></div>`).join(''):'<div class="d" style="margin-top:8px">Sin movimientos en este mes. ¡Anota el primero! 🐰</div>')+`</div>`}
+ return h+`<div class="c"><div class="k">Movimientos del mes</div><input id="q" placeholder="🔍 Buscar por nota, categoría o banco" style="margin-top:8px">`+(L.length?L.map(x=>`<div class="r mv" data-s="${esc((pyonMovementLabel(x)+' '+(x.c||'')+' '+(x.m?mn(x.m):'')+' '+(x.n||'')).toLowerCase())}" style="border-top:1px solid var(--ln);padding:6px 0"><div><div>${x.c?ce(x.c)+' ':''}${esc(pyonMovementLabel(x))}${x.c?' · '+esc(x.c):''}${x.imp?' · imprevisto':''}</div><div class="d">${x.f} · ${curOf(x)}${x.m?' · '+esc(mn(x.m)):''}${x.a?' · '+esc((C.metas.find(m=>m.id===x.a)||{}).n):''}${x.n?' · '+esc(x.n):''}</div></div><div style="display:flex;align-items:center"><b style="color:${x.t==='i'?'var(--ac)':'inherit'}">${pyonMovementSign(x)}${money(x.mo,curOf(x))}</b>${pyonMovementActions(x)}</div></div>`).join(''):'<div class="d" style="margin-top:8px">Sin movimientos en este mes. ¡Anota el primero! 🐰</div>')+`</div>`}
 function vMon(){return back()+`<div class="c"><div class="k">Tipo de cambio</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">PEN y USD se muestran por separado. Este valor es informativo y no convierte saldos ni movimientos anteriores.</p></details><label>Soles por cada US$ 1<input id="tcs" type="number" inputmode="decimal" step="0.001" min="0" value="${C.tc||''}"></label><button class="b" data-a="tcs" style="width:100%;margin-top:12px">Guardar</button></div>`}
 function vSeg(){return back()+(C.pin?`<div class="c"><div class="k">Bloqueo con PIN</div><p>El bloqueo está <b>activado</b>: la app pide el PIN al abrirla y después de un minuto fuera de ella.</p><label>Escribe tu PIN para desactivarlo<input id="pc" type="password" inputmode="numeric" maxlength="6"></label><button class="b" data-a="pof" style="width:100%;margin-top:12px">Desactivar bloqueo</button></div>`:`<div class="c"><div class="k">Bloqueo con PIN</div><p class="d">Es opcional: tú decides si lo activas. Es una barrera de comodidad para que nadie curiosee tu celular; no reemplaza la seguridad de tu cuenta de Claude.</p><label>Nuevo PIN (4 a 6 números)<input id="p1" type="password" inputmode="numeric" maxlength="6"></label><label>Repite el PIN<input id="p2" type="password" inputmode="numeric" maxlength="6"></label><button class="b" data-a="pon" style="width:100%;margin-top:12px">Activar bloqueo</button></div>`)+`<div class="c d">Si olvidas el PIN, avísame y te ayudo a quitarlo.</div>`}
 const sha=async t=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)))].map(x=>x.toString(16).padStart(2,'0')).join('');
@@ -609,6 +865,9 @@ function vAnual(){
 }
 function vAyuda(){
 const sections=[
+['📱','Respaldo, restauración e iPhone · v4.2','Transferencia de datos con revisión previa e instrucciones para iOS.',[['Descargar respaldo','En Más → Respaldo y restauración descarga el JSON completo de tu instalación actual. Guárdalo fuera de la aplicación y en un lugar privado.'],['Elegir archivo','Selecciona el archivo JSON. PYON revisa su estructura y muestra cantidad de cuentas, deudas y movimientos sin modificar datos existentes.'],['Confirmación','Después de verificar las cifras, marca que guardaste tu respaldo actual y pulsa Confirmar restauración. Debes aceptar una segunda confirmación. La restauración reemplaza, no mezcla, los datos actuales.'],['Compatibilidad','Se admite el formato PYON-respaldo y el respaldo antiguo con v, C y M. Los archivos CSV o .ics no son copias recuperables.'],['Seguridad','La importación se realiza en el dispositivo y está disponible en el modo local. No se restauran archivos automáticamente en nube conectada. Conoce el PIN si el respaldo incluye uno.'],['Instalar en iPhone','Publica el HTML y los archivos de ícono y manifiesto. En Safari, abre PYON por HTTPS → Compartir → Agregar a Inicio; activa Abrir como app web cuando aparezca.'],['Safari y pantalla de inicio','El almacenamiento de Safari y el de la app instalada pueden ser independientes. Si faltan los datos, usa el JSON. Sin sincronización, las modificaciones en un dispositivo no aparecen automáticamente en otro.'],['Alcance de pruebas','Las pruebas automatizadas emulan iPhone en Chromium; no sustituyen una prueba real en Safari iOS. Realiza un respaldo antes de instalar o actualizar.']]],
+['🛡️','Integridad financiera · v4.1','Verificaciones que no modifican tus datos.',[['Dónde encontrarla','En Más → Revisar datos, consulta si hay movimientos o vínculos que requieren atención.'],['Transferencias y cambio','Cada transferencia o cambio crea un registro de salida y otro de entrada. Ahora se anulan conjuntamente desde Movimientos o Más → Transferencias → Historial.'],['Deudas y metas','Para anular cobros o pagos usa el historial de Deudas. Los movimientos de metas están protegidos contra ediciones o eliminaciones aisladas.'],['Respaldos','En Más → Herramientas o Revisar datos puedes descargar una copia JSON de cuentas, movimientos y preferencias. No es un archivo para Google Calendar ni un CSV. Guárdalo en privado.'],['Alcance','Un diagnóstico sin avisos no significa que los saldos coincidan con el banco. PYON no corrige registros antiguos automáticamente.']]],
+['👁️','Inicio discreto y privacidad · v4.0','Más espacio para tus finanzas y control visual de importes.',[['Personalizar Inicio','El botón grande se reemplazó por un ícono pequeño de ajustes, situado junto al mes en Inicio. También está en Más → Personalizar Inicio.'],['Ocultar y mostrar','Toca el ícono del ojo junto al mes para ocultar los montos visibles. Tócalo nuevamente para mostrarlos. La preferencia dura durante la sesión de la pestaña.'],['Alcance y límites','Solo oculta visualmente importes mostrados como S/ o US$. No cifra los datos, no bloquea el acceso, no oculta valores dentro de los formularios ni afecta las descargas, respaldos o movimientos. Usa el PIN de PYON y la seguridad de tu dispositivo para proteger el acceso.'],['Compatibilidad','El diseño conserva los estilos Clásico, Moderno y Compacto, así como las cuatro paletas de colores.']]],
 ['📅','Calendario multibanco · v3.9','Descarga .ics nativa y recordatorios de varios bancos.',[['Todos los bancos','En Inicio pulsa Calendario para descargar todas las tarjetas seleccionadas, con sus fechas de pago independientes.'],['Elegir bancos','En Más → Calendario puedes marcar o desmarcar cada tarjeta, incluir deudas y notas, y elegir 3, 6 o 12 meses.'],['Alertas anticipadas','Se crean eventos separados a las 9:00 para el vencimiento y 10, 5, 3 y 1 días antes cuando caigan dentro del futuro.'],['Google Calendar','En una computadora abre Configuración → Importar y exportar → Importar, selecciona el archivo .ics, elige calendario y confirma. Si importas el mismo archivo varias veces podrías generar duplicados; revisa las notificaciones.'],['Limitaciones','Los archivos .ics no se sincronizan. Cuando cambies fechas de pago o agregues tarjetas deberás exportar e importar otra vez. No se realizan pagos bancarios.']]],
 ['⬇️','Exportar CSV · v3.9','Descarga directa sin depender de otros servicios.',[['Dónde','En Más → Herramientas pulsa Exportar CSV. Se descarga un archivo con tus movimientos para abrirlo en Excel o Google Sheets.'],['Seguridad','El archivo contiene datos financieros. Guárdalo en un lugar privado; es diferente del respaldo completo JSON.']]],
 ['🎯','Presupuestos visuales · v3.9','Consulta avances con alertas al 80% y al 100%.',[['Configurar','En Más → Presupuestos define límites mensuales por categoría y moneda.'],['Inicio','Puedes mostrar u ocultar la tarjeta Presupuestos desde Personalizar Inicio.'],['Cálculos','Solo se suman gastos ordinarios que ya registraste. Los presupuestos de PEN y USD se calculan por separado.'],['Alertas','Las alertas son visuales dentro de PYON, no notificaciones automáticas del teléfono.']]],
@@ -657,15 +916,15 @@ const sections=[
 ['Privacidad','Estas ventanas funcionan dentro de PYON. No son anuncios ni abren sitios externos.']]],
 ['🧪','Novedades y próximas mejoras','Conoce qué está disponible y qué está pendiente.',[
 ['Disponible en esta versión','Cuentas PEN/USD, saldos estimados por moneda, transferencias, cambio bidireccional, deudas con abonos y presupuestos por moneda.'],
-['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: próximo paso','Aún no está disponible. La v3.6 se plantea para preguntas sencillas escritas y procesadas localmente; un asistente conversacional avanzado requerirá un diseño de privacidad y seguridad.'],['En desarrollo','Proyecciones avanzadas, consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
-['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio pulsa Personalizar Inicio o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
+['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: pendiente','Todavía no está disponible. Una versión futura incorporará preguntas sencillas procesadas localmente; el asistente conversacional avanzado requerirá revisión de privacidad y costes.'],['En desarrollo','Proyecciones avanzadas, consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
+['Novedad v4.2 · respaldo y compatibilidad iOS','Nueva pantalla con vista previa y confirmación antes de restaurar un JSON, soporte de copias antiguas, preparación de ícono y manifiesto para instalación en pantalla de inicio y mejoras en controles táctiles.'],['Novedad v4.1 · integridad financiera','Nueva revisión de consistencia sin modificar datos, descarga de respaldo JSON, y anulación de transferencias y cambios como operación completa. Se protegen los movimientos de deudas y metas contra eliminación aislada.'],['Novedad v4.0 · inicio discreto y privacidad visual','El gran botón Personalizar Inicio se sustituyó por un pequeño ícono junto al mes. Un nuevo ícono de ojo oculta o muestra importes en pantalla sin cambiar registros.'],['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio toca el ícono discreto de ajustes junto al selector del mes, o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
 ];
-return back()+`<div class="c" style="background:var(--cd);color:var(--ink);border-top:4px solid var(--ac)"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Todo lo que necesitas, explicado paso a paso cuando lo necesites.</p><div class="d">Guía de la versión 3.8 · Puedes consultar los temas sin modificar tus datos.</div></div>`
+return back()+`<div class="c" style="background:var(--cd);color:var(--ink);border-top:4px solid var(--ac)"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Todo lo que necesitas, explicado paso a paso cuando lo necesites.</p><div class="d">Guía de la versión 4.2 · Puedes consultar los temas sin modificar tus datos.</div></div>`
 +`<div class="c"><label style="margin:0">🔎 Buscar en la guía<input id="helpSearch" type="search" placeholder="Ej. deuda, dólar, transferencia, ahorro" oninput="document.querySelectorAll('.help-topic').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(this.value.toLowerCase()))"></label></div>`
 +sections.map(([icon,title,desc,items],i)=>`<details class="c help-topic" ${i===0?'open':''} style="margin-bottom:10px"><summary style="cursor:pointer;list-style-position:inside;font-weight:750;font-size:16px;padding:5px 0">${icon} ${title}</summary><p class="d" style="margin:8px 0">${desc}</p>${items.map(([h,t])=>`<div style="border-top:1px solid var(--ln);padding:10px 2px"><b>${h}</b><p style="margin:4px 0;line-height:1.55">${t}</p></div>`).join('')}</details>`).join('')
 +`<div class="c" style="border-left:4px solid var(--ac)"><b>💚 Consejo PYON</b><p style="margin-bottom:0">Anota tus movimientos con frecuencia, verifica tus saldos y realiza un respaldo antes de instalar otra versión.</p></div>`;
 }
-function vOps(){const ac=C.medios.filter(m=>!m.x&&m.k!=='c');const opts=(exclude)=>ac.filter(m=>m.id!==exclude).map(m=>`<option value="${m.id}">${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('');return back()+`<div class="c"><div class="k">Transferencia entre mis cuentas</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">Mueve dinero entre cuentas de la misma moneda. No cuenta como ingreso ni gasto.</p></details><label>Cuenta de origen<select id="trsrc">${opts()}</select></label><label>Cuenta de destino<select id="trdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><label>Importe transferido<input id="trmo" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00"></label><label>Fecha<input id="trdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="trnote" placeholder="Ej. Transferencia entre ahorros"></label><button class="b" data-a="transfer" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Registrar transferencia</button></div><div class="c"><div class="k">Cambio de moneda</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">PYON estima el cambio y tú confirmas cuánto recibiste. Solo registra operaciones ya realizadas.</p></details><label>¿Qué operación realizaste?</label><div class="seg"><button type="button" class="on" data-a="exdir" data-v="PEN-USD" id="exdir1">Soles → dólares</button><button type="button" data-a="exdir" data-v="USD-PEN" id="exdir2">Dólares → soles</button></div><label>Cuenta de origen<select id="exsrc">${opts()}</select></label><label>Cuenta de destino<select id="exdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="exaccountHint" style="margin-top:5px">Selecciona cuentas con monedas diferentes.</div><label>Entidad donde hiciste el cambio<select id="exprovider"><option>BCP</option><option>Interbank</option><option>Scotiabank</option><option>BBVA</option><option>BanBif</option><option>Casa de cambio</option><option>Otra</option></select></label><label>Importe que entregaste (<span id="exfromcur">PEN</span>)<input id="exout" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 1000.00"></label><label>Tipo de cambio (S/ por US$ 1)<input id="extrate" type="number" min="0.0001" step="0.0001" inputmode="decimal" placeholder="Ej. 3.70"></label><div class="r" style="margin-top:7px"><span class="d">Puedes consultar una referencia de mercado.</span><button class="o" type="button" data-a="exquote">Consultar tipo de cambio</button></div><label>Comisión en moneda de origen (opcional)<input id="exfee" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label><div class="c" style="background:var(--bg);margin:12px 0 0;padding:12px"><div class="k">Importe aproximado que recibirías</div><div style="font-size:25px;font-weight:700;color:var(--ac);margin:5px 0" id="expreview">—</div><div class="d" id="exformula">Completa el importe y el tipo de cambio.</div></div><label>Importe realmente recibido (<span id="extocur">USD</span>)<input id="exin" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Se calcula automáticamente; puedes corregirlo"></label><label>Fecha<input id="exdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="exnote" placeholder="Ej. Cambio realizado por banca móvil"></label><button class="b" data-a="exchange" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Confirmar y registrar cambio</button><p class="d" style="margin-top:9px">La consulta es una referencia general, no una oferta del banco. El registro solo actualiza tu control personal; PYON no realiza operaciones bancarias.</p></div><div class="c"><div class="k">Historial de operaciones</div>${all().filter(x=>x.opId&&['tr_out','ex_out'].includes(x.t)).sort((a,b)=>b.f.localeCompare(a.f)).slice(0,20).map(x=>{const dest=all().find(y=>y.opId===x.opId&&y.id!==x.id);return `<div style="padding:9px 0;border-top:1px solid var(--ln)"><b>${x.t==='tr_out'?'Transferencia':'Cambio de moneda'}</b><div class="d">${esc(med(x.m)?.n||'Cuenta')} → ${esc(med(dest?.m)?.n||'Cuenta')} · ${esc(x.f)}</div><div>${money(x.mo,med(x.m)?.cur)} → ${dest?money(dest.mo,med(dest.m)?.cur):'—'}</div></div>`}).join('')||'<div class="d">Aún no hay operaciones registradas.</div>'}</div>`}
+function vOps(){const ac=C.medios.filter(m=>!m.x&&m.k!=='c');const opts=(exclude)=>ac.filter(m=>m.id!==exclude).map(m=>`<option value="${m.id}">${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('');return back()+`<div class="c"><div class="k">Transferencia entre mis cuentas</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">Mueve dinero entre cuentas de la misma moneda. No cuenta como ingreso ni gasto.</p></details><label>Cuenta de origen<select id="trsrc">${opts()}</select></label><label>Cuenta de destino<select id="trdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><label>Importe transferido<input id="trmo" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00"></label><label>Fecha<input id="trdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="trnote" placeholder="Ej. Transferencia entre ahorros"></label><button class="b" data-a="transfer" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Registrar transferencia</button></div><div class="c"><div class="k">Cambio de moneda</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">PYON estima el cambio y tú confirmas cuánto recibiste. Solo registra operaciones ya realizadas.</p></details><label>¿Qué operación realizaste?</label><div class="seg"><button type="button" class="on" data-a="exdir" data-v="PEN-USD" id="exdir1">Soles → dólares</button><button type="button" data-a="exdir" data-v="USD-PEN" id="exdir2">Dólares → soles</button></div><label>Cuenta de origen<select id="exsrc">${opts()}</select></label><label>Cuenta de destino<select id="exdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="exaccountHint" style="margin-top:5px">Selecciona cuentas con monedas diferentes.</div><label>Entidad donde hiciste el cambio<select id="exprovider"><option>BCP</option><option>Interbank</option><option>Scotiabank</option><option>BBVA</option><option>BanBif</option><option>Casa de cambio</option><option>Otra</option></select></label><label>Importe que entregaste (<span id="exfromcur">PEN</span>)<input id="exout" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 1000.00"></label><label>Tipo de cambio (S/ por US$ 1)<input id="extrate" type="number" min="0.0001" step="0.0001" inputmode="decimal" placeholder="Ej. 3.70"></label><div class="r" style="margin-top:7px"><span class="d">Puedes consultar una referencia de mercado.</span><button class="o" type="button" data-a="exquote">Consultar tipo de cambio</button></div><label>Comisión en moneda de origen (opcional)<input id="exfee" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label><div class="c" style="background:var(--bg);margin:12px 0 0;padding:12px"><div class="k">Importe aproximado que recibirías</div><div style="font-size:25px;font-weight:700;color:var(--ac);margin:5px 0" id="expreview">—</div><div class="d" id="exformula">Completa el importe y el tipo de cambio.</div></div><label>Importe realmente recibido (<span id="extocur">USD</span>)<input id="exin" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Se calcula automáticamente; puedes corregirlo"></label><label>Fecha<input id="exdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="exnote" placeholder="Ej. Cambio realizado por banca móvil"></label><button class="b" data-a="exchange" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Confirmar y registrar cambio</button><p class="d" style="margin-top:9px">La consulta es una referencia general, no una oferta del banco. El registro solo actualiza tu control personal; PYON no realiza operaciones bancarias.</p></div><div class="c"><div class="k">Historial de operaciones</div>${all().filter(x=>x.opId&&['tr_out','ex_out'].includes(x.t)).sort((a,b)=>b.f.localeCompare(a.f)).slice(0,20).map(x=>{const dest=all().find(y=>y.opId===x.opId&&y.id!==x.id);return `<div style="padding:9px 0;border-top:1px solid var(--ln)"><b>${x.t==='tr_out'?'Transferencia':'Cambio de moneda'}</b><div class="d">${esc(med(x.m)?.n||'Cuenta')} → ${esc(med(dest?.m)?.n||'Cuenta')} · ${esc(x.f)}</div><div>${money(x.mo,med(x.m)?.cur)} → ${dest?money(dest.mo,med(dest.m)?.cur):'—'}</div><button type="button" class="o pyon-op-undo" data-a="op-undo" data-v="${esc(x.opId)}">↶ Anular operación</button></div>`}).join('')||'<div class="d">Aún no hay operaciones registradas.</div>'}</div>`}
 // Navegación interna de Más: todas las subpantallas necesitan este botón.
 function back(){return `<button type="button" class="o" data-a="sub" data-v="" style="margin-bottom:12px">← Volver a Más</button>`}
 
@@ -765,6 +1024,9 @@ function pyonAppearance(){
 function pyonApplyAppearance(a){
  document.documentElement.dataset.pyonPalette=a.palette;
  document.documentElement.dataset.pyonStyle=a.style;
+ const colors={emerald:'#087F5B',executive:'#142C4E',aurora:'#6941C6',night:'#101827'};
+ const themeMeta=document.querySelector('meta[name="theme-color"]');
+ if(themeMeta)themeMeta.setAttribute('content',colors[a.palette]||colors.emerald);
 }
 function pyonSaveAppearance(patch){
  const a=Object.assign(pyonAppearance(),patch);
@@ -780,11 +1042,54 @@ function pyonSaveAppearance(patch){
 }
 pyonApplyAppearance(pyonAppearance());
 
-function vMas(){if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
- const menu=[['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['cal','📅','Calendario'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio']];
- return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">⬇️ Calendario .ics</button><button class="o" data-a="exp">⬇️ Exportar CSV</button><button class="o" data-a="calendar-open">⚙️ Elegir bancos</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
+function vMas(){if(sub==='restore')return vBackupRestore();if(sub==='revision')return vRevision();if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
+ const menu=[['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['cal','📅','Calendario'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio'],['revision','🛡️','Revisar datos'],['restore','☁️','Respaldo y restauración']];
+ return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">⬇️ Calendario .ics</button><button class="o" data-a="exp">⬇️ Exportar CSV</button><button class="o" data-a="calendar-open">⚙️ Elegir bancos</button><button class="o" data-a="backup-json">⬇️ Respaldo JSON</button><button class="o" data-a="restore-open">📂 Restaurar JSON</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
 }
-function render(){const v={i:vInicio,m:vMovs,d:vDeudas,a:vAhor,x:vMas}[tab]();$('#app').innerHTML=(msg?`<div class="c w">${esc(msg)}</div>`:'')+'<div class="v">'+v+'</div>';msg='';if($('#expreview'))updateExchangePreview();conteo();$('#fab').style.display=tab==='m'?'none':'block';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===tab))}
+
+// v4.0: Ocultar cifras visibles es una medida contra miradas casuales, NO cifrado ni bloqueo de acceso.
+let pyonPrivacyActive=false;
+try{pyonPrivacyActive=sessionStorage.getItem('pyon-privacy-visual-v1')==='hidden'}catch(e){}
+const pyonPrivacyOriginals=new WeakMap();
+function pyonMaskCurrencyText(original){
+ return original.replace(/(US\$|S\/|\$)\s*[+\-−]?\s*\d[\d,.]*/g,(_,currency)=>currency+' ••••');
+}
+function pyonPrivacyRefresh(){
+ document.documentElement.dataset.pyonPrivacy=pyonPrivacyActive?'hidden':'visible';
+ const root=document.getElementById('app');if(!root)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ let node;
+ while((node=walker.nextNode())){
+  const parent=node.parentElement;
+  if(!parent||parent.closest('script,style,textarea,option,[contenteditable="true"],[data-pyon-unmasked]'))continue;
+  const previous=pyonPrivacyOriginals.get(node);
+  if(pyonPrivacyActive){
+   if(previous!==undefined){node.nodeValue=pyonMaskCurrencyText(previous)}
+   else if(/(?:US\$|S\/|\$)\s*[+\-−]?\s*\d/.test(node.nodeValue)){
+    pyonPrivacyOriginals.set(node,node.nodeValue);
+    node.nodeValue=pyonMaskCurrencyText(node.nodeValue);
+   }
+  }else if(previous!==undefined){
+   node.nodeValue=previous;
+   pyonPrivacyOriginals.delete(node);
+  }
+ }
+ const btn=document.getElementById('pyon-privacy-switch');
+ if(btn){
+  const label=pyonPrivacyActive?'Mostrar importes en pantalla':'Ocultar importes en pantalla';
+  btn.setAttribute('aria-label',label);btn.title=label;
+  btn.setAttribute('aria-pressed',String(pyonPrivacyActive));
+  btn.innerHTML=pyonPrivacyActive?'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.58 10.587a2 2 0 0 0 2.83 2.827"/><path d="M9.88 5.093A10.98 10.98 0 0 1 12 4.89c4.73 0 8.8 2.99 10 7.11a11.75 11.75 0 0 1-2.24 3.83"/><path d="M6.61 6.61A11.77 11.77 0 0 0 2 12c1.2 4.12 5.27 7.11 10 7.11a10.96 10.96 0 0 0 5.39-1.4"/><path d="m2 2 20 20"/></svg>':'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+ }
+}
+function pyonPrivacyToggle(){
+ pyonPrivacyActive=!pyonPrivacyActive;
+ try{sessionStorage.setItem('pyon-privacy-visual-v1',pyonPrivacyActive?'hidden':'visible')}catch(e){}
+ pyonPrivacyRefresh();
+ toast(pyonPrivacyActive?'Importes ocultos en pantalla. Toca el ojo para mostrarlos.':'Importes visibles nuevamente.');
+}
+
+function render(){const v={i:vInicio,m:vMovs,d:vDeudas,a:vAhor,x:vMas}[tab]();$('#app').innerHTML=(msg?`<div class="c w">${esc(msg)}</div>`:'')+'<div class="v">'+v+'</div>';msg='';if($('#expreview'))updateExchangePreview();conteo();$('#fab').style.display=tab==='m'?'none':'block';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===tab));pyonPrivacyRefresh()}
 const val=id=>{const e=$('#'+id);return e?e.value.trim():''};
 function exDirection(){const s=med(val('exsrc')),d=med(val('exdst'));if(!s||!d)return null;return (s.cur||'PEN')+'-'+(d.cur||'PEN')}
 function updateExchangePreview(){const src=med(val('exsrc')),dst=med(val('exdst')),out=+val('exout')||0,fee=+val('exfee')||0,rate=+val('extrate')||0,dir=exDirection();const valid=src&&dst&&src.id!==dst.id&&(src.cur||'PEN')!==(dst.cur||'PEN');const from=$('#exfromcur'),to=$('#extocur'),preview=$('#expreview'),formula=$('#exformula'),hint=$('#exaccountHint');if(!preview)return;if(from)from.textContent=src?.cur||'PEN';if(to)to.textContent=dst?.cur||'PEN';if(hint)hint.textContent=valid?'Origen: '+src.cur+' · Destino: '+dst.cur:'Selecciona dos cuentas diferentes, una en PEN y otra en USD.';const b1=$('#exdir1'),b2=$('#exdir2');if(b1&&b2){b1.classList.toggle('on',dir==='PEN-USD');b2.classList.toggle('on',dir==='USD-PEN')}if(!valid){preview.textContent='—';formula.textContent='Las cuentas deben tener monedas diferentes.';return}if(!(out>0)||!(rate>0)||fee>out){preview.textContent='—';formula.textContent='Ingresa el importe, el tipo de cambio y una comisión válida.';return}const net=out-fee,received=dir==='PEN-USD'?net/rate:net*rate;preview.textContent=money(received,dst.cur);formula.textContent='Cálculo estimado. Puedes corregir el importe realmente recibido abajo.';const inp=$('#exin');if(inp&&!inp.dataset.edited)inp.value=received.toFixed(2)}
@@ -803,6 +1108,8 @@ function exp(){
 }
 
 document.addEventListener('change',e=>{
+ if(e.target.id==='pyon-restore-file'){void pyonReadBackupFile(e.target.files?.[0]);return}
+ if(e.target.id==='pyon-restore-confirm'){const btn=$('#pyon-restore-commit');if(btn)btn.disabled=!e.target.checked;return}
  if(e.target.dataset.calendarBank!==undefined){const cfg=pyonCalendarSettings(),id=e.target.dataset.calendarBank;pyonCalendarSave({excluded:e.target.checked?cfg.excluded.filter(x=>x!==id):[...new Set([...cfg.excluded,id])]});return}
  if(e.target.dataset.calendarSetting!==undefined){const key=e.target.dataset.calendarSetting;if(['debts','notes','recurring'].includes(key))pyonCalendarSave({[key]:e.target.checked});return}
  if(e.target.id==='pyon-calendar-months'){pyonCalendarSave({months:Number(e.target.value)});return}
@@ -879,20 +1186,26 @@ document.addEventListener('keydown',e=>{
 
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('svg .pyon-chart-action[role="button"]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+ if(a==='restore-open'){tab='x';sub='restore';render();return}
+ if(a==='restore-cancel'){pyonRestoreStage=null;render();return}
+ if(a==='restore-commit'){await pyonCommitRestore();return}
+ if(a==='backup-json'){pyonBackupJSON();return}
+ if(a==='op-undo'){await pyonUndoOperation(v);return}
  if(a==='calendar-open'){tab='x';sub='cal';render();return}
  if(a==='budget-open'){tab='x';sub='budget';render();return}
  if(a==='calendar-all'){pyonCalendarSave({excluded:[]});return}
+ if(a==='privacy-toggle'){pyonPrivacyToggle();return}
  if(a==='dashboard-open'){tab='x';sub='dash';render();return}
  if(a==='dash-up'||a==='dash-down'){const d=pyonDashboardSettings(),i=d.order.indexOf(v),j=i+(a==='dash-up'?-1:1);if(i>=0&&j>=0&&j<d.order.length){[d.order[i],d.order[j]]=[d.order[j],d.order[i]];pyonDashboardSave(d)}return}
  if(a==='dash-reset'){try{localStorage.removeItem('pyon-dashboard-v1')}catch(e){}render();return}
- if(a==='chart-select'){pyonChartSelection={kind:b.dataset.kind||'',key:String(v||'')};render();return}else if(a==='appearance-theme'){pyonSaveAppearance({palette:v});return}else if(a==='appearance-style'){pyonSaveAppearance({style:v});return}else if(a==='appearance-reset'){pyonSaveAppearance({palette:'emerald',style:'modern'});return}else if(a==='tab'){tab=v;sub='';ed=null}else if(a==='fab'){tab='m';sub='';ed=null;window.scrollTo(0,0)}else if(a==='tu'){const u=undo;undo=null;$('#toast').style.display='none';if(u)u();return}else if(a==='ics')return calendario();else if(a==='em'){ed=v;tab='m'}else if(a==='ce'){ed=null}else if(a==='sub')sub=v;else if(a==='mp')shift(-1);else if(a==='mn')shift(1);else if(a==='tt')fT=v;else if(a==='td')fD=v;
+ if(a==='chart-select'){pyonChartSelection={kind:b.dataset.kind||'',key:String(v||'')};render();return}else if(a==='appearance-theme'){pyonSaveAppearance({palette:v});return}else if(a==='appearance-style'){pyonSaveAppearance({style:v});return}else if(a==='appearance-reset'){pyonSaveAppearance({palette:'emerald',style:'modern'});return}else if(a==='tab'){tab=v;sub='';ed=null}else if(a==='fab'){tab='m';sub='';ed=null;window.scrollTo(0,0)}else if(a==='tu'){const u=undo;undo=null;$('#toast').style.display='none';if(u)u();return}else if(a==='ics')return calendario();else if(a==='em'){const movement=all().find(x=>x.id===v);if(!movement){toast('Movimiento no encontrado.');return}if(pyonLinkedType(movement)||movement.deudaId||['debt_in','debt_out','a','a_return'].includes(movement.t)){toast('Este movimiento está vinculado. Usa su sección de origen.');return}ed=v;tab='m'}else if(a==='ce'){ed=null}else if(a==='sub')sub=v;else if(a==='mp')shift(-1);else if(a==='mn')shift(1);else if(a==='tt')fT=v;else if(a==='td')fD=v;
  else if(a==='exp')return exp();
  else if(a==='transfer'){const src=med(val('trsrc')),dst=med(val('trdst')),mo=+val('trmo'),f=val('trdate')||today();if(!src||!dst||src.id===dst.id||!(mo>0)){msg='Selecciona dos cuentas distintas e indica un importe mayor que cero.';return render()}if((src.cur||'PEN')!==(dst.cur||'PEN')){msg='Las transferencias deben ser entre cuentas de la misma moneda. Para monedas distintas usa Cambio de moneda.';return render()}if(src.k==='c'||dst.k==='c'){msg='Por ahora, las transferencias solo están disponibles entre cuentas de débito, billeteras y efectivo.';return render()}const opId=nid(),note=val('trnote')||'Transferencia entre cuentas';addMov({t:'tr_out',f,mo,m:src.id,cuentaId:src.id,cur:src.cur||'PEN',opId,n:note});addMov({t:'tr_in',f,mo,m:dst.id,cuentaId:dst.id,cur:dst.cur||'PEN',opId,n:note});ym=f.slice(0,7);toast('Transferencia registrada ✓')}
  else if(a==='exdir'){const src=med(val('exsrc')),want=v==='PEN-USD'?'PEN':'USD';const source=C.medios.find(m=>!m.x&&m.k!=='c'&&(m.cur||'PEN')===want);const dest=C.medios.find(m=>!m.x&&m.k!=='c'&&m.id!==source?.id&&(m.cur||'PEN')!==(want));if(source&&dest){$('#exsrc').value=source.id;$('#exdst').value=dest.id}const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview();return}
  else if(a==='exquote'){const btn=b;btn.disabled=true;btn.textContent='Consultando…';try{const res=await fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'});if(!res.ok)throw new Error('No se pudo consultar');const data=await res.json();const rate=Number(data?.rates?.PEN);if(!(rate>0))throw new Error('Cotización no disponible');$('#extrate').value=rate.toFixed(4);const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview();const stamp=data.time_last_update_utc?new Date(data.time_last_update_utc).toLocaleString('es-PE'):'actualización informada por la fuente';toast('Referencia general actualizada: S/ '+rate.toFixed(4)+' por US$ 1 · '+stamp)}catch(err){toast('No se pudo consultar la referencia. Puedes ingresar el tipo de cambio manualmente.')}finally{btn.disabled=false;btn.textContent='Consultar tipo de cambio'}return}
  else if(a==='exchange'){const src=med(val('exsrc')),dst=med(val('exdst')),out=+val('exout'),inc=+val('exin'),fee=+val('exfee')||0,rate=+val('extrate'),f=val('exdate')||today();if(!src||!dst||src.id===dst.id||!(out>0)||!(inc>0)){msg='Selecciona dos cuentas distintas e indica los importes entregado y recibido.';return render()}if((src.cur||'PEN')===(dst.cur||'PEN')){msg='Para cambiar moneda, selecciona una cuenta en PEN y otra en USD.';return render()}if(src.k==='c'||dst.k==='c'){msg='El cambio de moneda solo está disponible entre cuentas de débito, billeteras y efectivo.';return render()}if(fee>out){msg='La comisión no puede superar el importe entregado.';return render()}if(!(rate>0)){msg='Ingresa o consulta el tipo de cambio para guardar la operación.';return render()}const opId=nid(),note=val('exnote')||'Cambio de moneda',provider=val('exprovider')||'No indicado';const effective=(out-fee)/inc;addMov({t:'ex_out',f,mo:out,m:src.id,cuentaId:src.id,cur:src.cur||'PEN',opId,n:note,comision:fee,tipoCambio:rate,tipoCambioEfectivo:effective,entidadCambio:provider,importeRecibido:inc});addMov({t:'ex_in',f,mo:inc,m:dst.id,cuentaId:dst.id,cur:dst.cur||'PEN',opId,n:note,comision:fee,tipoCambio:rate,entidadCambio:provider,importeEntregado:out});ym=f.slice(0,7);toast('Cambio de moneda registrado ✓')}
  else if(a==='add'){const mo=+val('mo');if(!(mo>0)){msg='Escribe un monto mayor que cero.';return render()}const f=val('fe')||today(),tc=+val('tc'),selectedAccount=med(val('md')),o={t:fT,f,mo,m:val('md'),cuentaId:val('md'),cur:ed?(all().find(x=>x.id===ed)?.cur||selectedAccount?.cur||'PEN'):(selectedAccount?.cur||'PEN')};if(tc>0)o.tc=tc;if(fT==='g'){o.c=val('ct');if($('#im')&&$('#im').checked)o.imp=1}if(val('no'))o.n=val('no');
-  if(ed){for(const y in M){const i=M[y].findIndex(x=>x.id===ed);if(i>=0){const old=M[y].splice(i,1)[0];if(old.rid)o.rid=old.rid;save(y)}}o.id=ed;ed=null;addMov(o);toast('Cambios guardados ✓')}
+  if(ed){const original=all().find(x=>x.id===ed);if(original&&(pyonLinkedType(original)||original.deudaId||original.a||['debt_in','debt_out','a','a_return'].includes(original.t))){msg='Este movimiento está vinculado: no se puede editar por separado.';return render()}for(const y in M){const i=M[y].findIndex(x=>x.id===ed);if(i>=0){const old=M[y].splice(i,1)[0];if(old.rid)o.rid=old.rid;save(y)}}o.id=ed;ed=null;addMov(o);toast('Cambios guardados ✓')}
   else{addMov(o);if(fT==='g'&&$('#fr')&&$('#fr').checked){C.frec.push({id:nid(),n:o.n||o.c,mo,c:o.c,m:o.m,cur:o.cur});save('cfg')}toast('Movimiento guardado ✓')}ym=f.slice(0,7)}
  else if(a==='fq'){const f=C.frec.find(x=>x.id===v);if(f){addMov({t:'g',f:today(),mo:f.mo,m:f.m,c:f.c,n:f.n,cur:f.cur,tc:f.cur?C.tc:0});ym=today().slice(0,7);toast('Registrado: '+f.n+' ✓')}}
  else if(a==='fx'){C.frec=C.frec.filter(x=>x.id!==v);save('cfg')}
@@ -907,7 +1220,17 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  else if(a==='nx'){C.notas=C.notas.filter(x=>x.id!==v);save('cfg')}
  else if(a==='nd'){const n=C.notas.find(x=>x.id===v);if(n&&n.mo>0){C.deudas.push({id:nid(),dir:'c',n:n.p||n.t,mo:n.mo,v:n.f||''});n.ok=1;save('cfg');toast('Pasó a Deudas: me deben ✓')}else msg='Para convertirla, la nota necesita un monto.'}
  else if(a==='ng'){const n=C.notas.find(x=>x.id===v),m=C.medios.find(x=>!x.x);if(n&&n.mo>0&&m){addMov({t:'g',f:today(),mo:n.mo,m:m.id,c:C.cats.some(c=>c.n==='Pareja y familia'&&!c.x)?'Pareja y familia':'Otros',n:n.t});n.ok=1;save('cfg');toast('Registrado como gasto con '+m.n+' ✓')}else msg='Para convertirla, la nota necesita un monto y al menos un medio de pago.'}
- else if(a==='dm'){for(const y in M){const i=M[y].findIndex(x=>x.id===v);if(i>=0){const it=M[y].splice(i,1)[0];save(y);toast('Movimiento eliminado','Deshacer',()=>{M[y].push(it);save(y);render()})}}}
+ else if(a==='dm'){
+  const x=all().find(m=>m.id===v);
+  if(!x){toast('Movimiento no encontrado.');return}
+  if(pyonLinkedType(x)){await pyonUndoOperation(x.opId);return}
+  if(x.deudaId||x.a||['debt_in','debt_out','a','a_return'].includes(x.t)){toast('Movimiento vinculado: para corregirlo utiliza Deudas o Ahorros.');return}
+  if(!await pyonConfirm('¿Eliminar este movimiento? Podrás deshacerlo durante unos segundos.','Eliminar movimiento'))return;
+  for(const year of Object.keys(M)){
+   const idx=M[year].findIndex(m=>m.id===v);
+   if(idx>=0){const removed=M[year].splice(idx,1)[0];save(year);render();toast('Movimiento eliminado.','Deshacer',()=>{M[year].splice(Math.min(idx,M[year].length),0,removed);save(year);render();toast('Movimiento restaurado.')});return}
+  }
+ }
  else if(a==='addd'){const n=val('dn'),mo=+val('dm');if(!n||!(mo>0)){msg='Escribe el nombre y un monto mayor que cero.';return render()}C.deudas.push({id:nid(),dir:fD,n,mo,v:val('dv'),cur:val('dc')==='USD'?'USD':'PEN'});save('cfg')}
  else if(a==='debtpay'){const d=C.deudas.find(x=>x.id===v);if(d){const amount=+val('debtamount'+v),m=med(val('debtaccount'+v)),date=val('debtdate'+v)||today(),left=debtLeft(d);if(!m||m.x||m.k==='c'||(m.cur||'PEN')!==(d.cur||'PEN')||!(amount>0)||amount>left+0.001){msg='Comprueba el importe y selecciona una cuenta activa de la misma moneda (no tarjeta de crédito).';return render()}const paymentId=nid(),movementId=nid();d.pagos=d.pagos||[];d.pagos.push({id:paymentId,mo:Math.round(amount*100)/100,m:m.id,f:date,movementId});d.ok=debtLeft(d)<0.005?1:0;addMov({id:movementId,t:d.dir==='c'?'debt_in':'debt_out',f:date,mo:Math.round(amount*100)/100,m:m.id,cuentaId:m.id,cur:d.cur||'PEN',deudaId:d.id,pagoId:paymentId,n:(d.dir==='c'?'Cobro de deuda: ':'Pago de deuda: ')+d.n});save('cfg');toast('Abono registrado ✓')}}
  else if(a==='debtundo'){const d=C.deudas.find(x=>x.id===v),pay=d?.pagos?.find(p=>p.id===b.dataset.p);if(d&&pay){if(!await pyonConfirm('¿Anular este pago y revertir el movimiento de la cuenta?','Anular abono'))return;d.pagos=d.pagos.filter(p=>p.id!==pay.id);for(const y in M){const before=M[y].length;M[y]=M[y].filter(x=>x.id!==pay.movementId);if(M[y].length!==before)save(y)}d.ok=0;save('cfg');toast('Pago anulado y saldo corregido')}}

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PYON · v4.3.3.1 · Selector de moneda visible</title>
+<title>PYON · v4.4.1 · Tarjetas multibanco</title>
 <meta name="theme-color" content="#087F5B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PYON">
 <meta name="application-name" content="PYON">
 <link rel="apple-touch-icon" sizes="180x180" href="./pyon-apple-touch-icon.png">
-<link rel="manifest" href="./pyon-v4.3.3.1.webmanifest">
+<link rel="manifest" href="./pyon-v4.4.1.webmanifest">
 
 <style>
 :root{--bg:#F4F5F1;--cd:#fff;--ink:#17231F;--mu:#5B6862;--ac:#1F6F5C;--on:#fff;--ln:#E3E6E0;--wb:#FFF1DC;--wt:#8A5200;--rd:#A63A28;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -580,6 +580,75 @@ html[data-pyon-style="compact"] .pyon-compact-row,html[data-pyon-style="compact"
 .pyon-account-currency-label input[type=radio]:disabled + .pyon-account-currency-card{opacity:.62;cursor:not-allowed}
 .pyon-account-currency-note{font-size:12px;line-height:1.45;color:var(--mu);margin:4px 0 12px}
 @media(prefers-reduced-motion:reduce){.pyon-account-currency-card{transition:none}}
+
+/* PYON v4.4 - Proyección financiera (solo lectura, local) */
+.pyon-forecast-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.pyon-forecast-tabs button{flex:1;min-width:68px;border:1px solid var(--ln);color:var(--ink);background:var(--cd);padding:10px 8px;border-radius:12px;cursor:pointer;font-weight:650;font-size:13px}
+.pyon-forecast-tabs button[aria-pressed="true"]{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.pyon-forecast-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+.pyon-forecast-metric{padding:13px 11px;border:1px solid var(--ln);background:var(--cd);border-radius:15px;min-width:0}
+.pyon-forecast-metric small{font-size:12px;color:var(--mu);display:block;line-height:1.35}
+.pyon-forecast-metric strong{font-size:clamp(16px,4.4vw,21px);display:block;overflow-wrap:anywhere;margin-top:7px}
+.pyon-forecast-metric.focus{background:color-mix(in srgb,var(--ac) 9%,var(--cd));border-color:color-mix(in srgb,var(--ac) 45%,var(--ln))}
+.pyon-forecast-chart{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end;gap:8px;min-height:170px;margin:12px 0}
+.pyon-forecast-col{min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-end;text-align:center}
+.pyon-forecast-col b{font-size:11px;overflow-wrap:anywhere;line-height:1.25}
+.pyon-forecast-barwrap{width:100%;height:104px;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid var(--ln);background:linear-gradient(to top, transparent, color-mix(in srgb,var(--ac) 3%, transparent));border-radius:9px 9px 0 0}
+.pyon-forecast-bar{width:min(48px,75%);border-radius:8px 8px 2px 2px;background:var(--ac);min-height:4px;transition:height .25s ease}
+.pyon-forecast-bar.negative{background:var(--rd)}
+.pyon-forecast-col small{font-size:11px;color:var(--mu)}
+.pyon-forecast-row{padding:10px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border-top:1px solid var(--ln)}
+.pyon-forecast-row .left{min-width:0;flex:1}
+.pyon-forecast-row .left strong{font-size:13px;display:block;overflow-wrap:anywhere}
+.pyon-forecast-row .left small{font-size:11px;color:var(--mu);display:block;margin-top:3px}
+.pyon-forecast-row .right{flex-shrink:0;text-align:right;font-weight:700;font-size:13px;max-width:42%;overflow-wrap:anywhere}
+.pyon-forecast-warning{border:1px solid var(--ln);border-radius:13px;background:var(--bg);padding:10px;margin-top:10px}
+.pyon-forecast-warning summary{cursor:pointer;font-weight:650;font-size:13px}
+.pyon-forecast-quiet{font-size:12px;color:var(--mu);line-height:1.5}
+.pyon-forecast-switch{display:flex;align-items:center;gap:9px;padding:11px 12px;background:var(--bg);border:1px solid var(--ln);border-radius:13px;margin:12px 0;cursor:pointer;font-size:13px}
+.pyon-forecast-switch input{margin:0;flex-shrink:0;width:19px;height:19px;accent-color:var(--ac)}
+@media(max-width:350px){.pyon-forecast-metrics{grid-template-columns:1fr}.pyon-forecast-col b{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.pyon-forecast-bar{transition:none}}
+
+/* v4.4.1: tarjetas agrupadas por banco y detalles compactos */
+.pyon-credit-section{margin-top:12px}
+.pyon-credit-intro{color:var(--mu);font-size:12px;margin:6px 0 12px}
+.pyon-credit-bank{border:1px solid var(--ln);border-radius:15px;margin:9px 0;background:var(--cd);overflow:hidden}
+.pyon-credit-bank>summary{list-style:none;cursor:pointer;padding:12px;display:flex;align-items:center;gap:9px;min-height:44px}
+.pyon-credit-bank>summary::-webkit-details-marker,.pyon-credit-card>summary::-webkit-details-marker{display:none}
+.pyon-bank-icon{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:8px}
+.pyon-bank-name{flex:1;font-weight:750;min-width:0;overflow-wrap:anywhere}
+.pyon-bank-name small{display:block;color:var(--mu);font-weight:400;font-size:11px;margin-top:2px}
+.pyon-credit-bank>summary::after{content:'⌄';color:var(--mu)}
+.pyon-credit-bank[open]>summary::after{content:'⌃'}
+.pyon-credit-bank-body{padding:0 10px 10px}
+.pyon-credit-card{border:1px solid var(--ln);background:var(--bg);border-radius:13px;margin-top:8px;padding:0 11px}
+.pyon-credit-card>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:10px;padding:11px 0;min-height:44px}
+.pyon-credit-card>summary span{min-width:0}
+.pyon-credit-card>summary b{font-size:13px;display:block;overflow-wrap:anywhere}
+.pyon-credit-card>summary small{display:block;color:var(--mu);font-size:11px;margin-top:3px}
+.pyon-credit-card>summary strong{font-size:14px;white-space:nowrap}
+.pyon-credit-body{padding:0 0 12px}
+.pyon-credit-line{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:7px 0 9px}
+.pyon-credit-stat{border:1px solid var(--ln);background:var(--cd);border-radius:10px;padding:9px;min-width:0}
+.pyon-credit-stat span{display:block;color:var(--mu);font-size:11px}
+.pyon-credit-stat strong{display:block;margin-top:3px;font-size:14px;overflow-wrap:anywhere}
+.pyon-credit-track{height:9px;background:var(--ln);border-radius:10px;overflow:hidden;margin:10px 0 5px}
+.pyon-credit-track>i{display:block;height:100%;background:var(--ac);border-radius:10px}
+.pyon-credit-track>i.over{background:var(--rd)}
+.pyon-credit-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--mu)}
+.pyon-credit-meta{font-size:12px;color:var(--mu);line-height:1.6;padding:8px 0}
+.pyon-credit-toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.pyon-credit-toolbar button{flex:1;min-width:105px}
+.pyon-credit-fieldset{grid-column:1/-1;border:1px solid var(--ln);border-radius:12px;margin-top:10px;padding:12px}
+.pyon-credit-fieldset legend{font-weight:700;padding:0 5px}
+.pyon-credit-note{font-size:12px;color:var(--mu);margin-top:6px}
+.pyon-card-pay-hint{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:10px;font-size:12px;margin-top:9px}
+.pyon-card-pay-error{color:var(--rd);font-size:12px;margin-top:8px}
+html[data-pyon-style="classic"] .pyon-credit-card,html[data-pyon-style="classic"] .pyon-credit-bank,html[data-pyon-style="classic"] .pyon-credit-stat{border-radius:4px}
+html[data-pyon-style="compact"] .pyon-credit-bank>summary,html[data-pyon-style="compact"] .pyon-credit-card>summary{padding:8px 4px}
+html[data-pyon-style="compact"] .pyon-credit-stat{padding:6px}
+@media(max-width:360px){.pyon-credit-line{gap:5px}.pyon-credit-stat{padding:7px}.pyon-credit-card>summary strong{font-size:12px}}
 </style>
 </head>
 <body>
@@ -602,7 +671,7 @@ const pen=x=>x.cur==='USD'?x.mo*(+x.tc||+C.tc||0):x.mo;
 const all=()=>Object.values(M).flat(),inM=p=>all().filter(x=>x.f.startsWith(p)),sum=(a,f)=>a.reduce((s,x)=>s+(f?f(x):pen(x)),0);
 const curOf=x=>x.cur==='USD'?'USD':'PEN', money=(n,c)=>c==='USD'?'US$ '+(+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'S/ '+(+n||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
 function accountMovements(id){return all().filter(x=>(x.cuentaId||x.m)===id)}
-function accountBalance(m){const L=accountMovements(m.id);if(m.k==='c'){const spent=sum(L.filter(x=>x.t==='g'||x.t==='tr_out'||x.t==='ex_out'),x=>x.mo),paid=sum(L.filter(x=>x.t==='p'||x.t==='tr_in'||x.t==='ex_in'),x=>x.mo);return -(spent-paid)}const base=m.saldoInicial==null?0:+m.saldoInicial;return base+sum(L.filter(x=>x.t==='i'||x.t==='tr_in'||x.t==='ex_in'||x.t==='debt_in'||x.t==='a_return'),x=>x.mo)-sum(L.filter(x=>x.t==='g'||x.t==='a'||x.t==='p'||x.t==='tr_out'||x.t==='ex_out'||x.t==='debt_out'),x=>x.mo)}
+function accountBalance(m){const L=accountMovements(m.id);if(m.k==='c'){const spent=sum(L.filter(x=>x.t==='g'||x.t==='tr_out'||x.t==='ex_out'),x=>x.mo),paid=sum(L.filter(x=>x.t==='p'||x.t==='tr_in'||x.t==='ex_in'),x=>x.mo);const opening=Number.isFinite(Number(m.deudaInicial))?Math.max(0,Number(m.deudaInicial)):0;return -(opening+spent-paid)}const base=m.saldoInicial==null?0:+m.saldoInicial;return base+sum(L.filter(x=>x.t==='i'||x.t==='tr_in'||x.t==='ex_in'||x.t==='debt_in'||x.t==='a_return'),x=>x.mo)-sum(L.filter(x=>x.t==='g'||x.t==='a'||x.t==='p'||x.t==='tr_out'||x.t==='ex_out'||x.t==='debt_out'||x.t==='card_out'),x=>x.mo)}
 const CE={Comida:'🍽️',Transporte:'🚌',Hogar:'🏠',Servicios:'💡',Salud:'💊','Educación':'📚',Ocio:'🎬',Compras:'🛍️',Suscripciones:'📺','Pareja y familia':'💞',Otros:'🧩'},ce=c=>CE[c]||'🏷️',KE={d:'🏦',c:'💳',b:'📱',e:'💵'};
 const calm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches,prevYm=()=>{let y=+ym.slice(0,4),m=+ym.slice(5)-1;if(m<1){m=12;y--}return y+'-'+String(m).padStart(2,'0')};
 let tt;function toast(t,lab,fn){const e=$('#toast');e.innerHTML=esc(t)+(lab?`<button data-a="tu">${lab}</button>`:'');e.style.display='flex';undo=fn||null;clearTimeout(tt);tt=setTimeout(()=>{e.style.display='none';undo=null},5000)}
@@ -841,20 +910,20 @@ function vInicio(){
  const a=inM(ym),curr=['PEN','USD'];let h=saludo()+`<div class="pyon-home-toolbar">${mSel()}<div class="pyon-home-actions"><button class="pyon-home-icon" data-a="dashboard-open" type="button" title="Personalizar Inicio" aria-label="Personalizar Inicio"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3"/><path d="M1 14h6m2-6h6m2 8h6"/></svg></button><button id="pyon-privacy-switch" class="pyon-home-icon" data-a="privacy-toggle" type="button" title="Ocultar importes en pantalla" aria-label="Ocultar importes en pantalla" aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>`;const blocks={};
  let part='<div class="pyon-section-title">💳 Mis saldos</div><div class="pyon-mini-grid">';
  for(const c of curr){const ac=C.medios.filter(m=>!m.x&&(m.cur||'PEN')===c),total=ac.filter(m=>m.k!=='c').reduce((z,m)=>z+accountBalance(m),0),credit=ac.filter(m=>m.k==='c').reduce((z,m)=>z+accountBalance(m),0);
- part+=`<div class="pyon-mini"><div class="k">${c==='PEN'?'🇵🇪 Soles':'🇺🇸 Dólares'}</div><div class="amount">${money(total,c)}</div><div class="d">${ac.length} cuenta(s)</div>${ac.some(m=>m.k==='c')?`<details class="pyon-detail"><summary>Ver tarjetas</summary><p class="d">Saldo neto: ${money(credit,c)}</p></details>`:''}</div>`}
+ part+=`<div class="pyon-mini"><div class="k">${c==='PEN'?'🇵🇪 Soles':'🇺🇸 Dólares'}</div><div class="amount">${money(total,c)}</div><div class="d">${ac.filter(m=>m.k!=='c').length} cuenta(s) · ${ac.filter(m=>m.k==='c').length} tarjeta(s)</div>${ac.some(m=>m.k==='c')?`<details class="pyon-detail"><summary>Ver tarjetas</summary><p class="d">Deuda estimada en tarjetas: ${money(Math.max(0,-credit),c)}. Ver Detalle de cuentas.</p></details>`:''}</div>`}
  part+='</div><div class="pyon-quiet" style="margin:-4px 2px 13px">Saldos estimados según tus registros, no saldos oficiales del banco.</div>';
  blocks.balances=part;part='<div class="pyon-section-title">📊 Este mes</div>';
  for(const c of curr){const L=a.filter(x=>curOf(x)===c),inc=sum(L.filter(x=>x.t==='i'),x=>x.mo),gas=sum(L.filter(x=>x.t==='g'),x=>x.mo),sav=sum(L.filter(x=>x.t==='a'),x=>x.mo);
  part+=`<section class="pyon-hero"><div class="k">${c==='PEN'?'🇵🇪 Soles':'🇺🇸 Dólares'} · Balance del mes</div><div class="big">${money(inc-gas-sav,c)}</div><div class="d">Ingresos − gastos − aportes a metas</div><div class="pyon-hero-grid"><div class="pyon-hero-metric"><div class="d">↙ Ingresos</div><b>${money(inc,c)}</b></div><div class="pyon-hero-metric"><div class="d">↗ Gastos</div><b>${money(gas,c)}</b></div></div><details style="margin-top:10px"><summary style="cursor:pointer;font-size:12px">Ver aportes a metas</summary><div class="r" style="margin-top:7px"><span>Ahorro registrado</span><b>${money(sav,c)}</b></div></details></section>`}
- blocks.monthly=part;blocks.budgets=vBudgetHome();part='';const nx=proximo();part+=`<div class="c w pyon-compact-card"><div class="r"><span>📅 ${nx||'Planifica tus pagos de bancos y tarjetas'}</span><span style="display:flex;gap:5px;flex-wrap:wrap"><button class="o" data-a="ics">⬇️ Calendario</button><button class="o" data-a="calendar-open">📅 Ver calendario</button></span></div></div>`;
+ blocks.monthly=part;blocks.budgets=vBudgetHome();part='';const nx=proximo();part+=`<div class="c w pyon-compact-card"><div class="r"><span>📅 ${nx||'Planifica tus pagos de bancos y tarjetas'}</span><span style="display:flex;gap:5px;flex-wrap:wrap"><button class="o" data-a="ics">⬇️ Calendario</button><button class="o" data-a="calendar-open">📅 Ver calendario</button><button class="o" data-a="forecast-open">📈 Proyección</button></span></div></div>`;
  blocks.upcoming=part;blocks.recurring=vRec();part='';
- const active=C.medios.filter(m=>!m.x);if(active.length){part+=`<details class="c"><summary style="font-weight:750;cursor:pointer">🏦 Detalle de cuentas (${active.length})</summary>`+active.map(m=>`<div class="r" style="padding:10px 0;border-top:1px solid var(--ln);flex-wrap:wrap"><span>${KE[m.k]||'🏦'} ${esc(m.n)}<span class="d"> · ${m.cur||'PEN'}</span></span><b>${money(accountBalance(m),m.cur||'PEN')}</b></div>`).join('')+`</details>`}
+ const active=C.medios.filter(m=>!m.x);if(active.length){const liquid=active.filter(m=>m.k!=='c'),credits=active.filter(m=>m.k==='c');part+=`<details class="c"><summary style="font-weight:750;cursor:pointer">🏦 Detalle de cuentas (${active.length})</summary>`+(liquid.length?`<div class="pyon-section-mini">Dinero disponible</div>`+liquid.map(m=>`<div class="r" style="padding:10px 0;border-top:1px solid var(--ln);flex-wrap:wrap"><span>${KE[m.k]||'🏦'} ${esc(m.n)}<span class="d"> · ${m.cur||'PEN'}</span></span><b>${money(accountBalance(m),m.cur||'PEN')}</b></div>`).join(''):'')+(credits.length?`<div class="pyon-section-mini">💳 Tarjetas de crédito por banco</div>`+pyonCreditBankList(credits):'')+`</details>`}
  blocks.accounts=part;const debts=['PEN','USD'].map(c=>{const dc=C.deudas.filter(d=>d.dir==='c'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0),dp=C.deudas.filter(d=>d.dir==='p'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0);return `<div class="r" style="padding:10px 0;border-top:1px solid var(--ln)"><b>${c}</b><span class="d">Por cobrar: ${money(dc,c)}<br>Por pagar: ${money(dp,c)}</span></div>`}).join('');
  blocks.debts=`<details class="c"><summary style="font-weight:750;cursor:pointer">🤝 Resumen de deudas</summary>${debts}</details>`;return h+pyonDashboardArrange(blocks);
 }
 
 /* PYON 4.1 — auditoría no destructiva de la información financiera. */
-const PYON_PAIRED_TYPES=['tr_out','tr_in','ex_out','ex_in'];
+const PYON_PAIRED_TYPES=['tr_out','tr_in','ex_out','ex_in','card_out'];
 function pyonLinkedType(x){return !!x && (PYON_PAIRED_TYPES.includes(x.t)||!!x.opId)}
 function pyonMovementActions(x){
  if(pyonLinkedType(x))return x.opId
@@ -886,11 +955,12 @@ function pyonHealthReport(){
  }
  for(const [opId,items] of ops){
   const types=items.map(x=>x.t),isTransfer=types.some(t=>t==='tr_out'||t==='tr_in'),isExchange=types.some(t=>t==='ex_out'||t==='ex_in');
-  const goodTypes=isTransfer&&!isExchange?types.includes('tr_out')&&types.includes('tr_in'):isExchange&&!isTransfer?types.includes('ex_out')&&types.includes('ex_in'):false;
+  const isCardPay=types.includes('card_out')||types.includes('p');const goodTypes=isTransfer&&!isExchange&&!isCardPay?types.includes('tr_out')&&types.includes('tr_in'):isExchange&&!isTransfer&&!isCardPay?types.includes('ex_out')&&types.includes('ex_in'):isCardPay&&!isTransfer&&!isExchange?types.includes('card_out')&&types.includes('p'):false;
   if(items.length!==2||!goodTypes){warn('Operación incompleta','Transferencia o cambio '+opId+' tiene '+items.length+' movimientos; debería tener uno de salida y otro de entrada.');continue}
-  const [out,inc]=[items.find(x=>x.t.endsWith('_out')),items.find(x=>x.t.endsWith('_in'))];
+  const [out,inc]=isCardPay?[items.find(x=>x.t==='card_out'),items.find(x=>x.t==='p')]:[items.find(x=>x.t.endsWith('_out')),items.find(x=>x.t.endsWith('_in'))];
   if(out.f!==inc.f)warn('Fechas diferentes','Operación '+opId+' tiene fechas diferentes en origen y destino.');
   if((out.cuentaId||out.m)===(inc.cuentaId||inc.m))warn('Misma cuenta en ambos lados','Operación '+opId+' usa una misma cuenta para salida y entrada.');
+  if(isCardPay&&(curOf(out)!==curOf(inc)||Math.abs(Number(out.mo)-Number(inc.mo))>.011))warn('Pago de tarjeta descuadrado','Pago '+opId+' tiene montos o monedas diferentes entre la tarjeta y la cuenta de origen.');
   if(isTransfer&&(curOf(out)!==curOf(inc)||Math.abs(Number(out.mo)-Number(inc.mo))>.011))warn('Transferencia descuadrada','Operación '+opId+' tiene importes o monedas que no coinciden.');
   if(isExchange&&curOf(out)===curOf(inc))warn('Cambio de moneda incorrecto','Operación '+opId+' tiene la misma moneda en ambas cuentas.');
  }
@@ -1103,7 +1173,7 @@ async function pyonUndoOperation(opId){
  const rows=all().filter(x=>String(x.opId||'')===String(opId));
  if(!rows.length){toast('La operación ya no está disponible.');return}
  const kinds=new Set(rows.map(x=>x.t));
- const title=kinds.has('ex_out')||kinds.has('ex_in')?'Anular cambio de moneda':'Anular transferencia';
+ const title=kinds.has('p')&&kinds.has('card_out')?'Anular pago de tarjeta':kinds.has('ex_out')||kinds.has('ex_in')?'Anular cambio de moneda':'Anular transferencia';
  const warning=rows.length===2?'Se eliminarán los movimientos de origen y destino juntos.':'Esta operación parece incompleta ('+rows.length+' registro/s). Se eliminarán únicamente los registros que aún existen.';
  if(!await pyonConfirm(warning+' Esta acción solo modifica los registros internos de PYON.',''+title))return;
  const removed=[];
@@ -1120,7 +1190,7 @@ async function pyonUndoOperation(opId){
  });
 }
 
-const PYON_EXTRA_MOVEMENT_LABELS={debt_in:'Cobro de préstamo',debt_out:'Pago de préstamo',tr_in:'Transferencia recibida',tr_out:'Transferencia enviada',ex_in:'Cambio de moneda recibido',ex_out:'Cambio de moneda enviado',a_return:'Retiro de meta',a:'Aporte a meta'};
+const PYON_EXTRA_MOVEMENT_LABELS={debt_in:'Cobro de préstamo',debt_out:'Pago de préstamo',tr_in:'Transferencia recibida',tr_out:'Transferencia enviada',ex_in:'Cambio de moneda recibido',ex_out:'Cambio de moneda enviado',a_return:'Retiro de meta',a:'Aporte a meta',card_out:'Pago de tarjeta desde cuenta'};
 function pyonMovementLabel(x){return TN[x.t]||PYON_EXTRA_MOVEMENT_LABELS[x.t]||'Movimiento registrado'}
 function pyonMovementSign(x){return ['i','debt_in','tr_in','ex_in','a_return'].includes(x.t)?'+':'−'}
 let pyonMovFormOpen=false,pyonMovFilter='all';
@@ -1133,7 +1203,7 @@ function vMovs(){
  if(opening){
  h+=`<div class="c pyon-compact-form"><div class="pyon-debt-create-title">${e?'Editar movimiento':'Nuevo movimiento'}</div><div class="seg">${[['g','Gasto'],['i','Ingreso'],['p','Pago de tarjeta']].map(([k,n])=>`<button type="button" class="${fT===k?'on':''}" data-a="tt" data-v="${k}">${n}</button>`).join('')}</div>`;
  if(!ms.length)h+=`<p class="d">${fT==='p'?'Primero agrega una tarjeta de crédito':'Primero agrega una cuenta'} en Más → Mis cuentas.</p></div>`;
- else h+=`<label>Monto<input id="mo" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e?e.mo:''}"></label><label>${fT==='p'?'Tarjeta que pagas':'Cuenta o medio de pago'}<select id="md">${ms.map(m=>`<option value="${esc(m.id)}"${e&&e.m===m.id?' selected':''}>${KE[m.k]||'🏦'} ${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><p class="d">Moneda según la cuenta seleccionada.</p><details class="pyon-subdetails"><summary>Tipo de cambio de referencia (opcional)</summary><label>Soles por dólar<input id="tc" type="number" inputmode="decimal" step="0.001" min="0" value="${e&&e.tc?e.tc:C.tc||''}"></label></details>`+(fT==='g'?`<label>Categoría<select id="ct">${cs.map(c=>`<option value="${esc(c.n)}"${e&&e.c===c.n?' selected':''}>${ce(c.n)} ${esc(c.n)}</option>`).join('')}</select></label><label class="chk"><input type="checkbox" id="im"${e&&e.imp?' checked':''}>Marcar como imprevisto</label>`+(e?'':`<label class="chk" style="color:var(--ink);background:var(--bg)"><input type="checkbox" id="fr">Guardar como gasto frecuente</label>`):'')+`<label>Fecha<input id="fe" type="date" value="${e?esc(e.f):today()}"></label><label>Nota<input id="no" placeholder="Opcional" value="${esc(e?e.n:'')}"></label><div class="pyon-compact-buttons"><button class="b" data-a="add">${e?'Guardar cambios':'Guardar movimiento'}</button><button class="o" type="button" data-a="mov-cancel">Cancelar</button></div></div>`;
+ else h+=`<label>Monto<input id="mo" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e?e.mo:''}"></label><label>${fT==='p'?'Tarjeta que pagas':'Cuenta o medio de pago'}<select id="md">${ms.map(m=>`<option value="${esc(m.id)}"${e&&e.m===m.id||(!e&&fT==='p'&&pyonPayCardPreselect===m.id)?' selected':''}>${KE[m.k]||'🏦'} ${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><p class="d">Moneda según la cuenta seleccionada.</p><details class="pyon-subdetails"><summary>Tipo de cambio de referencia (opcional)</summary><label>Soles por dólar<input id="tc" type="number" inputmode="decimal" step="0.001" min="0" value="${e&&e.tc?e.tc:C.tc||''}"></label></details>`+(fT==='g'?`<label>Categoría<select id="ct">${cs.map(c=>`<option value="${esc(c.n)}"${e&&e.c===c.n?' selected':''}>${ce(c.n)} ${esc(c.n)}</option>`).join('')}</select></label><label class="chk"><input type="checkbox" id="im"${e&&e.imp?' checked':''}>Marcar como imprevisto</label>`+(e?'':`<label class="chk" style="color:var(--ink);background:var(--bg)"><input type="checkbox" id="fr">Guardar como gasto frecuente</label>`):'')+`${fT==='p'&&!e?`<div id="pyon-card-pay-source-wrap">${pyonCardPaySelect(pyonPayCardPreselect&&ms.some(m=>m.id===pyonPayCardPreselect)?pyonPayCardPreselect:ms[0]?.id)}</div>`:fT==='p'&&e?'<p class="pyon-card-pay-hint">Pago histórico sin cuenta de origen: se conserva tal como fue registrado; no se generará un débito bancario retroactivo.</p>':''}<label>Fecha<input id="fe" type="date" value="${e?esc(e.f):today()}"></label><label>Nota<input id="no" placeholder="Opcional" value="${esc(e?e.n:'')}"></label><div class="pyon-compact-buttons"><button class="b" data-a="add">${e?'Guardar cambios':'Guardar movimiento'}</button><button class="o" type="button" data-a="mov-cancel">Cancelar</button></div></div>`;
  }
  if(C.frec.length&&!e)h+=`<details class="c pyon-subdetails"><summary>⚡ Gastos frecuentes (${C.frec.length})</summary><div class="pyon-frequent-row">${C.frec.map(f=>`<span class="chip"><button class="o" data-a="fq" data-v="${esc(f.id)}">${ce(f.c)} ${esc(f.n)} · ${money(f.mo,med(f.m)?.cur||f.cur||'PEN')}</button><button class="x" data-a="fx" data-v="${esc(f.id)}" aria-label="Quitar frecuente">✕</button></span>`).join('')}</div></details>`;
  const L=inM(ym).slice().sort((a,b)=>b.f.localeCompare(a.f));
@@ -1245,6 +1315,41 @@ function pyonAccountDependencies(id){
  const total=movements+recurring+frequent+debtPayments+legacyDebtLinks+goalLinks+notes;
  return {movements,recurring,frequent,debtPayments,legacyDebtLinks,goalLinks,notes,total};
 }
+
+function pyonCreditBank(m){
+ const explicit=String(m.banco||'').trim();if(explicit)return explicit;
+ const n=String(m.n||'').toLocaleLowerCase('es-PE');
+ const known=BANCOS.filter(b=>!['Yape','Plin','Efectivo'].includes(b)).sort((a,b)=>b.length-a.length);
+ const match=known.find(b=>n.includes(b.toLocaleLowerCase('es-PE')));
+ return match||'Otros bancos';
+}
+function pyonCreditCards(){return C.medios.filter(m=>m.k==='c')}
+function pyonCreditDebt(m){return Math.max(0,-accountBalance(m))}
+function pyonCreditLine(m){const n=Number(m.limiteCredito);return Number.isFinite(n)&&n>0?n:null}
+function pyonCreditGroups(cards){
+ const banks=new Map();
+ for(const m of cards){const name=pyonCreditBank(m),key=name.toLocaleLowerCase('es-PE');if(!banks.has(key))banks.set(key,{name,cards:[]});banks.get(key).cards.push(m)}
+ return [...banks.values()].sort((a,b)=>a.name.localeCompare(b.name,'es-PE'));
+}
+function pyonCreditCardDetails(m,manage=false){
+ const cur=m.cur||'PEN',owed=pyonCreditDebt(m),line=pyonCreditLine(m),available=line===null?null:Math.max(0,line-owed),pct=line===null?0:owed/line*100;
+ const credit=accountBalance(m)>0.005?`<div class="pyon-credit-note">Saldo a favor: ${money(accountBalance(m),cur)}.</div>`:'';
+ const legacy=m.deudaInicial==null&&m.saldoInicial!=null&&Number(m.saldoInicial)!==0?'<div class="pyon-credit-note">El saldo inicial antiguo de esta tarjeta no se ha reinterpretado. Edita la tarjeta si necesitas indicar deuda inicial.</div>':'';
+ return `<details class="pyon-credit-card" data-card="${esc(m.id)}"><summary><span><b>${esc(m.n)} ${m.x?' · Archivada':''}</b><small>${esc(cur)} · Deuda estimada</small></span><strong>${money(owed,cur)}</strong></summary><div class="pyon-credit-body"><div class="pyon-credit-line"><div class="pyon-credit-stat"><span>Deuda utilizada</span><strong>${money(owed,cur)}</strong></div><div class="pyon-credit-stat"><span>Crédito disponible</span><strong>${available===null?'Sin configurar':money(available,cur)}</strong></div></div><div class="pyon-credit-track" role="progressbar" aria-label="Uso de línea de crédito" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.min(100,Math.round(pct))}"><i class="${pct>100?'over':''}" style="width:${Math.min(100,Math.max(0,pct))}%"></i></div><div class="pyon-credit-foot"><span>${line===null?'Agrega una línea de crédito':pct.toFixed(1)+' % de la línea utilizada'}</span><span>${line===null?'':'Línea: '+money(line,cur)}</span></div><div class="pyon-credit-meta">Cierre: día ${esc(m.cie||'—')} · Pago: día ${esc(m.pag||'—')}<br>Saldo inicial adeudado: ${money(m.deudaInicial||0,cur)}</div>${credit}${legacy}<div class="pyon-credit-toolbar">${!m.x?`<button class="b" data-a="card-pay" data-v="${esc(m.id)}" type="button">Registrar pago</button>`:''}${manage?`<button class="o" data-a="mededit" data-v="${esc(m.id)}" type="button">Editar</button><button class="o" data-a="xm" data-v="${esc(m.id)}" type="button">${m.x?'Reactivar':'Archivar'}</button><button class="o pyon-account-delete" data-a="meddel" data-v="${esc(m.id)}" type="button">Eliminar</button>`:''}</div></div></details>`;
+}
+function pyonCreditBankList(cards,manage=false){
+ const groups=pyonCreditGroups(cards);
+ return `<div class="pyon-credit-section"><div class="pyon-credit-intro">Cada tarjeta conserva su propia moneda, línea y saldo. El crédito no se suma al dinero disponible.</div>${groups.map(({name,cards},idx)=>`<details class="pyon-credit-bank" ${idx===0?'open':''}><summary><span class="pyon-bank-icon" aria-hidden="true">🏦</span><span class="pyon-bank-name">${esc(name)}<small>${cards.length} ${cards.length===1?'tarjeta':'tarjetas'}</small></span></summary><div class="pyon-credit-bank-body">${cards.map(m=>pyonCreditCardDetails(m,manage)).join('')}</div></details>`).join('')}</div>`;
+}
+let pyonPayCardPreselect='';
+function pyonPaySourceOptions(cardId){
+ const card=med(cardId),cur=card?.cur||'PEN';
+ return C.medios.filter(m=>!m.x&&m.k!=='c'&&(m.cur||'PEN')===cur);
+}
+function pyonCardPaySelect(cardId){
+ const options=pyonPaySourceOptions(cardId);
+ return `<label>Cuenta desde la que pagaste<select id="cardPaySource"><option value="">Elige una cuenta de origen</option>${options.map(m=>`<option value="${esc(m.id)}">${KE[m.k]||'🏦'} ${esc(m.n)} · ${esc(m.cur||'PEN')}</option>`).join('')}</select></label><p class="pyon-card-pay-hint">El pago disminuirá la deuda de la tarjeta y el saldo estimado de la cuenta de origen. No se volverá a contar como gasto del mes.</p>${options.length?'':'<p class="pyon-card-pay-error">No tienes cuentas de débito, efectivo o billetera activas en la moneda de esta tarjeta. Crea una cuenta de esa moneda antes de registrar el pago.</p>'}`;
+}
 function pyonAccountListRow(m){
  const count=pyonAccountDependencies(m.id);
  const kind=KN[m.k]||'cuenta';
@@ -1262,7 +1367,7 @@ function pyonAccountListRow(m){
 function pyonUnifiedHeader(icon,title,desc,badge=''){return `<div class="pyon-unified-top"><div><h2>${icon} ${title}</h2><p>${desc}</p></div>${badge?`<span class="pyon-badge">${badge}</span>`:''}</div>`}
 function pyonUnifiedToggle(key,label,opened){return `<button type="button" class="o" data-a="utoggle" data-v="${key}">${opened?'▾':'▸'} ${label}</button>`}
 function pyonAccountCurrencySelection(){return document.querySelector('input[name="bcur-choice"]:checked')?.value==='USD'?'USD':'PEN'}
-function vMed(){const e=medEd?C.medios.find(m=>m.id===medEd):null;const open=e||pyonUnifiedForms.med;const active=C.medios.filter(m=>!m.x).length,arch=C.medios.filter(m=>m.x).length;return back()+`<div class="c">${pyonUnifiedHeader('💳','Mis cuentas y medios de pago','Administra tus cuentas con el mismo estilo compacto de Deudas, Movimientos y Ahorros.',`${active} activas · ${arch} archivadas`)}<div class="pyon-unified-actions">${!e?pyonUnifiedToggle('med',open?'Ocultar formulario':'Nueva cuenta',open):''}</div>${open?`<div class="pyon-form-card"><div class="k">${e?'Editar cuenta':'Agregar cuenta o medio de pago'}</div><label>Nombre<input id="bn" list="bl" placeholder="Ej. BCP ahorro dólares" value="${e?esc(e.n):''}"></label><datalist id="bl">${BANCOS.map(b=>`<option value="${esc(b)}">`).join('')}</datalist><div class="pyon-inline-grid"><label>Tipo<select id="bk"><option value="d"${e&&e.k==='d'?' selected':''}>Cuenta de débito</option><option value="c"${e&&e.k==='c'?' selected':''}>Tarjeta de crédito</option><option value="b"${e&&e.k==='b'?' selected':''}>Billetera</option><option value="e"${e&&e.k==='e'?' selected':''}>Efectivo</option></select></label><fieldset class="pyon-account-currency"><legend>Moneda de la cuenta</legend><div class="pyon-account-currency-grid"><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="PEN"${!e||e.cur!=='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">S/</span><strong>Soles</strong><small>PEN</small></span></label><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="USD"${e&&e.cur==='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">US$</span><strong>Dólares</strong><small>USD</small></span></label></div></fieldset><div class="pyon-account-currency-note">Selecciona la moneda en la que está denominada esta cuenta; PEN y USD no se suman ni convierten automáticamente.</div><label>Saldo inicial<input id="bsi" type="number" inputmode="decimal" step="0.01" placeholder="Opcional" value="${e&&e.saldoInicial!==null&&e.saldoInicial!==undefined?e.saldoInicial:''}"></label><label>Día de cierre (crédito)<input id="bc" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.cie||''):''}"></label><label>Día de pago (crédito)<input id="bp" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.pag||''):''}"></label></div>${e&&accountMovements(e.id).length?'<div class="d">La moneda se bloquea cuando la cuenta ya tiene movimientos.</div>':''}<div class="r" style="margin-top:12px"><button class="b" data-a="${e?'medsave':'addm'}" style="flex:1">${e?'Guardar cambios':'Agregar cuenta'}</button>${e?'<button class="o" data-a="medcancel">Cancelar</button>':'<button class="o" data-a="utoggle" data-v="med">Cerrar</button>'}</div></div>`:''}<div class="pyon-section-mini">Tus cuentas</div>${C.medios.length?C.medios.map(pyonAccountListRow).join(''):'<div class="pyon-list-card"><div class="d">Aún no agregaste ninguna cuenta o medio de pago.</div></div>'}<div class="d" style="margin-top:8px">Puedes editar, archivar o eliminar cuentas. Eliminar solo está disponible cuando no existen vínculos financieros.</div></div>`}
+function vMed(){const e=medEd?C.medios.find(m=>m.id===medEd):null;const open=e||pyonUnifiedForms.med;const active=C.medios.filter(m=>!m.x).length,arch=C.medios.filter(m=>m.x).length;return back()+`<div class="c">${pyonUnifiedHeader('💳','Mis cuentas y medios de pago','Administra tus cuentas con el mismo estilo compacto de Deudas, Movimientos y Ahorros.',`${active} activas · ${arch} archivadas`)}<div class="pyon-unified-actions">${!e?pyonUnifiedToggle('med',open?'Ocultar formulario':'Nueva cuenta',open):''}</div>${open?`<div class="pyon-form-card"><div class="k">${e?'Editar cuenta':'Agregar cuenta o medio de pago'}</div><label>Nombre<input id="bn" list="bl" placeholder="Ej. BCP ahorro dólares" value="${e?esc(e.n):''}"></label><datalist id="bl">${BANCOS.map(b=>`<option value="${esc(b)}">`).join('')}</datalist><div class="pyon-inline-grid"><label>Tipo<select id="bk"><option value="d"${e&&e.k==='d'?' selected':''}>Cuenta de débito</option><option value="c"${e&&e.k==='c'?' selected':''}>Tarjeta de crédito</option><option value="b"${e&&e.k==='b'?' selected':''}>Billetera</option><option value="e"${e&&e.k==='e'?' selected':''}>Efectivo</option></select></label><fieldset class="pyon-account-currency"><legend>Moneda de la cuenta</legend><div class="pyon-account-currency-grid"><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="PEN"${!e||e.cur!=='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">S/</span><strong>Soles</strong><small>PEN</small></span></label><label class="pyon-account-currency-label"><input type="radio" name="bcur-choice" value="USD"${e&&e.cur==='USD'?' checked':''}${e&&accountMovements(e.id).length?' disabled':''}><span class="pyon-account-currency-card"><span class="pyon-account-currency-symbol">US$</span><strong>Dólares</strong><small>USD</small></span></label></div></fieldset><div class="pyon-account-currency-note">Selecciona la moneda en la que está denominada esta cuenta; PEN y USD no se suman ni convierten automáticamente.</div><div id="pyon-noncredit-fields" class="full" ${e&&e.k==='c'?'hidden':''}><label>Saldo inicial disponible<input id="bsi" type="number" inputmode="decimal" step="0.01" placeholder="Opcional" value="${e&&e.saldoInicial!==null&&e.saldoInicial!==undefined?e.saldoInicial:''}"></label></div><fieldset id="pyon-credit-fields" class="pyon-credit-fieldset" ${!e||e.k!=='c'?'hidden':''}><legend>Detalles de la tarjeta de crédito</legend><label>Banco<input id="bbank" list="bank-list" maxlength="80" placeholder="Ej. BCP" value="${e?esc(e.banco||pyonCreditBank(e)):''}"></label><datalist id="bank-list">${BANCOS.filter(b=>!['Yape','Plin','Efectivo'].includes(b)).map(b=>`<option value="${esc(b)}">`).join('')}</datalist><div class="pyon-inline-grid"><label>Línea de crédito<input id="blimit" type="number" inputmode="decimal" step="0.01" min="0" placeholder="Ej. 5000" value="${e&&e.limiteCredito!=null?esc(e.limiteCredito):''}"></label><label>Deuda inicial anterior a PYON<input id="bdebt" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e&&e.deudaInicial!=null?esc(e.deudaInicial):''}"></label></div><p class="pyon-credit-note">La deuda inicial representa lo que ya debías antes de registrar consumos aquí; no es tu línea de crédito. Para tarjetas anteriores, PYON no convertirá automáticamente su antiguo saldo inicial.</p></fieldset><label>Día de cierre (crédito)<input id="bc" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.cie||''):''}"></label><label>Día de pago (crédito)<input id="bp" type="number" min="1" max="31" inputmode="numeric" value="${e?esc(e.pag||''):''}"></label></div>${e&&accountMovements(e.id).length?'<div class="d">La moneda se bloquea cuando la cuenta ya tiene movimientos.</div>':''}<div class="r" style="margin-top:12px"><button class="b" data-a="${e?'medsave':'addm'}" style="flex:1">${e?'Guardar cambios':'Agregar cuenta'}</button>${e?'<button class="o" data-a="medcancel">Cancelar</button>':'<button class="o" data-a="utoggle" data-v="med">Cerrar</button>'}</div></div>`:''}<div class="pyon-section-mini">Tus cuentas</div>${C.medios.length?C.medios.filter(m=>m.k!=='c').map(pyonAccountListRow).join('')+(pyonCreditCards().length?`<div class="pyon-section-mini">Tarjetas de crédito · por banco</div>`+pyonCreditBankList(pyonCreditCards(),true):''):'<div class="pyon-list-card"><div class="d">Aún no agregaste ninguna cuenta o medio de pago.</div></div>'}<div class="d" style="margin-top:8px">Puedes editar, archivar o eliminar cuentas. Eliminar solo está disponible cuando no existen vínculos financieros.</div></div>`}
 function vCat(){return back()+`<div class="c"><div class="k">Agregar categoría</div><label>Nombre<input id="cn"></label><button class="b" data-a="addc" style="width:100%;margin-top:12px">Agregar</button></div><div class="c">`+C.cats.map((c,i)=>`<div class="r" style="margin-top:8px"><span>${ce(c.n)} ${esc(c.n)}${c.x?' <span class="d">archivada</span>':''}</span><span style="display:flex;gap:6px"><input data-pr="${i}" type="number" inputmode="decimal" placeholder="Límite PEN" value="${budgetLimit(c.n,'PEN')||''}" style="width:120px" aria-label="Presupuesto PEN de ${esc(c.n)}"><input data-prusd="${i}" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Límite USD" value="${budgetLimit(c.n,'USD')||''}" style="width:105px" aria-label="Presupuesto USD de ${esc(c.n)}"><button class="o" data-a="xc" data-v="${i}">${c.x?'Reactivar':'Archivar'}</button></span></div>`).join('')+`</div>`}
 document.addEventListener('change',e=>{if(e.target.id==='reportcur'){window.reportCurrency=e.target.value;render()}});
 function reportCur(x){const acct=med(x.cuentaId||x.m);return x.cur==='USD'?'USD':x.cur==='PEN'?'PEN':(acct?.cur==='USD'?'USD':'PEN')}
@@ -1325,6 +1430,20 @@ function vAnual(){
 }
 function vAyuda(){
 const sections=[
+['💳','Tarjetas multibanco · v4.4.1','Visualiza tarjetas por banco y registra pagos vinculados a tus cuentas.',[
+ ['Tarjetas agrupadas','En Inicio → Detalle de cuentas verás los bancos agrupados; toca un banco y luego una tarjeta para consultar deuda, línea, disponible y fechas. En Más → Mis cuentas puedes editar sus datos.'],
+ ['Línea de crédito','Al crear o editar una tarjeta elige banco, línea de crédito y deuda inicial anterior a PYON. La línea no es dinero disponible y no se suma a los saldos de débito.'],
+ ['Saldo histórico','Las tarjetas antiguas conservan sus compras y pagos. No se convierte automáticamente el antiguo saldo inicial de la cuenta en deuda inicial. Complétala manualmente tras contrastar el banco.'],
+ ['Pago vinculado','En Movimientos → Pago de tarjeta selecciona la tarjeta, el importe y la cuenta de origen de la misma moneda. PYON crea dos movimientos vinculados: baja la deuda y descuenta dinero de la cuenta, sin generar un nuevo gasto ordinario.'],
+ ['Anular pagos','En Movimientos → Otros, abre el pago vinculado y toca Anular. Se anulan juntas ambas partes, con posibilidad de deshacer durante unos segundos. Los pagos antiguos sin cuenta de origen no se alteran.'],
+ ['Monedas y límites','Cada cuenta de tarjeta de esta versión mantiene una moneda (PEN o USD). Para consumos en otra moneda crea una tarjeta virtual separada; no se realizan conversiones automáticas. No se calculan intereses, cuotas ni importes facturados.']]],
+['📈','Proyección financiera · v4.4','Visualiza escenarios de 7, 15 y 30 días sin alterar tus registros.',[
+ ['Dónde está','En Más → Proyección, o desde el acceso rápido de Inicio junto al calendario.'],
+ ['Cálculo del saldo','Parte de los saldos iniciales y movimientos de cuentas activas distintas de tarjetas de crédito, con fechas hasta hoy. Los movimientos de fecha futura se suman o descuentan al llegar su día.'],
+ ['Compromisos','Resta deudas por pagar con fecha válida y gastos recurrentes aún no registrados. Las deudas vencidas se consideran pendientes desde hoy.'],
+ ['Cobros posibles','Los préstamos en Me deben no incrementan la proyección conservadora. Puedes activar un escenario que los incluya como cobros potenciales, nunca garantizados.'],
+ ['Tarjetas y datos faltantes','Los vencimientos de tarjetas sin monto confirmado, notas e importes desconocidos se avisan pero no se descuentan. Verifica fechas y pagos antes de tomar decisiones.'],
+ ['Privacidad y límites','La proyección se calcula en este dispositivo, no crea movimientos ni realiza pagos. PEN y USD se mantienen separados. No estima intereses ni gastos futuros que no estén registrados.']]],
 ['💵','Soles y dólares al crear cuentas · v4.3.3.1','Selector visible para registrar cuentas PEN y USD.',[
  ['Dónde está','En Más → Mis cuentas → Nueva cuenta, elige Soles (PEN) o Dólares (USD) antes de guardar. Ambas opciones se ven en la pantalla, sin abrir un menú desplegable.'],
  ['Cuenta nueva','Puedes crear cuentas o tarjetas en PEN o USD; PYON registra la moneda seleccionada y mantiene los saldos separados.'],
@@ -1419,8 +1538,8 @@ const sections=[
 ['Privacidad','Estas ventanas funcionan dentro de PYON. No son anuncios ni abren sitios externos.']]],
 ['🧪','Novedades y próximas mejoras','Conoce qué está disponible y qué está pendiente.',[
 ['Disponible en esta versión','Cuentas PEN/USD, saldos estimados por moneda, transferencias, cambio bidireccional, deudas con abonos y presupuestos por moneda.'],
-['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: pendiente','Todavía no está disponible. Una versión futura incorporará preguntas sencillas procesadas localmente; el asistente conversacional avanzado requerirá revisión de privacidad y costes.'],['En desarrollo','Proyecciones avanzadas, consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
-['Novedad v4.3.3.1 · selector PEN/USD','En Mis cuentas, la moneda se elige con dos tarjetas visibles: Soles (PEN) o Dólares (USD). Se respeta el bloqueo para cuentas con historial.'],['Novedad v4.3.3 · administración de datos','Nuevo centro para limpiar registros de prueba con descarga previa, dos alcances de borrado, palabra BORRAR y confirmación final, sin afectar otros sitios del navegador.'],['Novedad v4.3.2 · diseño unificado','Se unificaron tarjetas y formularios plegables de Mis cuentas, Presupuestos, Transferencias, Notas, Recurrentes, Seguridad y Monedas.'],['Novedad v4.3.2 · eliminación segura de cuentas','En Más → Mis cuentas y medios de pago se añadió Eliminar con confirmación. Las cuentas vinculadas a operaciones no se borran: pueden archivarse para conservar el historial.'],['Novedad v4.3 · calendario y vistas compactas','Calendario mensual interno con vencimientos de tarjetas, deudas, notas y recurrentes; movimientos y metas en filas compactas y expandibles. Se mantiene la descarga .ics.'],['Novedad v4.2.2 · Deudas compactas','La pestaña Deudas ahora tiene Me deben, Debo y Saldadas como vistas independientes; muestra filas compactas que se despliegan al tocarlas. No repite el resumen de Inicio ni altera los cálculos.'],['Novedad v4.2.1 · desplazamiento vertical','Se corrigió la interacción de las reglas de desbordamiento horizontal y vertical, especialmente para desplazarse con el dedo en pantallas móviles y tras cerrar ventanas emergentes.'],['Novedad v4.2 · respaldo y compatibilidad iOS','Nueva pantalla con vista previa y confirmación antes de restaurar un JSON, soporte de copias antiguas, preparación de ícono y manifiesto para instalación en pantalla de inicio y mejoras en controles táctiles.'],['Novedad v4.1 · integridad financiera','Nueva revisión de consistencia sin modificar datos, descarga de respaldo JSON, y anulación de transferencias y cambios como operación completa. Se protegen los movimientos de deudas y metas contra eliminación aislada.'],['Novedad v4.0 · inicio discreto y privacidad visual','El gran botón Personalizar Inicio se sustituyó por un pequeño ícono junto al mes. Un nuevo ícono de ojo oculta o muestra importes en pantalla sin cambiar registros.'],['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio toca el ícono discreto de ajustes junto al selector del mes, o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
+['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: pendiente','Todavía no está disponible. Una versión futura incorporará preguntas sencillas procesadas localmente; el asistente conversacional avanzado requerirá revisión de privacidad y costes.'],['En desarrollo','Consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
+['Novedad v4.4.1 · tarjetas multibanco','Tarjetas por banco, línea y saldo disponible, deuda inicial explícita y pagos vinculados a cuenta bancaria sin duplicar gastos.'],['Novedad v4.4 · Proyección financiera','Nuevas estimaciones de 7, 15 y 30 días, separadas por PEN/USD; compromisos programados y escenario opcional de cobros. No modifica registros.'],['Novedad v4.3.3.1 · selector PEN/USD','En Mis cuentas, la moneda se elige con dos tarjetas visibles: Soles (PEN) o Dólares (USD). Se respeta el bloqueo para cuentas con historial.'],['Novedad v4.3.3 · administración de datos','Nuevo centro para limpiar registros de prueba con descarga previa, dos alcances de borrado, palabra BORRAR y confirmación final, sin afectar otros sitios del navegador.'],['Novedad v4.3.2 · diseño unificado','Se unificaron tarjetas y formularios plegables de Mis cuentas, Presupuestos, Transferencias, Notas, Recurrentes, Seguridad y Monedas.'],['Novedad v4.3.2 · eliminación segura de cuentas','En Más → Mis cuentas y medios de pago se añadió Eliminar con confirmación. Las cuentas vinculadas a operaciones no se borran: pueden archivarse para conservar el historial.'],['Novedad v4.3 · calendario y vistas compactas','Calendario mensual interno con vencimientos de tarjetas, deudas, notas y recurrentes; movimientos y metas en filas compactas y expandibles. Se mantiene la descarga .ics.'],['Novedad v4.2.2 · Deudas compactas','La pestaña Deudas ahora tiene Me deben, Debo y Saldadas como vistas independientes; muestra filas compactas que se despliegan al tocarlas. No repite el resumen de Inicio ni altera los cálculos.'],['Novedad v4.2.1 · desplazamiento vertical','Se corrigió la interacción de las reglas de desbordamiento horizontal y vertical, especialmente para desplazarse con el dedo en pantallas móviles y tras cerrar ventanas emergentes.'],['Novedad v4.2 · respaldo y compatibilidad iOS','Nueva pantalla con vista previa y confirmación antes de restaurar un JSON, soporte de copias antiguas, preparación de ícono y manifiesto para instalación en pantalla de inicio y mejoras en controles táctiles.'],['Novedad v4.1 · integridad financiera','Nueva revisión de consistencia sin modificar datos, descarga de respaldo JSON, y anulación de transferencias y cambios como operación completa. Se protegen los movimientos de deudas y metas contra eliminación aislada.'],['Novedad v4.0 · inicio discreto y privacidad visual','El gran botón Personalizar Inicio se sustituyó por un pequeño ícono junto al mes. Un nuevo ícono de ojo oculta o muestra importes en pantalla sin cambiar registros.'],['Novedad v3.9 · calendario, CSV y presupuestos','Descargas nativas .ics y CSV; calendario con múltiples tarjetas y vencimientos durante 3, 6 o 12 meses; presupuestos con alertas visuales y configuración por moneda.'],['Novedad v3.8 · inicio personalizable','En Inicio toca el ícono discreto de ajustes junto al selector del mes, o entra en Más → Personalizar Inicio. Muestra u oculta secciones y cambia su orden con las flechas. Preferencias guardadas en el dispositivo, sin alterar tus finanzas.'],['Novedad v3.7 · gráficos interactivos','En Reportes, toca una barra mensual o una categoría para consultar importes, porcentajes y últimos movimientos. Compatible con estilos Moderno, Clásico y Compacto.'],['Novedad v3.6 · rediseño integral','Nuevo panel de balance mensual, gráficos anuales y de categorías que cambian según el estilo y respetan la paleta seleccionada. Se conservan registros y cálculos existentes.'],['Novedad v3.5.6 · respuesta inmediata y gráficos','El selector de Apariencia ya no reconstruye toda la página. Se agregaron gráficos de ejemplo para cada estilo.'],['Novedad v3.5.5 · correcciones','Se corrigió la aplicación de paletas y estilos y el texto indefinido en movimientos de cobros y pagos de deudas.'],['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
 ];
 return back()+`<div class="c" style="background:var(--cd);color:var(--ink);border-top:4px solid var(--ac)"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Todo lo que necesitas, explicado paso a paso cuando lo necesites.</p><div class="d">Guía de la versión 4.3 · Puedes consultar los temas sin modificar tus datos.</div></div>`
 +`<div class="c"><label style="margin:0">🔎 Buscar en la guía<input id="helpSearch" type="search" placeholder="Ej. deuda, dólar, transferencia, ahorro" oninput="document.querySelectorAll('.help-topic').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(this.value.toLowerCase()))"></label></div>`
@@ -1544,8 +1663,106 @@ function pyonSaveAppearance(patch){
 }
 pyonApplyAppearance(pyonAppearance());
 
-function vMas(){if(sub==='data')return vDataAdmin();if(sub==='restore')return vBackupRestore();if(sub==='revision')return vRevision();if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
- const menu=[['cal','📅','Calendario'],['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio'],['revision','🛡️','Revisar datos'],['restore','☁️','Respaldo y restauración'],['data','🗃️','Administrar datos']];
+
+// PYON v4.4: previsión local, solo lectura. Nunca registra transacciones por sí sola.
+let pyonForecastCurrency='PEN',pyonForecastWindow=30,pyonForecastReceivables=false;
+const PYON_FC_POSITIVE=new Set(['i','tr_in','ex_in','debt_in','a_return']);
+const PYON_FC_NEGATIVE=new Set(['g','a','p','tr_out','ex_out','debt_out','card_out']);
+function pyonForecastDelta(x){if(PYON_FC_POSITIVE.has(x.t))return +x.mo||0;if(PYON_FC_NEGATIVE.has(x.t))return -(+x.mo||0);return 0}
+function pyonForecastAddDays(key,num){const d=pyonLocalDate(key);if(!d)return null;d.setDate(d.getDate()+num);return pyonDateKey(d)}
+function pyonForecastDateRange(start,horizon){return [start,pyonForecastAddDays(start,horizon)]}
+function pyonForecastData(cur='PEN',asOf=today()){
+ const known=['PEN','USD'].includes(cur)?cur:'PEN',last=pyonForecastAddDays(asOf,30);
+ const accounts=C.medios.filter(m=>!m.x&&m.k!=='c'&&(m.cur||'PEN')===known),ids=new Set(accounts.map(m=>m.id));
+ const ledger=all().filter(x=>ids.has(x.cuentaId||x.m));
+ const validAmount=x=>Number.isFinite(Number(x.mo))&&Number(x.mo)>0;
+ const undated=ledger.filter(x=>!pyonLocalDate(x.f));
+ const base=accounts.reduce((z,m)=>z+(Number(m.saldoInicial)||0),0)+ledger.filter(x=>!pyonLocalDate(x.f)||x.f<=asOf).reduce((z,x)=>z+pyonForecastDelta(x),0);
+ const rows=[];const warnings=[];
+ const add=(date,label,amount,category,reference='',originalDate='')=>{
+  if(!date||date<asOf||date>last||!Number.isFinite(amount)||amount===0)return;
+  rows.push({date,label,amount,category,reference,originalDate});
+ };
+ // Los movimientos de fecha futura ya registrados se proyectan, no se suman al saldo de hoy.
+ ledger.filter(x=>pyonLocalDate(x.f)&&x.f>asOf&&x.f<=last&&validAmount(x)).forEach(x=>{
+  const delta=pyonForecastDelta(x);
+  if(delta) add(x.f,x.n||x.c||pyonMovementLabel(x),delta,'Movimiento registrado',x.id);
+ });
+ const recurring=C.rec||[];
+ for(const r of recurring){
+  if((med(r.m)?.cur||r.cur||'PEN')!==known)continue;
+  const value=Number(r.mo),day=Number(r.dia);
+  if(!(value>0)||!Number.isFinite(value)||!Number.isInteger(day)||day<1||day>31)continue;
+  for(let offset=0;offset<=1;offset++){
+   const d=pyonLocalDate(asOf),year=d.getFullYear(),month=d.getMonth()+offset;
+   const actualDay=Math.min(day,new Date(year,month+1,0).getDate());
+   const due=pyonDateKey(new Date(year,month,actualDay));if(due<asOf||due>last)continue;
+   const monthKey=due.slice(0,7);
+   // Si se registró el recurrente, no se vuelve a presupuestar en ese mes.
+   if(all().some(x=>x.rid===r.id&&typeof x.f==='string'&&x.f.startsWith(monthKey)))continue;
+   add(due,'Recurrente: '+r.n,-value,'Recurrente',r.id);
+  }
+ }
+ for(const d of C.deudas){
+  if((d.cur||'PEN')!==known||d.ok||debtLeft(d)<0.005)continue;
+  const owed=d.dir==='p',receivable=d.dir==='c';if(!owed&&!receivable)continue;
+  if(!pyonLocalDate(d.v)){
+   warnings.push({kind:'debtdate',text:(owed?'Deuda por pagar':'Cobro')+' sin fecha válida: '+d.n});
+   continue;
+  }
+  const due=d.v<asOf?asOf:d.v; // Compromisos vencidos siguen siendo obligaciones pendientes.
+  if(due>last)continue;
+  add(due,(owed?'Pagar: ':'Cobrar: ')+d.n,(owed?-1:1)*debtLeft(d),owed?'Deuda por pagar':'Cobro posible',d.id,d.v<asOf?d.v:'');
+ }
+ for(const m of C.medios.filter(x=>x.k==='c'&&!x.x&&(x.cur||'PEN')===known)){
+  const day=Number(m.pag);
+  if(!Number.isInteger(day)||day<1||day>31){warnings.push({kind:'card',text:'Tarjeta sin día de pago: '+m.n});continue}
+  const start=pyonLocalDate(asOf);
+  for(let k=0;k<=1;k++){
+   const yy=start.getFullYear(),mm=start.getMonth()+k;
+   const dt=pyonDateKey(new Date(yy,mm,Math.min(day,new Date(yy,mm+1,0).getDate())));
+   if(dt>=asOf&&dt<=last)warnings.push({kind:'card',date:dt,text:'Tarjeta: '+m.n+' · monto no confirmado'});
+  }
+ }
+ if(undated.length)warnings.push({kind:'ledger',text:undated.length+' movimiento(s) sin fecha válida incluidos en el saldo inicial estimado.'});
+ const notes=C.notas.filter(n=>!n.ok&&pyonLocalDate(n.f)&&n.f>=asOf&&n.f<=last);
+ if(notes.length)warnings.push({kind:'notes',text:notes.length+' nota(s) pendiente(s) no cuantificadas automáticamente.'});
+ rows.sort((a,b)=>a.date.localeCompare(b.date)||a.label.localeCompare(b.label));
+ const projection=(days,receivables=false)=>{
+  const date=pyonForecastAddDays(asOf,days);
+  const included=rows.filter(x=>x.date<=date&&(receivables||x.category!=='Cobro posible'));
+  const incomes=included.filter(x=>x.amount>0).reduce((z,x)=>z+x.amount,0);
+  const outgoing=included.filter(x=>x.amount<0).reduce((z,x)=>z-x.amount,0);
+  return {date,balance:base+incomes-outgoing,incomes,outgoing,known:included.length};
+ };
+ return {cur:known,asOf,base,accounts:accounts.length,rows,warnings,projection};
+}
+function vProyeccion(){
+ const cur=pyonForecastCurrency,days=pyonForecastWindow,scenario=pyonForecastReceivables;
+ const data=pyonForecastData(cur),p=data.projection(days,scenario),p0=data.projection(0,scenario);
+ const checkpoints=[0,7,15,30].map(n=>({n,...data.projection(n,scenario)}));
+ const maxBar=Math.max(1,...checkpoints.map(x=>Math.abs(x.balance)));
+ const visible=data.rows.filter(x=>x.date<=p.date&&(scenario||x.category!=='Cobro posible'));
+ const sorted=[...visible].sort((a,b)=>a.date.localeCompare(b.date)||a.label.localeCompare(b.label));
+ const obligations=visible.filter(x=>x.amount<0).reduce((v,x)=>v-x.amount,0);
+ const receivables=data.rows.filter(x=>x.date<=p.date&&x.category==='Cobro posible').reduce((v,x)=>v+x.amount,0);
+ const rows=sorted.length?sorted.map(x=>`<div class="pyon-forecast-row"><div class="left"><strong>${esc(x.label)}</strong><small>${esc(x.date)} · ${esc(x.category)}${x.originalDate?' · vencida desde '+esc(x.originalDate):''}</small></div><div class="right" style="color:${x.amount<0?'var(--rd)':'var(--ac)'}">${x.amount<0?'−':'+'} ${money(Math.abs(x.amount),cur)}</div></div>`).join(''):'<div class="pyon-forecast-quiet" style="padding:10px 0">Sin compromisos con importes conocidos para este período.</div>';
+ const chart=checkpoints.map(x=>`<div class="pyon-forecast-col"><b>${money(x.balance,cur)}</b><div class="pyon-forecast-barwrap"><div class="pyon-forecast-bar ${x.balance<0?'negative':''}" style="height:${Math.max(4,Math.abs(x.balance)/maxBar*100)}%"></div></div><small>${x.n?'Día '+x.n:'Hoy'}</small></div>`).join('');
+ const unknown=data.warnings.filter(w=>!w.date||w.date<=p.date);
+ return back()+`<div class="c">${pyonUnifiedHeader('📈','Proyección financiera','Una estimación para planificar tus próximos compromisos. No es un saldo bancario confirmado.','Solo lectura')}
+ <div class="pyon-section-mini">Moneda</div><div class="pyon-forecast-tabs" role="group" aria-label="Moneda de proyección"><button type="button" data-a="forecast-currency" data-v="PEN" aria-pressed="${cur==='PEN'}">🇵🇪 PEN · Soles</button><button type="button" data-a="forecast-currency" data-v="USD" aria-pressed="${cur==='USD'}">🇺🇸 USD · Dólares</button></div>
+ <div class="pyon-section-mini">Horizonte</div><div class="pyon-forecast-tabs" role="group" aria-label="Plazo de proyección">${[7,15,30].map(n=>`<button type="button" data-a="forecast-window" data-v="${n}" aria-pressed="${days===n}">${n} días</button>`).join('')}</div>
+ <div class="pyon-forecast-metrics"><div class="pyon-forecast-metric"><small>Saldo actual estimado</small><strong>${money(data.base,cur)}</strong><small>${data.accounts} cuenta(s) activa(s), sin tarjetas de crédito</small></div><div class="pyon-forecast-metric focus"><small>Saldo proyectado al ${esc(p.date)}</small><strong style="color:${p.balance<0?'var(--rd)':'var(--ac)'}">${money(p.balance,cur)}</strong><small>Escenario ${scenario?'con cobros posibles':'conservador'}</small></div><div class="pyon-forecast-metric"><small>Salidas previstas en ${days} días</small><strong>${money(p.outgoing,cur)}</strong><small>Incluye pagos y gastos registrados futuros</small></div><div class="pyon-forecast-metric"><small>Entradas previstas en ${days} días</small><strong>${money(p.incomes,cur)}</strong><small>${scenario?'Incluye cobros posibles':'Sin contar cobros inciertos'}</small></div></div>
+ <label class="pyon-forecast-switch"><input type="checkbox" id="pyon-forecast-receivables" ${scenario?'checked':''}><span>Incluir <b>«Me deben»</b> como cobros posibles (+ ${money(receivables,cur)} en este plazo). No son ingresos garantizados.</span></label>
+ <div class="pyon-form-card"><div class="k">Evolución del saldo estimado</div><div class="pyon-forecast-chart" role="img" aria-label="Evolución estimada a 0, 7, 15 y 30 días">${chart}</div><p class="pyon-forecast-quiet">Valores calculados con movimientos ya registrados, deudas y gastos recurrentes. Los meses de las tarjetas sin importe confirmado no se descuentan.</p></div>
+ <div class="pyon-form-card"><div class="r"><b>📅 Compromisos en ${days} días</b><span class="pyon-badge">${visible.length} evento(s)</span></div>${rows}</div>
+ ${unknown.length?`<details class="pyon-forecast-warning"><summary>⚠️ ${unknown.length} elementos no incluidos o sin importe confirmado</summary>${unknown.map(x=>`<p class="pyon-forecast-quiet">${x.date?esc(x.date)+' · ':''}${esc(x.text)}</p>`).join('')}</details>`:''}
+ <div class="pyon-forecast-quiet" style="margin:12px 0">Los cobros potenciales no se consideran en el escenario conservador. No se estima gasto discrecional futuro, intereses, comisiones no registradas ni pagos de tarjeta sin importe confirmado. Los saldos se basan en tus registros locales y pueden diferir del banco.</div>
+ <div class="pyon-unified-actions"><button type="button" class="o" data-a="calendar-open">📅 Abrir calendario</button><button type="button" class="o" data-a="ics">⬇️ Recordatorios .ics</button></div></div>`;
+}
+
+function vMas(){if(sub==='forecast')return vProyeccion();if(sub==='data')return vDataAdmin();if(sub==='restore')return vBackupRestore();if(sub==='revision')return vRevision();if(sub==='cal')return vCalendario();if(sub==='budget')return vPresupuestos();if(sub==='dash')return vPersonalizarInicio();if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
+ const menu=[['forecast','📈','Proyección'],['cal','📅','Calendario'],['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['budget','🎯','Presupuestos'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia'],['dash','🏠','Personalizar Inicio'],['revision','🛡️','Revisar datos'],['restore','☁️','Respaldo y restauración'],['data','🗃️','Administrar datos']];
  return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">⬇️ Calendario .ics</button><button class="o" data-a="exp">⬇️ Exportar CSV</button><button class="o" data-a="calendar-open">⚙️ Elegir bancos</button><button class="o" data-a="backup-json">⬇️ Respaldo JSON</button><button class="o" data-a="restore-open">📂 Restaurar JSON</button><button class="o" data-a="data-open">🗃️ Limpiar datos de prueba</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
 }
 
@@ -1616,6 +1833,8 @@ function exp(){
 }
 
 document.addEventListener('change',e=>{
+ if(e.target.id==='bk'){const card=e.target.value==='c';const cf=$('#pyon-credit-fields'),nf=$('#pyon-noncredit-fields');if(cf)cf.hidden=!card;if(nf)nf.hidden=card;return}
+ if(e.target.id==='md'&&fT==='p'){pyonPayCardPreselect=e.target.value;const wrap=$('#pyon-card-pay-source-wrap');if(wrap)wrap.innerHTML=pyonCardPaySelect(e.target.value);return}
  if(e.target.id==='pyon-restore-file'){void pyonReadBackupFile(e.target.files?.[0]);return}
  if(e.target.id==='pyon-restore-confirm'){const btn=$('#pyon-restore-commit');if(btn)btn.disabled=!e.target.checked;return}
  if(e.target.dataset.calendarBank!==undefined){const cfg=pyonCalendarSettings(),id=e.target.dataset.calendarBank;pyonCalendarSave({excluded:e.target.checked?cfg.excluded.filter(x=>x!==id):[...new Set([...cfg.excluded,id])]});return}
@@ -1678,6 +1897,7 @@ document.addEventListener('click',e=>{
   addMov(o);ym=f.slice(0,7);pyonCloseDialog(true);render();toast('Movimiento registrado ✓');
  }
 });
+document.addEventListener('change',e=>{if(e.target.id==='pyon-forecast-receivables'){pyonForecastReceivables=e.target.checked;render()}});
 document.addEventListener('change',e=>{if(e.target.id==='pqtype'){$('#pqcategorywrap').style.display=e.target.value==='g'?'':'none'}});
 $('#pyon-overlay').addEventListener('click',e=>{if(e.target.id==='pyon-overlay')pyonCloseDialog(false)});
 document.addEventListener('keydown',e=>{
@@ -1694,6 +1914,9 @@ document.addEventListener('keydown',e=>{
 
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('svg .pyon-chart-action[role="button"]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+ if(a==='forecast-currency'){pyonForecastCurrency=v==='USD'?'USD':'PEN';render();return}
+ if(a==='forecast-window'){pyonForecastWindow=[7,15,30].includes(Number(v))?Number(v):30;render();return}
+ if(a==='forecast-open'){tab='x';sub='forecast';render();return}
  if(a==='data-open'){tab='x';sub='data';render();return}
  if(a==='reset-backup'){pyonResetBackupDownload();return}
  if(a==='reset-commit'){await pyonResetCommit();return}
@@ -1701,6 +1924,7 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  if(a==='restore-cancel'){pyonRestoreStage=null;render();return}
  if(a==='restore-commit'){await pyonCommitRestore();return}
  if(a==='backup-json'){pyonBackupJSON();return}
+ if(a==='card-pay'){const card=med(v);if(!card||card.k!=='c'||card.x){toast('Tarjeta no disponible.');return}pyonPayCardPreselect=card.id;tab='m';sub='';ed=null;fT='p';pyonMovFormOpen=true;render();window.scrollTo(0,0);return}
  if(a==='mov-new'){pyonMovFormOpen=!pyonMovFormOpen;ed=null;render();return}
  if(a==='mov-cancel'){pyonMovFormOpen=false;ed=null;render();return}
  if(a==='mov-filter'){pyonMovFilter=['all','g','i','other'].includes(v)?v:'all';render();return}
@@ -1731,7 +1955,9 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  else if(a==='exdir'){const src=med(val('exsrc')),want=v==='PEN-USD'?'PEN':'USD';const source=C.medios.find(m=>!m.x&&m.k!=='c'&&(m.cur||'PEN')===want);const dest=C.medios.find(m=>!m.x&&m.k!=='c'&&m.id!==source?.id&&(m.cur||'PEN')!==(want));if(source&&dest){$('#exsrc').value=source.id;$('#exdst').value=dest.id}const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview();return}
  else if(a==='exquote'){const btn=b;btn.disabled=true;btn.textContent='Consultando…';try{const res=await fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'});if(!res.ok)throw new Error('No se pudo consultar');const data=await res.json();const rate=Number(data?.rates?.PEN);if(!(rate>0))throw new Error('Cotización no disponible');$('#extrate').value=rate.toFixed(4);const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview();const stamp=data.time_last_update_utc?new Date(data.time_last_update_utc).toLocaleString('es-PE'):'actualización informada por la fuente';toast('Referencia general actualizada: S/ '+rate.toFixed(4)+' por US$ 1 · '+stamp)}catch(err){toast('No se pudo consultar la referencia. Puedes ingresar el tipo de cambio manualmente.')}finally{btn.disabled=false;btn.textContent='Consultar tipo de cambio'}return}
  else if(a==='exchange'){const src=med(val('exsrc')),dst=med(val('exdst')),out=+val('exout'),inc=+val('exin'),fee=+val('exfee')||0,rate=+val('extrate'),f=val('exdate')||today();if(!src||!dst||src.id===dst.id||!(out>0)||!(inc>0)){msg='Selecciona dos cuentas distintas e indica los importes entregado y recibido.';return render()}if((src.cur||'PEN')===(dst.cur||'PEN')){msg='Para cambiar moneda, selecciona una cuenta en PEN y otra en USD.';return render()}if(src.k==='c'||dst.k==='c'){msg='El cambio de moneda solo está disponible entre cuentas de débito, billeteras y efectivo.';return render()}if(fee>out){msg='La comisión no puede superar el importe entregado.';return render()}if(!(rate>0)){msg='Ingresa o consulta el tipo de cambio para guardar la operación.';return render()}const opId=nid(),note=val('exnote')||'Cambio de moneda',provider=val('exprovider')||'No indicado';const effective=(out-fee)/inc;addMov({t:'ex_out',f,mo:out,m:src.id,cuentaId:src.id,cur:src.cur||'PEN',opId,n:note,comision:fee,tipoCambio:rate,tipoCambioEfectivo:effective,entidadCambio:provider,importeRecibido:inc});addMov({t:'ex_in',f,mo:inc,m:dst.id,cuentaId:dst.id,cur:dst.cur||'PEN',opId,n:note,comision:fee,tipoCambio:rate,entidadCambio:provider,importeEntregado:out});ym=f.slice(0,7);toast('Cambio de moneda registrado ✓')}
- else if(a==='add'){const mo=+val('mo');if(!(mo>0)){msg='Escribe un monto mayor que cero.';return render()}const f=val('fe')||today(),tc=+val('tc'),selectedAccount=med(val('md')),o={t:fT,f,mo,m:val('md'),cuentaId:val('md'),cur:ed?(all().find(x=>x.id===ed)?.cur||selectedAccount?.cur||'PEN'):(selectedAccount?.cur||'PEN')};if(tc>0)o.tc=tc;if(fT==='g'){o.c=val('ct');if($('#im')&&$('#im').checked)o.imp=1}if(val('no'))o.n=val('no');
+ else if(a==='add'){const mo=+val('mo');if(!(mo>0)||!Number.isFinite(mo)){msg='Escribe un monto válido mayor que cero.';return render()}const f=val('fe')||today(),tc=+val('tc'),selectedAccount=med(val('md')),o={t:fT,f,mo,m:val('md'),cuentaId:val('md'),cur:ed?(all().find(x=>x.id===ed)?.cur||selectedAccount?.cur||'PEN'):(selectedAccount?.cur||'PEN')};
+  if(fT==='p'&&!ed){const source=med(val('cardPaySource'));if(!selectedAccount||selectedAccount.x||selectedAccount.k!=='c'){msg='Selecciona una tarjeta de crédito activa.';return render()}if(!source||source.x||source.k==='c'||source.id===selectedAccount.id||(source.cur||'PEN')!==(selectedAccount.cur||'PEN')){msg='Selecciona una cuenta de origen activa en la misma moneda que la tarjeta. No se convirtió ningún importe.';return render()}const debt=pyonCreditDebt(selectedAccount);if(mo>debt+.005){msg='El pago supera la deuda estimada de '+money(debt,selectedAccount.cur||'PEN')+'. Verifica la deuda inicial y los consumos antes de pagar.';return render()}const opId=nid(),note=val('no')||('Pago de '+selectedAccount.n);addMov({t:'p',f,mo,m:selectedAccount.id,cuentaId:selectedAccount.id,cur:selectedAccount.cur||'PEN',opId,n:note,cuentaOrigenId:source.id});addMov({t:'card_out',f,mo,m:source.id,cuentaId:source.id,cur:source.cur||'PEN',opId,tarjetaId:selectedAccount.id,n:'Pago de tarjeta: '+selectedAccount.n});pyonPayCardPreselect='';pyonMovFormOpen=false;ym=f.slice(0,7);toast('Pago vinculado guardado ✓');render();return}
+if(tc>0)o.tc=tc;if(fT==='g'){o.c=val('ct');if($('#im')&&$('#im').checked)o.imp=1}if(val('no'))o.n=val('no');
   if(ed){const original=all().find(x=>x.id===ed);if(original&&(pyonLinkedType(original)||original.deudaId||original.a||['debt_in','debt_out','a','a_return'].includes(original.t))){msg='Este movimiento está vinculado: no se puede editar por separado.';return render()}for(const y in M){const i=M[y].findIndex(x=>x.id===ed);if(i>=0){const old=M[y].splice(i,1)[0];if(old.rid)o.rid=old.rid;save(y)}}o.id=ed;ed=null;pyonMovFormOpen=false;addMov(o);toast('Cambios guardados ✓')}
   else{addMov(o);if(fT==='g'&&$('#fr')&&$('#fr').checked){C.frec.push({id:nid(),n:o.n||o.c,mo,c:o.c,m:o.m,cur:o.cur});save('cfg')}toast('Movimiento guardado ✓');pyonMovFormOpen=false}ym=f.slice(0,7)}
  else if(a==='fq'){const f=C.frec.find(x=>x.id===v);if(f){addMov({t:'g',f:today(),mo:f.mo,m:f.m,c:f.c,n:f.n,cur:f.cur,tc:f.cur?C.tc:0});ym=today().slice(0,7);toast('Registrado: '+f.n+' ✓')}}
@@ -1768,8 +1994,32 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  else if(a==='retg'){const mt=C.metas.find(x=>x.id===v),mo=+val('ret'+v),acct=med(val('retac'+v));if(!mt||!Number.isFinite(mo)||mo<=0||mo>goalSaved(v)+0.001||!acct||acct.x||acct.k==='c'||(acct.cur||'PEN')!==(mt.cur||'PEN')){msg='Comprueba el importe pendiente en la meta y selecciona una cuenta activa de la misma moneda.';return render()}if(!await pyonConfirm('¿Liberar '+money(mo,mt.cur||'PEN')+' de esta meta hacia '+acct.n+'? Solo cambia el registro interno de PYON.','Retirar de la meta'))return;addMov({t:'a_return',f:today(),mo:Math.round(mo*100)/100,a:v,m:acct.id,cuentaId:acct.id,cur:mt.cur||'PEN',n:'Retiro de reserva: '+mt.n});msg='Dinero liberado de la meta y devuelto al disponible estimado.'}
  else if(a==='mededit'){medEd=v;sub='med'}
  else if(a==='medcancel'){medEd=null;sub='med'}
- else if(a==='medsave'){const m=C.medios.find(x=>x.id===medEd),n=val('bn'),k=val('bk');if(!m||!n){msg='Escribe el nombre de la cuenta.';return render()}if(accountMovements(m.id).length&&val('bcur')!==(m.cur||'PEN')){msg='No se puede cambiar la moneda porque la cuenta ya tiene movimientos.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';m.n=n;m.k=k;m.cur=pyonAccountCurrencySelection();m.saldoInicial=val('bsi')!==''?+val('bsi'):null;m.tipoCuenta=k;m.cie=k==='c'?val('bc'):' ';m.pag=k==='c'?val('bp'):' ';medEd=null;save('cfg');msg='Cuenta actualizada. Los movimientos históricos se conservaron.'}
- else if(a==='addm'){let n=val('bn'),k=val('bk');if(!n){msg='Escribe el nombre.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';C.medios.push({id:nid(),n,k,cur:pyonAccountCurrencySelection(),saldoInicial:val('bsi')!==''?+val('bsi'):null,tipoCuenta:k,cie:k==='c'?val('bc'):'',pag:k==='c'?val('bp'):''});save('cfg');msg='Medio de pago agregado.'}
+ else if(a==='medsave'){
+  const m=C.medios.find(x=>x.id===medEd),n=val('bn').trim();let k=val('bk');if(!m||!n){msg='Escribe el nombre de la cuenta.';return render()}
+  if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';
+  const cur=pyonAccountCurrencySelection(),historical=accountMovements(m.id).length,previousKind=m.k;
+  if(historical&&(cur!==(m.cur||'PEN')||k!==m.k)){msg='La moneda y el tipo no pueden cambiar porque esta cuenta tiene movimientos. Puedes modificar el nombre, banco, línea y fechas.';return render()}
+  if(k==='c'){
+   const lineText=val('blimit').trim(),debtText=val('bdebt').trim(),line=lineText===''?null:Number(lineText),debt=debtText===''?null:Number(debtText);
+   if((line!==null&&(!Number.isFinite(line)||line<0))||(debt!==null&&(!Number.isFinite(debt)||debt<0))){msg='La línea y la deuda inicial deben ser valores válidos mayores o iguales a cero.';return render()}
+   m.banco=val('bbank').trim()||pyonCreditBank({...m,n});m.limiteCredito=line;m.deudaInicial=debt;
+  }
+  m.n=n;m.k=k;m.cur=cur;
+  if(k!=='c')m.saldoInicial=val('bsi')!==''?Number(val('bsi')):null;
+  else if(!historical&&previousKind!=='c')m.saldoInicial=null;
+  m.tipoCuenta=k;m.cie=k==='c'?val('bc'):'';m.pag=k==='c'?val('bp'):'';medEd=null;save('cfg');msg='Cuenta actualizada. Los movimientos históricos se conservaron.'
+ }
+ else if(a==='addm'){
+  const n=val('bn').trim();let k=val('bk');if(!n){msg='Escribe el nombre.';return render()}
+  if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';
+  const data={id:nid(),n,k,cur:pyonAccountCurrencySelection(),saldoInicial:k==='c'?null:(val('bsi')!==''?Number(val('bsi')):null),tipoCuenta:k,cie:k==='c'?val('bc'):'',pag:k==='c'?val('bp'):''};
+  if(k==='c'){
+   const lt=val('blimit').trim(),dt=val('bdebt').trim(),line=lt===''?null:Number(lt),debt=dt===''?null:Number(dt);
+   if((line!==null&&(!Number.isFinite(line)||line<0))||(debt!==null&&(!Number.isFinite(debt)||debt<0))){msg='La línea y la deuda inicial deben ser valores válidos mayores o iguales a cero.';return render()}
+   data.banco=val('bbank').trim()||pyonCreditBank(data);data.limiteCredito=line;data.deudaInicial=debt;
+  }
+  C.medios.push(data);save('cfg');pyonUnifiedForms.med=false;msg='Medio de pago agregado.'
+ }
  else if(a==='meddel'){
   const account=med(v);
   if(!account){toast('Esta cuenta ya no existe.');return}

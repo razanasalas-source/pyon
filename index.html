@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PYON · versión 2.5 (cambio de moneda bidireccional)</title>
+<title>PYON · v3.5.4 · Apariencia personalizable</title>
 <style>
 :root{--bg:#F4F5F1;--cd:#fff;--ink:#17231F;--mu:#5B6862;--ac:#1F6F5C;--on:#fff;--ln:#E3E6E0;--wb:#FFF1DC;--wt:#8A5200;--rd:#A63A28;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121815;--cd:#1B2420;--ink:#E8EEEA;--mu:#A5B1AA;--ac:#4FB89F;--on:#0B1411;--ln:#2C3832;--wb:#3A2A12;--wt:#F0B35A;--rd:#E58673;color-scheme:dark}}
@@ -52,11 +52,121 @@ svg[role=img]{animation:pop .5s ease both}
 .cf{position:fixed;top:-20px;font-size:22px;animation:fall 2.2s ease-in forwards;z-index:9;pointer-events:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 #lock{position:fixed;inset:0;background:var(--bg);z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px}
+
+/* PYON 3.5.1 — iOS / Safari responsive layout */
+*,*::before,*::after{box-sizing:border-box}
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;max-width:100%;overflow-x:hidden}
+#app{width:100%;min-width:0;max-width:480px;margin-inline:auto;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+#app *,#app *::before,#app *::after{max-width:100%}
+.c,.r,.seg,.m{min-width:0}
+.r{flex-wrap:wrap;align-items:center}
+.r>*,.seg>*,.m>*{min-width:0}
+.r>span,.r>div,.r>label,.r>strong{overflow-wrap:anywhere}
+button,input,select,textarea{max-width:100%;-webkit-appearance:none;appearance:none;border-radius:10px}
+input,select,textarea{font-size:16px;min-width:0}
+input[type=checkbox]{-webkit-appearance:checkbox;appearance:checkbox}
+input[type=radio]{-webkit-appearance:radio;appearance:radio}
+button{white-space:normal;overflow-wrap:anywhere;touch-action:manipulation}
+.seg{flex-wrap:wrap}
+.seg button{min-width:0;flex:1 1 95px}
+.m{grid-template-columns:minmax(0,96px) minmax(0,1fr) minmax(0,40px)}
+nav{width:100%;max-width:100%;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav div{width:100%;min-width:0}
+nav button{min-width:0;overflow-wrap:anywhere;font-size:clamp(10px,2.8vw,13px)}
+#toast{width:max-content;max-width:calc(100vw - 24px);overflow-wrap:anywhere}
+#lock{width:100%;max-width:100%;min-height:100dvh;overflow-y:auto}
+.c img,.c svg,.c canvas{max-width:100%;height:auto}
+.c table{max-width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:390px){#app{padding-left:10px;padding-right:10px}.c{padding:11px}.big{font-size:clamp(25px,7vw,34px)}.r>.b,.r>.o{flex-shrink:1}.m{grid-template-columns:minmax(0,82px) minmax(0,1fr) minmax(0,38px);gap:5px;font-size:12px}}
+
+/* PYON 3.5.2 — ventanas combinadas y accesibles */
+body.pyon-dialog-open{overflow:hidden}
+#pyon-overlay{position:fixed;inset:0;z-index:30;background:rgba(8,20,16,.57);display:none;align-items:center;justify-content:center;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom))}
+#pyon-overlay.open{display:flex}
+#pyon-overlay.sheet{align-items:flex-end;padding:0}
+.pyon-dialog{width:min(100%,420px);max-height:min(88dvh,720px);overflow:auto;overscroll-behavior:contain;background:var(--cd);color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 18px 70px #0004}
+.sheet .pyon-dialog{width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:90dvh}
+.pyon-dialog h2{font-size:20px;margin:4px 0 8px}
+.pyon-dialog p{margin:4px 0 14px;overflow-wrap:anywhere}
+.pyon-dialog .pyon-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.pyon-dialog .pyon-actions button{flex:1 1 130px}
+.pyon-dialog label{display:block}
+.pyon-dialog .pyon-handle{width:40px;height:5px;background:var(--ln);border-radius:8px;margin:-8px auto 14px}
+@media(prefers-reduced-motion:no-preference){#pyon-overlay.open .pyon-dialog{animation:in .2s ease-out}}
+
+/* PYON v3.5.3 · Diseño equilibrado: jerarquía visual y lectura progresiva */
+:root{--radius-card:18px}
+#app{padding:12px 14px calc(100px + env(safe-area-inset-bottom,0px))}
+.c{border-radius:var(--radius-card);padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(16,44,32,.035)}
+.k{font-size:11px;letter-spacing:.055em;font-weight:750}
+.d{line-height:1.42}
+.big{font-size:clamp(26px,7vw,34px);letter-spacing:-.04em;line-height:1.16}
+.r{min-width:0;gap:10px}
+.r>*{min-width:0}
+button{cursor:pointer}
+button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.pyon-hero{background:linear-gradient(135deg,#1f6f5c,#154b40);color:white;padding:18px;border-radius:20px;margin-bottom:12px}
+.pyon-hero .k,.pyon-hero .d{color:#d9f1e9}
+.pyon-hero .big{font-size:clamp(25px,7.5vw,36px);overflow-wrap:anywhere}
+.pyon-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.pyon-mini{padding:13px;border:1px solid var(--ln);background:var(--cd);border-radius:16px;min-width:0}
+.pyon-mini .amount{font-weight:750;font-size:clamp(17px,4.8vw,22px);letter-spacing:-.035em;overflow-wrap:anywhere}
+.pyon-mini .k{margin-bottom:7px}
+.pyon-summary{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pyon-summary>*{min-width:0}
+.pyon-detail{margin-top:9px}
+.pyon-detail summary{cursor:pointer;color:var(--ac);font-size:12px;font-weight:700;padding:5px 0}
+.pyon-detail p{margin:6px 0}
+.pyon-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pyon-menu button{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;text-align:left;width:100%;min-height:91px;padding:13px;border:1px solid var(--ln);border-radius:15px;background:var(--cd);color:var(--ink);font-weight:650;line-height:1.25;overflow-wrap:anywhere}
+.pyon-menu .ico{font-size:23px;line-height:1.1}
+.pyon-menu .txt{font-size:13px}
+.pyon-menu button:active{transform:scale(.99)}
+.pyon-section-title{font-weight:800;font-size:15px;margin:16px 2px 9px}
+.pyon-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pyon-shortcuts button{width:100%;min-height:46px}
+.pyon-quiet{font-size:12px;color:var(--mu)}
+.pyon-compact-card{padding:13px 15px}
+.pyon-compact-card .r{flex-wrap:wrap}
+.pyon-compact-card .d{overflow-wrap:anywhere}
+@media(max-width:360px){#app{padding-left:10px;padding-right:10px}.pyon-menu button{padding:10px;min-height:84px}.pyon-mini{padding:11px}.pyon-shortcuts{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.v>.c,.f,svg[role=img]{animation:none!important}}
+
+/* PYON 3.5.4: temas y estilos, sin afectar la información financiera */
+html[data-pyon-palette="emerald"]{--bg:#F4F9F6;--cd:#FFFFFF;--ink:#173B32;--mu:#58736A;--ac:#087F5B;--on:#FFFFFF;--ln:#DCEAE2;--wb:#FFF1DC;--wt:#8A5200;--rd:#B23C3C;color-scheme:light}
+html[data-pyon-palette="executive"]{--bg:#F2F5FA;--cd:#FFFFFF;--ink:#142C4E;--mu:#64748B;--ac:#2563A6;--on:#FFFFFF;--ln:#DFE6F1;--wb:#FFF3D7;--wt:#815500;--rd:#B23C3C;color-scheme:light}
+html[data-pyon-palette="aurora"]{--bg:#F8F5FF;--cd:#FFFFFF;--ink:#30234E;--mu:#706586;--ac:#6941C6;--on:#FFFFFF;--ln:#E8E0F8;--wb:#FFF1DC;--wt:#815500;--rd:#B23C3C;color-scheme:light}
+html[data-pyon-palette="night"]{--bg:#101827;--cd:#1F2937;--ink:#F3F4F6;--mu:#BBC5D2;--ac:#34D399;--on:#101827;--ln:#394454;--wb:#47371D;--wt:#F4C46A;--rd:#FF9A8C;color-scheme:dark}
+html[data-pyon-style="classic"] .c,html[data-pyon-style="classic"] .pyon-mini-card,html[data-pyon-style="classic"] .pyon-menu button,html[data-pyon-style="classic"] .pyon-dialog{border-radius:6px}
+html[data-pyon-style="classic"] .pyon-menu{display:flex;flex-direction:column;gap:7px}
+html[data-pyon-style="classic"] .pyon-menu button{display:flex;flex-direction:row;justify-content:flex-start;gap:12px;text-align:left}
+html[data-pyon-style="classic"] .pyon-menu .ico{font-size:20px}
+html[data-pyon-style="compact"] #app{padding:9px 10px 88px}
+html[data-pyon-style="compact"] .c{padding:10px;margin-bottom:7px;border-radius:9px}
+html[data-pyon-style="compact"] .pyon-menu{gap:6px}
+html[data-pyon-style="compact"] .pyon-menu button{padding:8px 5px;border-radius:9px}
+html[data-pyon-style="compact"] .pyon-section-title{margin-top:12px;margin-bottom:7px}
+html[data-pyon-style="modern"] .c{border-radius:19px;box-shadow:0 3px 15px rgba(0,0,0,.035)}
+html[data-pyon-style="modern"] .pyon-menu button{border-radius:17px}
+.pyon-appearance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pyon-theme-choice{border:2px solid var(--ln);border-radius:15px;background:var(--cd);color:var(--ink);padding:12px;min-height:92px;text-align:left;cursor:pointer}
+.pyon-theme-choice[aria-pressed="true"]{border-color:var(--ac);box-shadow:0 0 0 2px color-mix(in srgb,var(--ac) 17%,transparent)}
+.pyon-swatches{display:flex;gap:3px;margin-bottom:9px}
+.pyon-swatches i{display:block;height:22px;flex:1;border-radius:5px;border:1px solid #7772}
+.pyon-style-choice{display:flex;gap:10px;align-items:center;width:100%;padding:13px;margin:8px 0;text-align:left;border:1px solid var(--ln);border-radius:13px;background:var(--cd);color:var(--ink)}
+.pyon-style-choice[aria-pressed="true"]{border:2px solid var(--ac)}
+.pyon-preview{border:1px solid var(--ln);background:var(--bg);padding:14px;border-radius:16px;margin-top:12px}
+.pyon-preview .c{margin:8px 0}
+.pyon-preview .big{font-size:26px}
+@media(max-width:360px){.pyon-appearance-grid{gap:6px}.pyon-theme-choice{padding:8px}}
+
 </style>
 </head>
 <body>
 <div id="app">Cargando…</div>
 <nav><div><button data-a="tab" data-v="i">Inicio</button><button data-a="tab" data-v="m">Movimientos</button><button data-a="tab" data-v="d">Deudas</button><button data-a="tab" data-v="a">Ahorros</button><button data-a="tab" data-v="x">Más</button></div></nav><button id="fab" data-a="fab" aria-label="Nuevo movimiento">+</button><div id="toast" role="status"></div><div id="lock" role="dialog" aria-label="Bloqueo"><div style="font-size:48px">🐰</div><div style="font-weight:700;font-size:18px">Ingresa tu PIN</div><input id="lp" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN" style="max-width:220px;text-align:center;font-size:24px"><div id="le" class="d" style="color:var(--rd)"></div><button class="b" data-a="lk" style="min-width:160px">Entrar</button></div>
+<div id="pyon-overlay" aria-hidden="true"><section class="pyon-dialog" role="dialog" aria-modal="true" aria-labelledby="pyon-dialog-title"><div id="pyon-dialog-body"></div></section></div>
 <script>
 const $=s=>document.querySelector(s),MN=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const BANCOS=['BCP','BBVA','Interbank','Scotiabank','BanBif','Banco de la Nación','Mibanco','Banco Pichincha','Banco Falabella','Banco Ripley','Financiera Oh!','Yape','Plin','Efectivo'];
@@ -120,24 +230,27 @@ function proximo(){const t=new Date(),t0=new Date(t.getFullYear(),t.getMonth(),t
  const f=L.map(([d,n])=>[Math.round((d-t0)/864e5),n]).filter(x=>x[0]>=0).sort((a,b)=>a[0]-b[0])[0];return f?`Próximo pago: <b>${esc(f[1])}</b> · ${f[0]===0?'hoy':'en '+f[0]+(f[0]===1?' día':' días')}`:''}
 function vInicio(){
  const a=inM(ym),curr=['PEN','USD'];let h=saludo()+mSel();
- h+=`<div class="c" style="margin-top:10px"><div class="k">Mis saldos por moneda</div>`;
- for(const c of curr){const ac=C.medios.filter(m=>!m.x&&(m.cur||'PEN')===c),total=ac.filter(m=>m.k!=='c').reduce((z,m)=>z+accountBalance(m),0),credit=ac.filter(m=>m.k==='c').reduce((z,m)=>z+accountBalance(m),0);h+=`<div style="padding:9px 0;border-top:1px solid var(--ln)"><div class="r"><b>${c==='PEN'?'Soles (PEN)':'Dólares (USD)'}</b><b style="font-size:21px">${money(total,c)}</b></div><div class="d">${ac.length} cuenta(s) · ${ac.filter(m=>m.k==='c').length?`saldo neto de tarjetas: ${money(credit,c)}`:'Sin tarjetas de crédito'}</div></div>`}
- h+=`<div class="d">Los saldos se calculan con el saldo inicial y los movimientos registrados. No son saldos bancarios oficiales. Las cuentas sin saldo inicial parten provisionalmente de cero.</div></div>`;
- for(const c of curr){const L=a.filter(x=>curOf(x)===c),inc=sum(L.filter(x=>x.t==='i'),x=>x.mo),gas=sum(L.filter(x=>x.t==='g'),x=>x.mo),sav=sum(L.filter(x=>x.t==='a'),x=>x.mo);h+=`<div class="c"><div class="k">Resumen del mes · ${c}</div><div class="big">${money(gas,c)}</div><div class="r" style="margin-top:8px"><span>Ingresos<br><b>${money(inc,c)}</b></span><span>Ahorro<br><b>${money(sav,c)}</b></span><span style="text-align:right">Diferencia<br><b>${money(inc-gas-sav,c)}</b></span></div></div>`}
- const nx=proximo();if(nx)h+=`<div class="c w">${nx}<div style="margin-top:6px"><button class="o" data-a="ics">📅 Agregar recordatorios al calendario</button></div></div>`;
+ h+='<div class="pyon-section-title">💳 Mis saldos</div><div class="pyon-mini-grid">';
+ for(const c of curr){const ac=C.medios.filter(m=>!m.x&&(m.cur||'PEN')===c),total=ac.filter(m=>m.k!=='c').reduce((z,m)=>z+accountBalance(m),0),credit=ac.filter(m=>m.k==='c').reduce((z,m)=>z+accountBalance(m),0);
+ h+=`<div class="pyon-mini"><div class="k">${c==='PEN'?'🇵🇪 Soles':'🇺🇸 Dólares'}</div><div class="amount">${money(total,c)}</div><div class="d">${ac.length} cuenta(s)</div>${ac.some(m=>m.k==='c')?`<details class="pyon-detail"><summary>Ver tarjetas</summary><p class="d">Saldo neto: ${money(credit,c)}</p></details>`:''}</div>`}
+ h+='</div><div class="pyon-quiet" style="margin:-4px 2px 13px">Saldos estimados según tus registros, no saldos oficiales del banco.</div>';
+ h+='<div class="pyon-section-title">📊 Este mes</div>';
+ for(const c of curr){const L=a.filter(x=>curOf(x)===c),inc=sum(L.filter(x=>x.t==='i'),x=>x.mo),gas=sum(L.filter(x=>x.t==='g'),x=>x.mo),sav=sum(L.filter(x=>x.t==='a'),x=>x.mo);
+ h+=`<div class="c"><div class="pyon-summary"><div><div class="k">${c==='PEN'?'🇵🇪 PEN':'🇺🇸 USD'} · Gastos</div><div class="big">${money(gas,c)}</div></div><div style="text-align:right"><div class="k">Balance</div><b style="color:${inc-gas-sav>=0?'var(--ac)':'var(--rd)'}">${money(inc-gas-sav,c)}</b></div></div><details class="pyon-detail"><summary>Ver ingresos y ahorro</summary><div class="r"><span>Ingresos</span><b>${money(inc,c)}</b></div><div class="r"><span>Ahorro registrado</span><b>${money(sav,c)}</b></div></details></div>`}
+ const nx=proximo();if(nx)h+=`<div class="c w pyon-compact-card"><div class="r"><span>📅 ${nx}</span><button class="o" data-a="ics">Calendario</button></div></div>`;
  h+=vRec();
- const active=C.medios.filter(m=>!m.x);if(active.length){h+=`<div class="c"><div class="k">Detalle de cuentas</div>`+active.map(m=>`<div class="r" style="padding:9px 0;border-top:1px solid var(--ln)"><span>${KE[m.k]||'🏦'} ${esc(m.n)}<span class="d"> · ${m.cur||'PEN'} · ${KN[m.k]||'cuenta'}</span></span><b>${money(accountBalance(m),m.cur||'PEN')}</b></div>`).join('')+`</div>`}
- const debts=['PEN','USD'].map(c=>{const dc=C.deudas.filter(d=>d.dir==='c'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0),dp=C.deudas.filter(d=>d.dir==='p'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0);return `<div class="c"><div class="k">Deudas · ${c}</div><div class="r"><span>Me deben</span><b>${money(dc,c)}</b></div><div class="r"><span>Debo</span><b>${money(dp,c)}</b></div></div>`}).join('');
- return h+debts;
+ const active=C.medios.filter(m=>!m.x);if(active.length){h+=`<details class="c"><summary style="font-weight:750;cursor:pointer">🏦 Detalle de cuentas (${active.length})</summary>`+active.map(m=>`<div class="r" style="padding:10px 0;border-top:1px solid var(--ln);flex-wrap:wrap"><span>${KE[m.k]||'🏦'} ${esc(m.n)}<span class="d"> · ${m.cur||'PEN'}</span></span><b>${money(accountBalance(m),m.cur||'PEN')}</b></div>`).join('')+`</details>`}
+ const debts=['PEN','USD'].map(c=>{const dc=C.deudas.filter(d=>d.dir==='c'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0),dp=C.deudas.filter(d=>d.dir==='p'&&!d.ok&&(d.cur||'PEN')===c).reduce((z,d)=>z+debtLeft(d),0);return `<div class="r" style="padding:10px 0;border-top:1px solid var(--ln)"><b>${c}</b><span class="d">Por cobrar: ${money(dc,c)}<br>Por pagar: ${money(dp,c)}</span></div>`}).join('');
+ return h+`<details class="c"><summary style="font-weight:750;cursor:pointer">🤝 Resumen de deudas</summary>${debts}</details>`;
 }
 function vMovs(){const e=ed?all().find(x=>x.id===ed):null;if(e)fT=e.t;
  const ms=C.medios.filter(m=>(!m.x||(e&&e.m===m.id))&&(fT!=='p'||m.k==='c')),cs=C.cats.filter(c=>!c.x||(e&&e.c===c.n));
  let h=mSel()+(C.frec.length&&!e?`<div class="c" style="margin-top:10px"><div class="k">Gastos frecuentes · un toque</div>`+C.frec.map(f=>`<span class="chip"><button class="o" data-a="fq" data-v="${f.id}">${ce(f.c)} ${esc(f.n)} · ${fm(f.mo)}</button><button class="x" data-a="fx" data-v="${f.id}" aria-label="Quitar frecuente">✕</button></span>`).join('')+`</div>`:'')+`<div class="c" style="margin-top:10px"><div class="k">${e?'Editar movimiento':'Nuevo movimiento'}</div><div class="seg">${[['g','Gasto'],['i','Ingreso'],['p','Pago de tarjeta']].map(([k,n])=>`<button class="${fT===k?'on':''}" data-a="tt" data-v="${k}">${n}</button>`).join('')}</div>`;
  if(!ms.length)h+=`<div class="d">${fT==='p'?'Primero agrega una tarjeta de crédito':'Primero agrega un medio de pago'} en Más → Medios de pago.</div></div>`;
- else h+=`<label>Monto<input id="mo" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e?e.mo:''}"></label><label>${fT==='p'?'Tarjeta que pagas':'Cuenta o medio de pago'}<select id="md">${ms.map(m=>`<option value="${m.id}"${e&&e.m===m.id?' selected':''}>${KE[m.k]} ${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="accountCurrencyHint">La moneda del movimiento será la misma que la cuenta seleccionada.</div><label>Tipo de cambio de referencia (opcional)<input id="tc" type="number" inputmode="decimal" step="0.001" min="0" value="${e&&e.tc?e.tc:C.tc||''}" placeholder="Solo informativo"></label>`+(fT==='g'?`<label>Categoría<select id="ct">${cs.map(c=>`<option value="${esc(c.n)}"${e&&e.c===c.n?' selected':''}>${ce(c.n)} ${esc(c.n)}</option>`).join('')}</select></label><label class="chk"><input type="checkbox" id="im"${e&&e.imp?' checked':''}>Marcar como imprevisto</label>`+(e?'':`<label class="chk" style="color:var(--ink);background:var(--bg)"><input type="checkbox" id="fr">Guardar como gasto frecuente</label>`):'')+`<label>Fecha<input id="fe" type="date" value="${e?e.f:today()}"></label><label>Nota<input id="no" placeholder="Opcional" value="${esc(e?e.n:'')}"></label><div class="r" style="margin-top:12px"><button class="b" data-a="add" style="flex:1">${e?'Guardar cambios':'Guardar'}</button>${e?'<button class="o" data-a="ce">Cancelar</button>':''}</div></div>`;
+ else h+=`<label>Monto<input id="mo" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" value="${e?e.mo:''}"></label><label>${fT==='p'?'Tarjeta que pagas':'Cuenta o medio de pago'}<select id="md">${ms.map(m=>`<option value="${m.id}"${e&&e.m===m.id?' selected':''}>${KE[m.k]} ${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="accountCurrencyHint" style="margin-top:4px">Moneda según la cuenta.</div><label>Tipo de cambio de referencia (opcional)<input id="tc" type="number" inputmode="decimal" step="0.001" min="0" value="${e&&e.tc?e.tc:C.tc||''}" placeholder="Solo informativo"></label>`+(fT==='g'?`<label>Categoría<select id="ct">${cs.map(c=>`<option value="${esc(c.n)}"${e&&e.c===c.n?' selected':''}>${ce(c.n)} ${esc(c.n)}</option>`).join('')}</select></label><label class="chk"><input type="checkbox" id="im"${e&&e.imp?' checked':''}>Marcar como imprevisto</label>`+(e?'':`<label class="chk" style="color:var(--ink);background:var(--bg)"><input type="checkbox" id="fr">Guardar como gasto frecuente</label>`):'')+`<label>Fecha<input id="fe" type="date" value="${e?e.f:today()}"></label><label>Nota<input id="no" placeholder="Opcional" value="${esc(e?e.n:'')}"></label><div class="r" style="margin-top:12px"><button class="b" data-a="add" style="flex:1">${e?'Guardar cambios':'Guardar'}</button>${e?'<button class="o" data-a="ce">Cancelar</button>':''}</div></div>`;
  const L=inM(ym).sort((a,b)=>a.f<b.f?1:-1);
  return h+`<div class="c"><div class="k">Movimientos del mes</div><input id="q" placeholder="🔍 Buscar por nota, categoría o banco" style="margin-top:8px">`+(L.length?L.map(x=>`<div class="r mv" data-s="${esc((TN[x.t]+' '+(x.c||'')+' '+(x.m?mn(x.m):'')+' '+(x.n||'')).toLowerCase())}" style="border-top:1px solid var(--ln);padding:6px 0"><div><div>${x.c?ce(x.c)+' ':''}${TN[x.t]}${x.c?' · '+esc(x.c):''}${x.imp?' · imprevisto':''}</div><div class="d">${x.f} · ${curOf(x)}${x.m?' · '+esc(mn(x.m)):''}${x.a?' · '+esc((C.metas.find(m=>m.id===x.a)||{}).n):''}${x.n?' · '+esc(x.n):''}</div></div><div style="display:flex;align-items:center"><b style="color:${x.t==='i'?'var(--ac)':'inherit'}">${x.t==='i'?'+':'−'}${money(x.mo,curOf(x))}</b>${x.t==='a'?'':`<button class="x" style="color:var(--ink)" data-a="em" data-v="${x.id}" aria-label="Editar movimiento">✎</button>`}<button class="x" data-a="dm" data-v="${x.id}" aria-label="Eliminar movimiento">✕</button></div></div>`).join(''):'<div class="d" style="margin-top:8px">Sin movimientos en este mes. ¡Anota el primero! 🐰</div>')+`</div>`}
-function vMon(){return back()+`<div class="c"><div class="k">Tipo de cambio</div><p class="d">Los saldos de cuentas y los resúmenes se muestran por separado en PEN y USD. Este tipo de cambio queda como referencia para futuras funciones; no convierte los saldos ni los movimientos históricos.</p><label>Soles por cada US$ 1<input id="tcs" type="number" inputmode="decimal" step="0.001" min="0" value="${C.tc||''}"></label><button class="b" data-a="tcs" style="width:100%;margin-top:12px">Guardar</button></div>`}
+function vMon(){return back()+`<div class="c"><div class="k">Tipo de cambio</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">PEN y USD se muestran por separado. Este valor es informativo y no convierte saldos ni movimientos anteriores.</p></details><label>Soles por cada US$ 1<input id="tcs" type="number" inputmode="decimal" step="0.001" min="0" value="${C.tc||''}"></label><button class="b" data-a="tcs" style="width:100%;margin-top:12px">Guardar</button></div>`}
 function vSeg(){return back()+(C.pin?`<div class="c"><div class="k">Bloqueo con PIN</div><p>El bloqueo está <b>activado</b>: la app pide el PIN al abrirla y después de un minuto fuera de ella.</p><label>Escribe tu PIN para desactivarlo<input id="pc" type="password" inputmode="numeric" maxlength="6"></label><button class="b" data-a="pof" style="width:100%;margin-top:12px">Desactivar bloqueo</button></div>`:`<div class="c"><div class="k">Bloqueo con PIN</div><p class="d">Es opcional: tú decides si lo activas. Es una barrera de comodidad para que nadie curiosee tu celular; no reemplaza la seguridad de tu cuenta de Claude.</p><label>Nuevo PIN (4 a 6 números)<input id="p1" type="password" inputmode="numeric" maxlength="6"></label><label>Repite el PIN<input id="p2" type="password" inputmode="numeric" maxlength="6"></label><button class="b" data-a="pon" style="width:100%;margin-top:12px">Activar bloqueo</button></div>`)+`<div class="c d">Si olvidas el PIN, avísame y te ayudo a quitarlo.</div>`}
 const sha=async t=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)))].map(x=>x.toString(16).padStart(2,'0')).join('');
 async function pinOn(){const a=val('p1'),b=val('p2');if(!/^\d{4,6}$/.test(a)){msg='El PIN debe tener de 4 a 6 números.';return render()}if(a!==b){msg='Los PIN no coinciden.';return render()}const s=nid();C.pin={s,h:await sha(s+a)};save('cfg');toast('Bloqueo activado 🔒');render()}
@@ -185,6 +298,11 @@ function vAnual(){
 }
 function vAyuda(){
 const sections=[
+['🎨','Apariencia · v3.5.4','Cambia el aspecto de PYON sin modificar tus finanzas.',[
+['Dónde se cambia','En Más → Apariencia puedes seleccionar una de cuatro paletas (Esmeralda, Ejecutivo, Aurora y Nocturno) y tres estilos (Moderno, Clásico y Compacto).'],
+['Vista previa','El ejemplo de la pantalla Apariencia muestra cantidades ficticias. Los datos reales se mantienen intactos.'],
+['Guardar y restaurar','Los cambios se aplican inmediatamente y se guardan en el navegador del dispositivo. Pulsa Restaurar apariencia predeterminada para volver a Esmeralda + Moderno.'],
+['Privacidad y dispositivos','La apariencia se almacena por separado de tus movimientos. Cambiar de navegador o dispositivo puede requerir volver a elegir el tema.']]],
 ['🚀','Primeros pasos','Configura tus cuentas y comienza a registrar tus movimientos.',[
 ['1. Agrega tus cuentas','En Más → Medios de pago, crea cada cuenta de banco, billetera o efectivo. Elige PEN o USD y, cuando lo sepas, completa el saldo inicial.'],
 ['2. Registra ingresos y gastos','En Movimientos, selecciona la cuenta, el importe, la categoría y la fecha. La moneda se toma de la cuenta elegida.'],
@@ -213,17 +331,22 @@ const sections=[
 ['Notas y calendario','Usa Notas y pendientes y exporta recordatorios al calendario.'],
 ['CSV y respaldo','Exportar a Excel (CSV) genera un archivo de movimientos; no lo confundas con el respaldo JSON completo de configuración y datos.'],
 ['PIN','En Más → Seguridad puedes activar un bloqueo local. No sustituye la protección del dispositivo ni cifra por sí solo toda la información.']]],
-['🤖','PYON IA · Panel inteligente','Interpreta tus movimientos sin compartirlos con un servicio externo.',[['Abrir el panel','En Más → PYON IA, selecciona PEN o USD. El panel analiza el mes elegido en Inicio.'],['Simulador de ahorro','En PYON IA elige un porcentaje de reducción de gastos y un horizonte de 3 a 12 meses. Los resultados son escenarios hipotéticos basados en meses con movimientos, no promesas de ahorro.'],['Tendencias de seis meses','El panel compara ingresos y gastos de los últimos seis meses y muestra cuántos movimientos hay en cada uno. El promedio solo usa meses con registros y puede ser incompleto.'],['Hallazgos','Señala la categoría con más gastos, variaciones respecto al mes anterior y alertas de presupuesto.'],['Recomendaciones','Las sugerencias son simulaciones basadas en registros, no predicciones garantizadas ni asesoría profesional.'],['Diagnóstico de salud financiera','Muestra ingresos menos gastos y su proporción respecto a los ingresos, durante hasta seis meses. Si hay pocos registros, el resultado es preliminar. Los recurrentes solo se reconocen cuando están vinculados a una recurrencia.'],['Consultas en lenguaje natural','Todavía no están disponibles en v3.5. Está previsto comenzar con preguntas simples en una siguiente versión.'],['Privacidad y límites','En esta etapa se ejecutan reglas locales: no hay conexión con modelos de IA, bancos ni correo. Si faltan datos, los resultados serán parciales.']]],['🧪','Novedades y próximas mejoras','Conoce qué está disponible y qué está pendiente.',[
+['🤖','PYON IA · Panel inteligente','Interpreta tus movimientos sin compartirlos con un servicio externo.',[['Abrir el panel','En Más → PYON IA, selecciona PEN o USD. El panel analiza el mes elegido en Inicio.'],['Simulador de ahorro','En PYON IA elige un porcentaje de reducción de gastos y un horizonte de 3 a 12 meses. Los resultados son escenarios hipotéticos basados en meses con movimientos, no promesas de ahorro.'],['Tendencias de seis meses','El panel compara ingresos y gastos de los últimos seis meses y muestra cuántos movimientos hay en cada uno. El promedio solo usa meses con registros y puede ser incompleto.'],['Hallazgos','Señala la categoría con más gastos, variaciones respecto al mes anterior y alertas de presupuesto.'],['Recomendaciones','Las sugerencias son simulaciones basadas en registros, no predicciones garantizadas ni asesoría profesional.'],['Diagnóstico de salud financiera','Muestra ingresos menos gastos y su proporción respecto a los ingresos, durante hasta seis meses. Si hay pocos registros, el resultado es preliminar. Los recurrentes solo se reconocen cuando están vinculados a una recurrencia.'],['Consultas en lenguaje natural','Todavía no están disponibles en v3.5. Está previsto comenzar con preguntas simples en una siguiente versión.'],['Privacidad y límites','En esta etapa se ejecutan reglas locales: no hay conexión con modelos de IA, bancos ni correo. Si faltan datos, los resultados serán parciales.']]],['🎨','Diseño equilibrado · v3.5.3','Menos texto visible, mismas herramientas.',[['Inicio renovado','Los saldos se muestran en tarjetas por moneda. Toca Ver ingresos y ahorro para ampliar el resumen mensual.'],['Menú Más simplificado','Las herramientas ahora aparecen como tarjetas con íconos y nombres cortos. Todas las opciones anteriores se conservan.'],['Detalles desplegables','Pulsa Ver detalle o ¿Cómo funciona? para consultar explicaciones sin saturar la pantalla.'],['Compatibilidad móvil','Las tarjetas se adaptan al ancho disponible. En iPhone comprueba también los formularios y ventanas emergentes.'],['Sin cambios en tus registros','Esta actualización reorganiza la presentación. No altera intencionalmente los datos, cálculos, monedas ni funciones de registro.']]],['💬','Ventanas emergentes · v3.5.2','Acciones más claras y cómodas en el celular.',[
+['Movimiento rápido','En Más pulsa Registrar movimiento rápido. Se abre un panel desde abajo; selecciona tipo, monto, cuenta y fecha. El movimiento se guarda en tus registros normales.'],
+['Confirmaciones centradas','Antes de eliminar una deuda, anular un abono o retirar dinero de una meta, aparece una confirmación centrada. Cancelar no modifica tus datos.'],
+['Cómo cerrar','Pulsa Cancelar, toca fuera de la ventana o utiliza Escape en computadora.'],
+['Privacidad','Estas ventanas funcionan dentro de PYON. No son anuncios ni abren sitios externos.']]],
+['🧪','Novedades y próximas mejoras','Conoce qué está disponible y qué está pendiente.',[
 ['Disponible en esta versión','Cuentas PEN/USD, saldos estimados por moneda, transferencias, cambio bidireccional, deudas con abonos y presupuestos por moneda.'],
 ['Disponible en esta versión','Metas PEN/USD con aportes, retiros de reserva y un historial diferenciado. Las cuentas y las metas mantienen sus monedas.'],['Disponible en esta versión','Reportes anuales separados por PEN y USD, gráficos mensuales y gastos por categoría.'],['Navegación corregida','Las pantallas de Más cuentan con el botón Volver a Más. Si una opción no se abre, verifica que estés utilizando la versión corregida.'],['Disponible en esta versión','PYON IA inicial: panel privado con indicadores, alertas y recomendaciones por moneda.'],['Disponible en v3.3','Tendencia de ingresos y gastos de los últimos seis meses por moneda, número de movimientos y promedio de gastos de meses con registros.'],['Disponible en v3.4','Simulador de ahorro con porcentajes y plazos configurables; es un escenario hipotético, no una predicción.'],['Disponible en v3.5','Diagnóstico financiero por moneda: margen sobre ingresos, flujo acumulado de hasta seis meses, identificación de recurrentes y alertas de calidad de datos. No es calificación crediticia ni asesoría.'],['Lenguaje natural: próximo paso','Aún no está disponible. La v3.6 se plantea para preguntas sencillas escritas y procesadas localmente; un asistente conversacional avanzado requerirá un diseño de privacidad y seguridad.'],['En desarrollo','Proyecciones avanzadas, consultas conversacionales y análisis más sofisticados; requerirán diseño y pruebas adicionales.'],
-['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
+['Novedad v3.5.4 · personalización','Cuatro paletas y tres estilos combinables. La preferencia se guarda en este dispositivo y no altera tus datos.'],['Novedad v3.5.3 · diseño equilibrado','Inicio con tarjetas compactas, menú Más en cuadrícula, textos explicativos desplegables y mejor jerarquía visual. Se mantienen las funciones existentes.'],['Novedad v3.5.2 · pop-ups combinados','Panel inferior para registrar movimientos rápidos y ventanas centradas para confirmar operaciones sensibles. Se adaptan a iOS, Android y escritorio.'],['Novedad v3.5.1 · compatibilidad iPhone','Se ajustaron anchos, filas, botones, formularios, navegación inferior y márgenes seguros para pantallas pequeñas y Safari iOS.'],['Consejo para iOS','Abre PYON desde Safari; si instalaste una versión anterior, cierra y vuelve a abrir la aplicación. Si persisten desplazamientos, envía una captura indicando la pantalla y el modelo de iPhone.'],['Consejo para probar','Usa primero una copia de desarrollo y datos de prueba. Antes de importar o restaurar datos, conserva tu respaldo JSON original.']]]
 ];
-return back()+`<div class="c" style="background:linear-gradient(125deg,#e6f7ee,#eef5ff);color:#173c31"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Tu guía práctica de finanzas personales. Abre cada tema y sigue los pasos a tu ritmo.</p><div class="d">Guía de la versión 3.5 · Puedes consultar los temas sin modificar tus datos.</div></div>`
+return back()+`<div class="c" style="background:linear-gradient(125deg,#e6f7ee,#eef5ff);color:#173c31"><div style="font-size:32px">🐰📗</div><h2 style="margin:5px 0">Aprende a usar PYON</h2><p style="margin:5px 0">Todo lo que necesitas, explicado paso a paso cuando lo necesites.</p><div class="d">Guía de la versión 3.5.4 · Puedes consultar los temas sin modificar tus datos.</div></div>`
 +`<div class="c"><label style="margin:0">🔎 Buscar en la guía<input id="helpSearch" type="search" placeholder="Ej. deuda, dólar, transferencia, ahorro" oninput="document.querySelectorAll('.help-topic').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(this.value.toLowerCase()))"></label></div>`
 +sections.map(([icon,title,desc,items],i)=>`<details class="c help-topic" ${i===0?'open':''} style="margin-bottom:10px"><summary style="cursor:pointer;list-style-position:inside;font-weight:750;font-size:16px;padding:5px 0">${icon} ${title}</summary><p class="d" style="margin:8px 0">${desc}</p>${items.map(([h,t])=>`<div style="border-top:1px solid var(--ln);padding:10px 2px"><b>${h}</b><p style="margin:4px 0;line-height:1.55">${t}</p></div>`).join('')}</details>`).join('')
 +`<div class="c" style="border-left:4px solid var(--ac)"><b>💚 Consejo PYON</b><p style="margin-bottom:0">Anota tus movimientos con frecuencia, verifica tus saldos y realiza un respaldo antes de instalar otra versión.</p></div>`;
 }
-function vOps(){const ac=C.medios.filter(m=>!m.x&&m.k!=='c');const opts=(exclude)=>ac.filter(m=>m.id!==exclude).map(m=>`<option value="${m.id}">${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('');return back()+`<div class="c"><div class="k">Transferencia entre mis cuentas</div><p class="d">Mueve dinero entre cuentas de la misma moneda. No se registra como ingreso ni gasto.</p><label>Cuenta de origen<select id="trsrc">${opts()}</select></label><label>Cuenta de destino<select id="trdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><label>Importe transferido<input id="trmo" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00"></label><label>Fecha<input id="trdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="trnote" placeholder="Ej. Transferencia entre ahorros"></label><button class="b" data-a="transfer" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Registrar transferencia</button></div><div class="c"><div class="k">Cambio de moneda</div><p class="d">Cambia de soles a dólares o de dólares a soles. PYON calcula cuánto recibirías y tú confirmas el importe real antes de guardar.</p><label>¿Qué operación realizaste?</label><div class="seg"><button type="button" class="on" data-a="exdir" data-v="PEN-USD" id="exdir1">Soles → dólares</button><button type="button" data-a="exdir" data-v="USD-PEN" id="exdir2">Dólares → soles</button></div><label>Cuenta de origen<select id="exsrc">${opts()}</select></label><label>Cuenta de destino<select id="exdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="exaccountHint" style="margin-top:5px">Selecciona cuentas con monedas diferentes.</div><label>Entidad donde hiciste el cambio<select id="exprovider"><option>BCP</option><option>Interbank</option><option>Scotiabank</option><option>BBVA</option><option>BanBif</option><option>Casa de cambio</option><option>Otra</option></select></label><label>Importe que entregaste (<span id="exfromcur">PEN</span>)<input id="exout" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 1000.00"></label><label>Tipo de cambio (S/ por US$ 1)<input id="extrate" type="number" min="0.0001" step="0.0001" inputmode="decimal" placeholder="Ej. 3.70"></label><div class="r" style="margin-top:7px"><span class="d">Puedes consultar una referencia de mercado.</span><button class="o" type="button" data-a="exquote">Consultar tipo de cambio</button></div><label>Comisión en moneda de origen (opcional)<input id="exfee" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label><div class="c" style="background:var(--bg);margin:12px 0 0;padding:12px"><div class="k">Importe aproximado que recibirías</div><div style="font-size:25px;font-weight:700;color:var(--ac);margin:5px 0" id="expreview">—</div><div class="d" id="exformula">Completa el importe y el tipo de cambio.</div></div><label>Importe realmente recibido (<span id="extocur">USD</span>)<input id="exin" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Se calcula automáticamente; puedes corregirlo"></label><label>Fecha<input id="exdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="exnote" placeholder="Ej. Cambio realizado por banca móvil"></label><button class="b" data-a="exchange" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Confirmar y registrar cambio</button><p class="d" style="margin-top:9px">La consulta es una referencia general, no una oferta del banco. El registro solo actualiza tu control personal; PYON no realiza operaciones bancarias.</p></div><div class="c"><div class="k">Historial de operaciones</div>${all().filter(x=>x.opId&&['tr_out','ex_out'].includes(x.t)).sort((a,b)=>b.f.localeCompare(a.f)).slice(0,20).map(x=>{const dest=all().find(y=>y.opId===x.opId&&y.id!==x.id);return `<div style="padding:9px 0;border-top:1px solid var(--ln)"><b>${x.t==='tr_out'?'Transferencia':'Cambio de moneda'}</b><div class="d">${esc(med(x.m)?.n||'Cuenta')} → ${esc(med(dest?.m)?.n||'Cuenta')} · ${esc(x.f)}</div><div>${money(x.mo,med(x.m)?.cur)} → ${dest?money(dest.mo,med(dest.m)?.cur):'—'}</div></div>`}).join('')||'<div class="d">Aún no hay operaciones registradas.</div>'}</div>`}
+function vOps(){const ac=C.medios.filter(m=>!m.x&&m.k!=='c');const opts=(exclude)=>ac.filter(m=>m.id!==exclude).map(m=>`<option value="${m.id}">${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('');return back()+`<div class="c"><div class="k">Transferencia entre mis cuentas</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">Mueve dinero entre cuentas de la misma moneda. No cuenta como ingreso ni gasto.</p></details><label>Cuenta de origen<select id="trsrc">${opts()}</select></label><label>Cuenta de destino<select id="trdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><label>Importe transferido<input id="trmo" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00"></label><label>Fecha<input id="trdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="trnote" placeholder="Ej. Transferencia entre ahorros"></label><button class="b" data-a="transfer" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Registrar transferencia</button></div><div class="c"><div class="k">Cambio de moneda</div><details class="pyon-detail"><summary>¿Cómo funciona?</summary><p class="d">PYON estima el cambio y tú confirmas cuánto recibiste. Solo registra operaciones ya realizadas.</p></details><label>¿Qué operación realizaste?</label><div class="seg"><button type="button" class="on" data-a="exdir" data-v="PEN-USD" id="exdir1">Soles → dólares</button><button type="button" data-a="exdir" data-v="USD-PEN" id="exdir2">Dólares → soles</button></div><label>Cuenta de origen<select id="exsrc">${opts()}</select></label><label>Cuenta de destino<select id="exdst">${ac.map((m,i)=>`<option value="${m.id}"${i===1?' selected':''}>${esc(m.n)} · ${m.cur||'PEN'}</option>`).join('')}</select></label><div class="d" id="exaccountHint" style="margin-top:5px">Selecciona cuentas con monedas diferentes.</div><label>Entidad donde hiciste el cambio<select id="exprovider"><option>BCP</option><option>Interbank</option><option>Scotiabank</option><option>BBVA</option><option>BanBif</option><option>Casa de cambio</option><option>Otra</option></select></label><label>Importe que entregaste (<span id="exfromcur">PEN</span>)<input id="exout" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 1000.00"></label><label>Tipo de cambio (S/ por US$ 1)<input id="extrate" type="number" min="0.0001" step="0.0001" inputmode="decimal" placeholder="Ej. 3.70"></label><div class="r" style="margin-top:7px"><span class="d">Puedes consultar una referencia de mercado.</span><button class="o" type="button" data-a="exquote">Consultar tipo de cambio</button></div><label>Comisión en moneda de origen (opcional)<input id="exfee" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label><div class="c" style="background:var(--bg);margin:12px 0 0;padding:12px"><div class="k">Importe aproximado que recibirías</div><div style="font-size:25px;font-weight:700;color:var(--ac);margin:5px 0" id="expreview">—</div><div class="d" id="exformula">Completa el importe y el tipo de cambio.</div></div><label>Importe realmente recibido (<span id="extocur">USD</span>)<input id="exin" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Se calcula automáticamente; puedes corregirlo"></label><label>Fecha<input id="exdate" type="date" value="${today()}"></label><label>Nota (opcional)<input id="exnote" placeholder="Ej. Cambio realizado por banca móvil"></label><button class="b" data-a="exchange" style="width:100%;margin-top:12px" ${ac.length<2?'disabled':''}>Confirmar y registrar cambio</button><p class="d" style="margin-top:9px">La consulta es una referencia general, no una oferta del banco. El registro solo actualiza tu control personal; PYON no realiza operaciones bancarias.</p></div><div class="c"><div class="k">Historial de operaciones</div>${all().filter(x=>x.opId&&['tr_out','ex_out'].includes(x.t)).sort((a,b)=>b.f.localeCompare(a.f)).slice(0,20).map(x=>{const dest=all().find(y=>y.opId===x.opId&&y.id!==x.id);return `<div style="padding:9px 0;border-top:1px solid var(--ln)"><b>${x.t==='tr_out'?'Transferencia':'Cambio de moneda'}</b><div class="d">${esc(med(x.m)?.n||'Cuenta')} → ${esc(med(dest?.m)?.n||'Cuenta')} · ${esc(x.f)}</div><div>${money(x.mo,med(x.m)?.cur)} → ${dest?money(dest.mo,med(dest.m)?.cur):'—'}</div></div>`}).join('')||'<div class="d">Aún no hay operaciones registradas.</div>'}</div>`}
 // Navegación interna de Más: todas las subpantallas necesitan este botón.
 function back(){return `<button type="button" class="o" data-a="sub" data-v="" style="margin-bottom:12px">← Volver a Más</button>`}
 
@@ -292,8 +415,43 @@ function vPyonIA(){
  aiHealth(cur)+aiTrend(cur)+aiScenario(cur)+
  `<div class="c d">🔒 Privacidad: el análisis se realiza en tu navegador. PYON IA no accede a bancos, no ejecuta transferencias y no utiliza información que no esté registrada. Los saldos pueden ser incompletos si faltan movimientos o saldos iniciales. Los consejos no son asesoría financiera profesional.</div>`;
 }
-function vMas(){if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
- return `<div class="c">`+[['ia','🐰✨ PYON IA','Panel de hallazgos, alertas y recomendaciones'],['ops','Transferencias y cambio','Mover dinero entre cuentas y cambiar moneda'],['med','Medios de pago','Bancos, tarjetas, Yape, Plin, efectivo'],['cat','Categorías','Agregar o archivar'],['anual','📊 Reportes por moneda','Ingresos, gastos y gráficos PEN / USD'],['mon','Moneda y tipo de cambio','Soles y dólares'],['seg','Seguridad (PIN)','Bloqueo opcional'],['not','Notas y pendientes','Pagos por ayudar a otros y recordatorios'],['rec','Gastos recurrentes','Alquiler, suscripciones…'],['ayu','📗 Ayuda y novedades','Guía por temas, búsqueda y funciones disponibles']].map(([k,n,d])=>`<button class="o row" data-a="sub" data-v="${k}"><b>${n}</b><span class="d">${d}</span></button>`).join('')+`<button class="o row" data-a="ics"><b>📅 Recordatorios al calendario</b><span class="d">10, 5, 3 y 1 día antes de cada pago</span></button><button class="o row" data-a="exp"><b>Exportar a Excel (CSV)</b><span class="d">Copia de seguridad de todos tus movimientos</span></button></div>`}
+
+function vApariencia(){
+ const palettes=[
+  ['emerald','🌿 Esmeralda','#087F5B','#16A085','#DDF5E9','#F7FAF8'],
+  ['executive','💼 Ejecutivo','#142C4E','#2563A6','#C7A45B','#F4F6FA'],
+  ['aurora','✨ Aurora','#6941C6','#A78BFA','#EDE9FE','#FAF8FF'],
+  ['night','🌙 Nocturno','#101827','#1F2937','#34D399','#93C5FD']
+ ];
+ const current=pyonAppearance();
+ return back()+`<div class="c"><h2>🎨 Apariencia</h2><p class="d">Personaliza colores y distribución. Tus movimientos, saldos y respaldos no cambian.</p>
+ <div class="pyon-section-title">Paleta de colores</div><div class="pyon-appearance-grid">`+
+ palettes.map(([id,name,...colors])=>`<button class="pyon-theme-choice" type="button" data-a="appearance-theme" data-v="${id}" aria-pressed="${current.palette===id}"><span class="pyon-swatches">${colors.map(c=>`<i style="background:${c}"></i>`).join('')}</span><strong>${name}</strong></button>`).join('')+
+ `</div><div class="pyon-section-title">Estilo de interfaz</div>`+
+ [['modern','▦','Moderno','Tarjetas redondeadas e íconos.'],['classic','☷','Clásico','Menús en lista y bordes discretos.'],['compact','▤','Compacto','Más información en menos espacio.']].map(([id,icon,name,description])=>`<button type="button" class="pyon-style-choice" data-a="appearance-style" data-v="${id}" aria-pressed="${current.style===id}"><span style="font-size:23px">${icon}</span><span><strong>${name}</strong><br><span class="d">${description}</span></span>${current.style===id?'✓':''}</button>`).join('')+
+ `<div class="pyon-section-title">Vista previa</div><div class="pyon-preview"><div class="k">Balance mensual · ejemplo</div><div class="big">S/ 3,840.00</div><div class="r"><span>Ingresos</span><strong>S/ 5,200</strong></div><div class="r"><span>Gastos</span><strong>S/ 1,360</strong></div><p class="d">Cifras ficticias. La vista previa utiliza el tema seleccionado.</p></div>
+ <button type="button" class="o" data-a="appearance-reset" style="width:100%;margin-top:12px">↺ Restaurar apariencia predeterminada</button></div>`;
+}
+function pyonAppearance(){
+ try{const raw=JSON.parse(localStorage.getItem('pyon-appearance-v1')||'{}');
+ return {palette:['emerald','executive','aurora','night'].includes(raw.palette)?raw.palette:'emerald',style:['classic','modern','compact'].includes(raw.style)?raw.style:'modern'};
+ }catch(e){return {palette:'emerald',style:'modern'}}
+}
+function pyonApplyAppearance(a){
+ document.documentElement.dataset.pyonPalette=a.palette;
+ document.documentElement.dataset.pyonStyle=a.style;
+}
+function pyonSaveAppearance(patch){
+ const a=Object.assign(pyonAppearance(),patch);
+ try{localStorage.setItem('pyon-appearance-v1',JSON.stringify(a))}catch(e){toast('No se pudo guardar la preferencia en este dispositivo.')}
+ pyonApplyAppearance(a);render();
+}
+pyonApplyAppearance(pyonAppearance());
+
+function vMas(){if(sub==='apar')return vApariencia();if(sub==='ia')return vPyonIA();if(sub==='ops')return vOps();if(sub==='med')return vMed();if(sub==='cat')return vCat();if(sub==='anual')return vAnual();if(sub==='ayu')return vAyuda();if(sub==='not')return vNot();if(sub==='mon')return vMon();if(sub==='seg')return vSeg();if(sub==='rec')return vRecs();
+ const menu=[['ia','🐰✨','PYON IA'],['ops','🔁','Transferencias'],['med','💳','Mis cuentas'],['cat','🏷️','Categorías'],['anual','📊','Reportes'],['mon','💱','Monedas'],['seg','🔒','Seguridad'],['not','📝','Notas'],['rec','🔄','Recurrentes'],['ayu','📗','Ayuda y novedades'],['apar','🎨','Apariencia']];
+ return `<div class="c"><div class="k" style="margin-bottom:10px">Acceso rápido</div><button class="b" type="button" data-pop="quick" style="width:100%">＋ Movimiento rápido</button></div><div class="pyon-section-title">Explorar PYON</div><div class="pyon-menu">`+menu.map(([k,i,n])=>`<button type="button" data-a="sub" data-v="${k}" aria-label="Abrir ${n}"><span class="ico" aria-hidden="true">${i}</span><span class="txt">${n}</span></button>`).join('')+`</div><div class="pyon-section-title">Herramientas</div><div class="c"><div class="pyon-shortcuts"><button class="o" data-a="ics">📅 Calendario</button><button class="o" data-a="exp">⬇️ Exportar CSV</button></div><details class="pyon-detail"><summary>¿Qué hace cada herramienta?</summary><p class="d">Calendario: descarga recordatorios para tu calendario. CSV: exporta tus movimientos. Para instrucciones completas, entra en Ayuda y novedades.</p></details></div>`;
+}
 function render(){const v={i:vInicio,m:vMovs,d:vDeudas,a:vAhor,x:vMas}[tab]();$('#app').innerHTML=(msg?`<div class="c w">${esc(msg)}</div>`:'')+'<div class="v">'+v+'</div>';msg='';if($('#expreview'))updateExchangePreview();conteo();$('#fab').style.display=tab==='m'?'none':'block';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===tab))}
 const val=id=>{const e=$('#'+id);return e?e.value.trim():''};
 function exDirection(){const s=med(val('exsrc')),d=med(val('exdst'));if(!s||!d)return null;return (s.cur||'PEN')+'-'+(d.cur||'PEN')}
@@ -304,8 +462,75 @@ async function exp(){try{const d=await claude.use('downloads');if(!d){msg='La de
 document.addEventListener('change',e=>{if(e.target.id==='aicut'){window.aiCutPercent=Number(e.target.value);render();return}if(e.target.id==='aimonths'){window.aiMonths=Number(e.target.value);render();return}if(e.target.id==='aicur'){window.aiCurrency=e.target.value;render();return}if(e.target.id==='yr'){yr=e.target.value;render()}const pu=e.target.dataset&&e.target.dataset.prusd;if(pu!==undefined){const c=C.cats[+pu];if(c){C.pres[c.n]={PEN:budgetLimit(c.n,'PEN'),USD:+e.target.value||0};save('cfg');toast('Presupuesto USD guardado')}}const p=e.target.dataset&&e.target.dataset.pr;if(p!==undefined){const c=C.cats[+p];if(c){C.pres[c.n]={PEN:+e.target.value||0,USD:budgetLimit(c.n,'USD')};save('cfg');toast('Presupuesto guardado')}}});
 document.addEventListener('input',e=>{if(e.target.id==='q'){const q=e.target.value.toLowerCase();document.querySelectorAll('.mv').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}if(['exout','extrate','exfee'].includes(e.target.id)){const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview()}if(e.target.id==='exin')e.target.dataset.edited='1'});
 document.addEventListener('change',e=>{if(['exsrc','exdst'].includes(e.target.id)){const src=med(val('exsrc')),dst=med(val('exdst'));if(src&&dst&&(src.cur||'PEN')===(dst.cur||'PEN')){const other=C.medios.find(m=>!m.x&&m.id!==src.id&&(m.cur||'PEN')!==(src.cur||'PEN')&&m.k!=='c');if(other)$('#exdst').value=other.id}const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview()}});
+
+// Pop-ups propios: confirmaciones centradas y formularios en panel inferior.
+// Se cierran con Escape o tocando fuera; se devuelve el foco al control anterior.
+let pyonDialogResolver=null,pyonPreviousFocus=null;
+function pyonCloseDialog(result=false){
+ const ov=$('#pyon-overlay');if(!ov.classList.contains('open'))return;
+ ov.className='';ov.setAttribute('aria-hidden','true');document.body.classList.remove('pyon-dialog-open');
+ const resolve=pyonDialogResolver;pyonDialogResolver=null;if(resolve)resolve(result);
+ if(pyonPreviousFocus&&pyonPreviousFocus.isConnected)pyonPreviousFocus.focus();
+}
+function pyonShowDialog(html,kind='center'){
+ pyonCloseDialog(false);pyonPreviousFocus=document.activeElement;
+ const ov=$('#pyon-overlay');ov.className='open'+(kind==='sheet'?' sheet':'');
+ ov.setAttribute('aria-hidden','false');
+ $('#pyon-dialog-body').innerHTML=(kind==='sheet'?'<div class="pyon-handle" aria-hidden="true"></div>':'')+html;
+ document.body.classList.add('pyon-dialog-open');
+ const first=ov.querySelector('input,select,button');if(first)first.focus();
+}
+function pyonConfirm(message,heading='¿Confirmar acción?'){
+ return new Promise(resolve=>{
+  pyonShowDialog('<h2 id="pyon-dialog-title">'+esc(heading)+'</h2><p>'+esc(message)+'</p><div class="pyon-actions"><button class="o" type="button" data-pop="cancel">Cancelar</button><button class="b" type="button" data-pop="confirm">Confirmar</button></div>');
+  pyonDialogResolver=resolve;
+ });
+}
+function pyonQuickMovement(){
+ const accounts=C.medios.filter(m=>!m.x),cats=C.cats.filter(c=>!c.x);
+ if(!accounts.length){toast('Primero agrega una cuenta en Más → Medios de pago.');return}
+ pyonShowDialog('<h2 id="pyon-dialog-title">➕ Movimiento rápido</h2><p class="d">Registra un ingreso o gasto sin salir de esta pantalla.</p>'+
+ '<label>Tipo<select id="pqtype"><option value="g">Gasto</option><option value="i">Ingreso</option></select></label>'+
+ '<label>Monto<input id="pqamount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00"></label>'+
+ '<label>Cuenta<select id="pqaccount">'+accounts.map(m=>'<option value="'+esc(m.id)+'">'+esc(m.n)+' · '+esc(m.cur||'PEN')+'</option>').join('')+'</select></label>'+
+ '<label id="pqcategorywrap">Categoría<select id="pqcategory">'+cats.map(c=>'<option value="'+esc(c.n)+'">'+esc(c.n)+'</option>').join('')+'</select></label>'+
+ '<label>Fecha<input id="pqdate" type="date" value="'+today()+'"></label>'+
+ '<label>Nota (opcional)<input id="pqnote" maxlength="180" placeholder="Descripción"></label>'+
+ '<p id="pqerror" role="alert" style="color:var(--rd);display:none"></p>'+
+ '<div class="pyon-actions"><button type="button" class="o" data-pop="cancel">Cancelar</button><button type="button" class="b" data-pop="savequick">Guardar movimiento</button></div>','sheet');
+}
+document.addEventListener('click',e=>{
+ const pop=e.target.closest('[data-pop]');if(!pop)return;
+ if(pop.dataset.pop==='cancel'){pyonCloseDialog(false);return}
+ if(pop.dataset.pop==='confirm'){pyonCloseDialog(true);return}
+ if(pop.dataset.pop==='quick'){pyonQuickMovement();return}
+ if(pop.dataset.pop==='savequick'){
+  const amount=Number($('#pqamount')?.value),acct=med($('#pqaccount')?.value),type=$('#pqtype')?.value;
+  const err=$('#pqerror');
+  if(!(amount>0)||!Number.isFinite(amount)||!acct){err.textContent='Indica un monto válido y una cuenta.';err.style.display='block';return}
+  const f=$('#pqdate').value||today();
+  const o={t:type,f,mo:amount,m:acct.id,cuentaId:acct.id,cur:acct.cur||'PEN'};
+  if(type==='g'){if(!$('#pqcategory').value){err.textContent='Selecciona una categoría.';err.style.display='block';return}o.c=$('#pqcategory').value}
+  if($('#pqnote').value.trim())o.n=$('#pqnote').value.trim();
+  addMov(o);ym=f.slice(0,7);pyonCloseDialog(true);render();toast('Movimiento registrado ✓');
+ }
+});
+document.addEventListener('change',e=>{if(e.target.id==='pqtype'){$('#pqcategorywrap').style.display=e.target.value==='g'?'':'none'}});
+$('#pyon-overlay').addEventListener('click',e=>{if(e.target.id==='pyon-overlay')pyonCloseDialog(false)});
+document.addEventListener('keydown',e=>{
+ const ov=$('#pyon-overlay');if(!ov.classList.contains('open'))return;
+ if(e.key==='Escape'){e.preventDefault();pyonCloseDialog(false)}
+ if(e.key==='Tab'){
+  const els=[...ov.querySelectorAll('button,input,select,textarea')].filter(x=>!x.disabled&&x.offsetParent!==null);
+  if(!els.length)return;
+  const first=els[0],last=els[els.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+ }
+});
+
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
- if(a==='tab'){tab=v;sub='';ed=null}else if(a==='fab'){tab='m';sub='';ed=null;window.scrollTo(0,0)}else if(a==='tu'){const u=undo;undo=null;$('#toast').style.display='none';if(u)u();return}else if(a==='ics')return calendario();else if(a==='em'){ed=v;tab='m'}else if(a==='ce'){ed=null}else if(a==='sub')sub=v;else if(a==='mp')shift(-1);else if(a==='mn')shift(1);else if(a==='tt')fT=v;else if(a==='td')fD=v;
+ if(a==='appearance-theme'){pyonSaveAppearance({palette:v});return}else if(a==='appearance-style'){pyonSaveAppearance({style:v});return}else if(a==='appearance-reset'){pyonSaveAppearance({palette:'emerald',style:'modern'});return}else if(a==='tab'){tab=v;sub='';ed=null}else if(a==='fab'){tab='m';sub='';ed=null;window.scrollTo(0,0)}else if(a==='tu'){const u=undo;undo=null;$('#toast').style.display='none';if(u)u();return}else if(a==='ics')return calendario();else if(a==='em'){ed=v;tab='m'}else if(a==='ce'){ed=null}else if(a==='sub')sub=v;else if(a==='mp')shift(-1);else if(a==='mn')shift(1);else if(a==='tt')fT=v;else if(a==='td')fD=v;
  else if(a==='exp')return exp();
  else if(a==='transfer'){const src=med(val('trsrc')),dst=med(val('trdst')),mo=+val('trmo'),f=val('trdate')||today();if(!src||!dst||src.id===dst.id||!(mo>0)){msg='Selecciona dos cuentas distintas e indica un importe mayor que cero.';return render()}if((src.cur||'PEN')!==(dst.cur||'PEN')){msg='Las transferencias deben ser entre cuentas de la misma moneda. Para monedas distintas usa Cambio de moneda.';return render()}if(src.k==='c'||dst.k==='c'){msg='Por ahora, las transferencias solo están disponibles entre cuentas de débito, billeteras y efectivo.';return render()}const opId=nid(),note=val('trnote')||'Transferencia entre cuentas';addMov({t:'tr_out',f,mo,m:src.id,cuentaId:src.id,cur:src.cur||'PEN',opId,n:note});addMov({t:'tr_in',f,mo,m:dst.id,cuentaId:dst.id,cur:dst.cur||'PEN',opId,n:note});ym=f.slice(0,7);toast('Transferencia registrada ✓')}
  else if(a==='exdir'){const src=med(val('exsrc')),want=v==='PEN-USD'?'PEN':'USD';const source=C.medios.find(m=>!m.x&&m.k!=='c'&&(m.cur||'PEN')===want);const dest=C.medios.find(m=>!m.x&&m.k!=='c'&&m.id!==source?.id&&(m.cur||'PEN')!==(want));if(source&&dest){$('#exsrc').value=source.id;$('#exdst').value=dest.id}const r=$('#exin');if(r)delete r.dataset.edited;updateExchangePreview();return}
@@ -330,12 +555,12 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]')
  else if(a==='dm'){for(const y in M){const i=M[y].findIndex(x=>x.id===v);if(i>=0){const it=M[y].splice(i,1)[0];save(y);toast('Movimiento eliminado','Deshacer',()=>{M[y].push(it);save(y);render()})}}}
  else if(a==='addd'){const n=val('dn'),mo=+val('dm');if(!n||!(mo>0)){msg='Escribe el nombre y un monto mayor que cero.';return render()}C.deudas.push({id:nid(),dir:fD,n,mo,v:val('dv'),cur:val('dc')==='USD'?'USD':'PEN'});save('cfg')}
  else if(a==='debtpay'){const d=C.deudas.find(x=>x.id===v);if(d){const amount=+val('debtamount'+v),m=med(val('debtaccount'+v)),date=val('debtdate'+v)||today(),left=debtLeft(d);if(!m||m.x||m.k==='c'||(m.cur||'PEN')!==(d.cur||'PEN')||!(amount>0)||amount>left+0.001){msg='Comprueba el importe y selecciona una cuenta activa de la misma moneda (no tarjeta de crédito).';return render()}const paymentId=nid(),movementId=nid();d.pagos=d.pagos||[];d.pagos.push({id:paymentId,mo:Math.round(amount*100)/100,m:m.id,f:date,movementId});d.ok=debtLeft(d)<0.005?1:0;addMov({id:movementId,t:d.dir==='c'?'debt_in':'debt_out',f:date,mo:Math.round(amount*100)/100,m:m.id,cuentaId:m.id,cur:d.cur||'PEN',deudaId:d.id,pagoId:paymentId,n:(d.dir==='c'?'Cobro de deuda: ':'Pago de deuda: ')+d.n});save('cfg');toast('Abono registrado ✓')}}
- else if(a==='debtundo'){const d=C.deudas.find(x=>x.id===v),pay=d?.pagos?.find(p=>p.id===b.dataset.p);if(d&&pay){if(!confirm('¿Anular este pago y revertir el movimiento de la cuenta?'))return;d.pagos=d.pagos.filter(p=>p.id!==pay.id);for(const y in M){const before=M[y].length;M[y]=M[y].filter(x=>x.id!==pay.movementId);if(M[y].length!==before)save(y)}d.ok=0;save('cfg');toast('Pago anulado y saldo corregido')}}
+ else if(a==='debtundo'){const d=C.deudas.find(x=>x.id===v),pay=d?.pagos?.find(p=>p.id===b.dataset.p);if(d&&pay){if(!await pyonConfirm('¿Anular este pago y revertir el movimiento de la cuenta?','Anular abono'))return;d.pagos=d.pagos.filter(p=>p.id!==pay.id);for(const y in M){const before=M[y].length;M[y]=M[y].filter(x=>x.id!==pay.movementId);if(M[y].length!==before)save(y)}d.ok=0;save('cfg');toast('Pago anulado y saldo corregido')}}
  else if(a==='debtlegacy'){const d=C.deudas.find(x=>x.id===v);if(d){d.ok=0;save('cfg')}}
- else if(a==='dd'){const d=C.deudas.find(x=>x.id===v);if(d){if((d.pagos||[]).length){msg='Primero anula los pagos registrados en el historial antes de eliminar esta deuda.';return render()}if(confirm('¿Eliminar esta deuda?')){C.deudas=C.deudas.filter(x=>x.id!==v);save('cfg')}}}
+ else if(a==='dd'){const d=C.deudas.find(x=>x.id===v);if(d){if((d.pagos||[]).length){msg='Primero anula los pagos registrados en el historial antes de eliminar esta deuda.';return render()}if(await pyonConfirm('¿Eliminar esta deuda? Esta acción no se puede deshacer.','Eliminar deuda')){C.deudas=C.deudas.filter(x=>x.id!==v);save('cfg')}}}
  else if(a==='addg'){const n=val('gn'),meta=+val('gm');if(!n||!(meta>0)){msg='Escribe el nombre y el monto de la meta.';return render()}C.metas.push({id:nid(),n,meta,cur:val('gcur')==='USD'?'USD':'PEN',fe:val('gf')});save('cfg')}
  else if(a==='ap'){const mo=+val('ap'+v);if(!(mo>0)){msg='Escribe el monto a aportar.';return render()}const mt=C.metas.find(x=>x.id===v),acct=med(val('amac'+v));if(!mt||!acct||acct.x||acct.k==='c'||(acct.cur||'PEN')!==(mt.cur||'PEN')){msg='Selecciona una cuenta activa de la misma moneda que la meta.';return render()}const pre=goalSaved(v);addMov({t:'a',f:today(),mo,a:v,m:acct.id,cuentaId:acct.id,cur:mt.cur||'PEN'});ym=today().slice(0,7);msg='Aporte registrado y descontado del saldo.';if(mt&&mt.meta>0&&pre<mt.meta&&pre+mo>=mt.meta){confeti();msg='🎉 ¡Meta alcanzada: '+mt.n+'!'}}
- else if(a==='retg'){const mt=C.metas.find(x=>x.id===v),mo=+val('ret'+v),acct=med(val('retac'+v));if(!mt||!Number.isFinite(mo)||mo<=0||mo>goalSaved(v)+0.001||!acct||acct.x||acct.k==='c'||(acct.cur||'PEN')!==(mt.cur||'PEN')){msg='Comprueba el importe pendiente en la meta y selecciona una cuenta activa de la misma moneda.';return render()}if(!confirm('¿Liberar '+money(mo,mt.cur||'PEN')+' de esta meta hacia '+acct.n+'? Solo cambia el registro interno de PYON.'))return;addMov({t:'a_return',f:today(),mo:Math.round(mo*100)/100,a:v,m:acct.id,cuentaId:acct.id,cur:mt.cur||'PEN',n:'Retiro de reserva: '+mt.n});msg='Dinero liberado de la meta y devuelto al disponible estimado.'}
+ else if(a==='retg'){const mt=C.metas.find(x=>x.id===v),mo=+val('ret'+v),acct=med(val('retac'+v));if(!mt||!Number.isFinite(mo)||mo<=0||mo>goalSaved(v)+0.001||!acct||acct.x||acct.k==='c'||(acct.cur||'PEN')!==(mt.cur||'PEN')){msg='Comprueba el importe pendiente en la meta y selecciona una cuenta activa de la misma moneda.';return render()}if(!await pyonConfirm('¿Liberar '+money(mo,mt.cur||'PEN')+' de esta meta hacia '+acct.n+'? Solo cambia el registro interno de PYON.','Retirar de la meta'))return;addMov({t:'a_return',f:today(),mo:Math.round(mo*100)/100,a:v,m:acct.id,cuentaId:acct.id,cur:mt.cur||'PEN',n:'Retiro de reserva: '+mt.n});msg='Dinero liberado de la meta y devuelto al disponible estimado.'}
  else if(a==='mededit'){medEd=v;sub='med'}
  else if(a==='medcancel'){medEd=null;sub='med'}
  else if(a==='medsave'){const m=C.medios.find(x=>x.id===medEd),n=val('bn'),k=val('bk');if(!m||!n){msg='Escribe el nombre de la cuenta.';return render()}if(accountMovements(m.id).length&&val('bcur')!==(m.cur||'PEN')){msg='No se puede cambiar la moneda porque la cuenta ya tiene movimientos.';return render()}if(/^(yape|plin)$/i.test(n))k='b';if(/^efectivo$/i.test(n))k='e';m.n=n;m.k=k;m.cur=val('bcur')==='USD'?'USD':'PEN';m.saldoInicial=val('bsi')!==''?+val('bsi'):null;m.tipoCuenta=k;m.cie=k==='c'?val('bc'):' ';m.pag=k==='c'?val('bp'):' ';medEd=null;save('cfg');msg='Cuenta actualizada. Los movimientos históricos se conservaron.'}
